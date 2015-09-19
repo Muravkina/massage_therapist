@@ -13,9 +13,9 @@ var app = express();
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://localhost/ilia')
 
-var Blog     = require('./app/models/blog');
-var Reviews     = require('./app/models/reviews');
-var User     = require('./app/models/user');
+var Blog     = require('./models/blog');
+var Reviews     = require('./models/reviews');
+var User     = require('./models/user');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

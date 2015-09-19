@@ -1,10 +1,9 @@
 var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
-var RewiewsSchema = new Schema({
+var ReviewsSchema = new Schema({
     author: String,
     body: String,
-    created_at: { type: Date, default: Date.now },
     stars: Number
 })
 

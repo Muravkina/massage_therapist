@@ -1,8 +1,35 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+header {
+  margin-top: 20px;
 }
-
-a {
-  color: #00B7FF;
+.nav{
+  margin-top: 30px;
+}
+header img {
+  margin-top: 10px;
+}
+.main_picture.container{
+  max-width: 975px;
+}
+.main_picture{
+  background-image: url('/images/spine.jpg');
+  background-size: cover;
+  height: 20%;
+  overflow: auto;
+}
+.main_picture p {
+  margin-top: 300px;
+  margin-left: 606px;
+  width: 300px;
+  font-family: 'Carter One', cursive;
+  color: rgb(90, 90, 90);
+}
+.menu {
+  height: 47px;
+  border: 2px solid rgb(41, 31, 18);
+  margin-top: 10px;
+  padding: 5px;
+}
+.menu h3 {
+  font-size: 30px;
+  margin-left: 10px;
 }
