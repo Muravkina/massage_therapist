@@ -43,9 +43,35 @@
       <div class="title">
         <h3>Reviews</h3>
       </div>
+      <div class="reviews_collection">
+        <p><% reviews.forEach(function(review){ %>
+          <div class="review">
+            <div class="star-ratings-css"
+            <% if (review.stars === 0 || review.stars === undefined ) { %>
+              title=".000"
+            <% } else { %>
+              title= ".<%= review.stars %>"
+            <% } %>
+            ></div>
+            <p><%= review.body %></p>
+            <p><%= review.author %></p>
+            <p><%= review.stars %></p>
+          </div>
+       <% }) %>
+      </div>
       <div class="form">
+        <fieldset class="rating">
+          <legend>Please rate:</legend>
+          <input type="radio" id="star5" name="rating" value="5" /><label for="star5">5 stars</label>
+          <input type="radio" id="star4" name="rating" value="4" /><label for="star4">4 stars</label>
+          <input type="radio" id="star3" name="rating" value="3" /><label for="star3">3 stars</label>
+          <input type="radio" id="star2" name="rating" value="2" /><label for="star2">2 stars</label>
+          <input type="radio" id="star1" name="rating" value="1" /><label for="star1">1 star</label>
+        </fieldset>
+
         <form method="post" action="/" id="reviewForm">
           <input type="text" name="author" class="reviewAuthor" placeholder="Name">
+          <input type="text" name="email" class="reviewEmail" placeholder="Email">
           <textarea placeholder="You review goes here" rows="20" name="body" class="reviewBody"></textarea>
           <button class="submit">Submit</button>
         </form>

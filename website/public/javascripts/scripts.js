@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+
   $(window).trigger('scroll');
   var animation_elements = $(".scrollable");
 
@@ -7,6 +8,7 @@ $(document).ready(function() {
   var window_height = $(window).height();
   var window_top_position = $(window).scrollTop();
   var window_bottom_position = (window_top_position + window_height);
+
 
   $.each(animation_elements, function() {
     var element_height = $(this).outerHeight();
@@ -27,7 +29,8 @@ $(document).ready(function() {
       event.preventDefault();
       var data = {
         author: $(".reviewAuthor").val(),
-        body: $(".reviewBody").val()
+        body: $(".reviewBody").val(),
+        stars: $("input[name=rating]:checked").val()
       }
     $.ajax({
       type: 'POST',
@@ -35,10 +38,16 @@ $(document).ready(function() {
       contentType: 'application/json',
       data: JSON.stringify(data)
     }).done(function(data){
-      console.log(data)
+      $(".reviewAuthor").val("");
+      $(".reviewBody").val("");
+      $(".reviewEmail").val("");
+      $('input[name=rating]').attr('checked', false);
+      var review = "<div class='review'><p>" + data.body + "</p><p>" + data.author + "</p></div>"
+      $(".reviews_collection").append(review)
     })
   })
 
   $(window).on('scroll resize', check_if_in_view);
+
 
 });
