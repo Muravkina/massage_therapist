@@ -2,10 +2,10 @@ var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
 var ReviewsSchema = new Schema({
-    author: String,
-    body: String,
+    author: { type: String, required: true },
+    body: {type: String, required: true },
     email: String,
-    stars: Number
+    stars: { type: Number, required: true}
 })
 
 

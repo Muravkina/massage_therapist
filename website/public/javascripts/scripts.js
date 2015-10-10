@@ -24,27 +24,55 @@ $(document).ready(function() {
     }
   });
 }
+    //check if the review fields are valid
+    var isValid = function(field){
+      if (!field.val()){
+        return false
+      } else {
+        return true
+      }
+    }
 
     $(".submit").on("click", function(event){
+
       event.preventDefault();
       var data = {
         author: $(".reviewAuthor").val(),
         body: $(".reviewBody").val(),
-        stars: $("input[name=rating]:checked").val()
+        stars: $("input[name=rating]:checked").val(),
+        email: $(".reviewEmail").val()
       }
-    $.ajax({
-      type: 'POST',
-      url: "/",
-      contentType: 'application/json',
-      data: JSON.stringify(data)
-    }).done(function(data){
-      $(".reviewAuthor").val("");
-      $(".reviewBody").val("");
-      $(".reviewEmail").val("");
-      $('input[name=rating]').attr('checked', false);
-      var review = "<div class='review'><p>" + data.body + "</p><p>" + data.author + "</p></div>"
-      $(".reviews_collection").append(review)
-    })
+
+      var checkable = [$(".reviewAuthor"), $(".reviewBody"), $("input[name=rating]:checked")];
+
+      var areFieldsValid = true;
+
+      for (var i = 0; i < checkable.length; i++){
+        if(!isValid(checkable[i])){
+          areFieldsValid = false;
+          checkable[i].addClass("red");
+        }
+      }
+
+      if (areFieldsValid) {
+        $.ajax({
+            type: 'POST',
+            url: "/",
+            contentType: 'application/json',
+            data: JSON.stringify(data)
+          }).done(function(data){
+            $(".reviewAuthor").val("").removeClass("red");
+            $(".reviewBody").val("").removeClass("red");
+            $(".reviewEmail").val("").removeClass("red");
+            $(".formErrors > p").remove()
+            $('input[name=rating]').attr('checked', false);
+            var review = "<div class='review'><p>" + data.body + "</p><p>" + data.author + "</p></div>"
+            $(".reviews_collection").append(review)
+          })
+      } else {
+        var error = "<p>Don't forget to fill out the fields, marked in red</p>"
+        $(".formErrors").append(error)
+      }
   })
 
   $(window).on('scroll resize', check_if_in_view);

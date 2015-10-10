@@ -161,7 +161,7 @@ header {
   width: attr(rating);
   overflow: hidden;
 }
-[title=".000"]::after {
+[title=".0"]::after {
   width: 0%;
 }
 
@@ -176,4 +176,10 @@ header {
 }
 [title=".4"]::after {
   width: 100%;
+}
+.red {
+  border-color: red;
+}
+input[type="text"].red {
+  border-color: red;
 }
