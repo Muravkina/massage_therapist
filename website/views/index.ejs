@@ -4,7 +4,6 @@
     <title>Ilia Gerassimov - Massage Therapy</title>
     <link rel='stylesheet' href='/stylesheets/normalize.css' />
     <link rel='stylesheet' href='/stylesheets/base.css' />
-    <link rel='stylesheet' href='/stylesheets/skeleton-fluid.css' />
     <link rel='stylesheet' href='/stylesheets/skeleton.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link href='https://fonts.googleapis.com/css?family=Carter+One' rel='stylesheet' type='text/css'>
@@ -43,34 +42,55 @@
       <div class="title">
         <h3>Reviews</h3>
       </div>
-      <div class="reviews_collection">
-        <p><% reviews.forEach(function(review){ %>
-          <div class="review">
-            <div class="star-ratings-css" title= ".<%= review.stars %>" ></div>
-            <p><%= review.body %></p>
-            <p><%= review.author %></p>
-          </div>
-       <% }) %>
-      </div>
-      <div class="form">
-        <div class="formErrors"></div>
-        <fieldset class="rating">
-          <legend>Please rate:</legend>
-          <input type="radio" id="star5" name="rating" value="5" /><label for="star5">5 stars</label>
-          <input type="radio" id="star4" name="rating" value="4" /><label for="star4">4 stars</label>
-          <input type="radio" id="star3" name="rating" value="3" /><label for="star3">3 stars</label>
-          <input type="radio" id="star2" name="rating" value="2" /><label for="star2">2 stars</label>
-          <input type="radio" id="star1" name="rating" value="1" /><label for="star1">1 star</label>
-        </fieldset>
-
-        <form method="post" action="/" id="reviewForm">
-          <input type="text" name="author" class="reviewAuthor checkable" placeholder="Name">
-          <input type="text" name="email" class="reviewEmail" placeholder="Email">
-          <textarea placeholder="You review goes here" rows="20" name="body" class="reviewBody checkable"></textarea>
-          <button class="submit">Submit</button>
-        </form>
-      </div>
-    </div>
+      <div class = "container">
+        <div class="row">
+          <div class="form eleven columns">
+            <form method="post" action="/" id="reviewForm">
+              <legend>Please rate:</legend>
+              <div class="formErrors"></div>
+              <div class="rating_stars_wrapper">
+                <fieldset class="rating">
+                  <!-- Stars -->
+                  <input type="radio" id="star5" name="rating" value="5" /><label for="star5">5 stars</label>
+                  <input type="radio" id="star4" name="rating" value="4" /><label for="star4">4 stars</label>
+                  <input type="radio" id="star3" name="rating" value="3" /><label for="star3">3 stars</label>
+                  <input type="radio" id="star2" name="rating" value="2" /><label for="star2">2 stars</label>
+                  <input type="radio" id="star1" name="rating" value="1" /><label for="star1">1 star</label>
+                </fieldset>
+              </div><!-- rating_stars_wrapper -->
+              <fieldset>
+                <div class="review_row">
+                  <label for="author">&#42;Name:</label>
+                  <input type="text" id="author" name="author" class="reviewAuthor checkable">
+                  <label for="email">Email:</label>
+                  <input type="text" name="email" id="email" class="reviewEmail">
+                </div>
+                <div class="review_row">
+                  <label for="body">&#42;Review:</label>
+                  <textarea id="body" name="body" class="reviewBody checkable"></textarea>
+                </div>
+              </fieldset>
+              <div class="review_button">
+                <button class="submit">Submit</button>
+                <input type="reset" value="Clear">
+              </div><!-- review_buttons -->
+            </form>
+          </div><!-- form eight columns -->
+        </div><!-- row -->
+      </div><!-- container -->
+      <div class="container">
+        <div class="reviews_collection">
+          <div class="row">
+          <% reviews.forEach(function(review){ %>
+            <div class="review six columns">
+              <div class="star-ratings-css" title= ".<%= review.stars %>" ></div>
+              <p class="review_body"><%= review.body %></p>
+              <p class="review_author"><%= review.author %></p>
+            </div><!-- review -->
+         <% }) %>
+         </div><!-- row -->
+        </div><!-- reviews_collection -->
+      </div><!-- container -->
     <div class="menu bounce_up contact scrollable">
       <div class="title">
         <h3>Contact</h3>

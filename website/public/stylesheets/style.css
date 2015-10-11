@@ -141,7 +141,7 @@ header {
   font-size: 25px;
   height: 25px;
   width: 100px;
-  margin: 0 auto;
+  margin-bottom: 0.8em;
   position: relative;
   text-shadow: 0 1px 0 #a2a2a2;
 }
@@ -182,4 +182,70 @@ header {
 }
 input[type="text"].red {
   border-color: red;
+}
+.rating_stars_wrapper {
+  overflow:auto;
+}
+label {
+  display: inline-block;
+}
+input[type="text"]{
+  width: 23.5em;
+  margin-left: 0.5em;
+}
+textarea {
+  width: 52em;
+  vertical-align: top;
+  margin-left: 0.5em;
+}
+label[for="body"] {
+  margin-top: -2em;
+}
+input[type="reset"]{
+  margin-left: 1em;
+}
+.review_button input[type="reset"], .review_button button{
+  width: 16em;
+}
+label[for="email"]{
+  margin-left: 1em;
+}
+label[for="author"]{
+  margin-right: 0.7em;
+}
+legend {
+  font-family: 'Carter One', cursive;
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+.formErrors {
+  color: red;
+  margin-bottom: -0.5em;
+}
+.review_button{
+  float: right;
+}
+.form {
+  margin: 1em auto;
+}
+.review_author {
+  float: right;
+  margin-right: 2em;
+  font-style: italic;
+}
+.review_body {
+  margin-bottom: 1rem;
+  overflow: auto;
+}
+.six.columns{
+  margin-right: 5em;
+}
+.reviews_collection .review.six.columns {
+  margin-bottom: -1em;
+}
+.reviews {
+  background-image: url('/images/lines.png');
+  background-size: 30% 30%;
+  background-repeat: no-repeat;
+  background-position: 85% 20%;
 }

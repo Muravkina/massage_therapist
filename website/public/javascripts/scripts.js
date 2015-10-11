@@ -61,16 +61,17 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify(data)
           }).done(function(data){
+            console.log(data)
             $(".reviewAuthor").val("").removeClass("red");
             $(".reviewBody").val("").removeClass("red");
             $(".reviewEmail").val("").removeClass("red");
             $(".formErrors > p").remove()
             $('input[name=rating]').attr('checked', false);
-            var review = "<div class='review'><p>" + data.body + "</p><p>" + data.author + "</p></div>"
-            $(".reviews_collection").append(review)
+            var review = "<div class='review six columns'><div class='star-ratings-css' title= '." + data.stars + "'></div><p class='review_body'>" + data.body + "</p><p class='review_author'>" + data.author + "</p></div>"
+            $(".reviews_collection > .row").append(review)
           })
       } else {
-        var error = "<p>Don't forget to fill out the fields, marked in red</p>"
+        var error = "<p>Don't forget to fill out the fields marked in red</p>"
         $(".formErrors").append(error)
       }
   })
