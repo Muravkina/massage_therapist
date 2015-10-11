@@ -1,4 +1,5 @@
 var express = require('express');
+var engine = require('ejs-locals');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -18,6 +19,7 @@ var Reviews     = require('./models/reviews');
 var User     = require('./models/user');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
