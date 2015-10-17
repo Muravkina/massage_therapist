@@ -249,3 +249,14 @@ legend {
   background-repeat: no-repeat;
   background-position: 85% 20%;
 }
+header a {
+  font-family: 'Montserrat', sans-serif;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-size: 1.2em;
+  margin-left: 1em;
+  float: right;
+}
+a:hover {
+  color: rgb(130, 130, 130);
+}

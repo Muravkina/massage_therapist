@@ -8,6 +8,7 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link href='https://fonts.googleapis.com/css?family=Carter+One' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Krona+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   </head>
   <body>
@@ -15,12 +16,16 @@
       <div class="container">
         <div class="row">
             <!-- <img src="/images/logo-sample.00_png_srz" width="100px" > -->
-            <a href="#">About</a>
-            <a href="#">Schedule</a>
-            <a href="#">Reviews</a>
-            <a href="#">Contact</a>
             <a href="#">Blog</a>
-
+            <a href="#">Contact</a>
+            <a href="#">Reviews</a>
+            <a href="#">Schedule</a>
+            <a href="#">About</a>
+            <% if (user) { %>
+              <a href="/logout">Log out</a>
+            <% } else { %>
+              <a href="#">Blah</a>
+              <% } %>
         </div>
       </div>
     </header>
