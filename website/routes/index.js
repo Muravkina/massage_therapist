@@ -2,14 +2,14 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var Review = require("./../models/reviews");
-var Blog = require("./../models/blog");
+var Post = require("./../models/blog");
 var User = require("./../models/user");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   Review.find({}).exec(function(err, reviews) {
     if (err) {
-      console.log("db error in GET /posts: " + err);
+      console.log("db error in GET /reviews: " + err);
       res.render('error');
     } else {
       console.log(req.user)
@@ -46,11 +46,29 @@ router.post('/register', function(req, res) {
         }
 
         passport.authenticate('local')(req, res, function () {
-          console.log("success")
             res.redirect('/');
         });
     });
 });
+
+router.get('/blog', function(req, res, next){
+  Post.find({}).sort({date: 'desc'}).exec(function(err, posts){
+    if (err) {
+      console.log("db error in GET /blog: " + err);
+      res.render('error');
+    } else {
+      res.render('blog', {posts: posts, user: req.user});
+    };
+  })
+})
+
+router.post('/blog', function(req, res, next){
+  tagsArray = req.body.tags.split(', ');
+  new Post({title: req.body.title, body: req.body.body, date: new Date(), tags: tagsArray})
+    .save(function(err, post){
+    res.send(post)
+  })
+})
 
 
 module.exports = router;

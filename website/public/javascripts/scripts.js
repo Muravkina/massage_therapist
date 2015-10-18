@@ -24,7 +24,7 @@ $(document).ready(function() {
     }
   });
 }
-    //check if the review fields are valid
+    //check if the fields are valid
     var isValid = function(field){
       if (!field.val()){
         return false
@@ -33,6 +33,19 @@ $(document).ready(function() {
       }
     }
 
+
+    var fieldsAreValid = true;
+    var validate = function(checkable) {
+
+      for (var i = 0; i < checkable.length; i++){
+        if(!isValid(checkable[i])){
+          fieldsAreValid = false;
+          checkable[i].addClass("red");
+        }
+      }
+    }
+
+// submit review
     $(".submit").on("click", function(event){
 
       event.preventDefault();
@@ -45,16 +58,9 @@ $(document).ready(function() {
 
       var checkable = [$(".reviewAuthor"), $(".reviewBody"), $("input[name=rating]:checked")];
 
-      var areFieldsValid = true;
+      validate(checkable);
 
-      for (var i = 0; i < checkable.length; i++){
-        if(!isValid(checkable[i])){
-          areFieldsValid = false;
-          checkable[i].addClass("red");
-        }
-      }
-
-      if (areFieldsValid) {
+      if (fieldsAreValid) {
         $.ajax({
             type: 'POST',
             url: "/",
@@ -75,6 +81,48 @@ $(document).ready(function() {
         $(".formErrors").append(error)
       }
   })
+
+//submit post
+
+  var submitPost = function(event){
+    event.preventDefault()
+    var data = {
+        title: $("input[name='title']").val(),
+        body: $("input[name='body']").val(),
+        tags: $("input[name='tags']").val()
+      }
+
+    var checkable = [$("input[name='title']"), $("input[name='body']")];
+
+    validate(checkable);
+
+    if (fieldsAreValid) {
+        $.ajax({
+            type: 'POST',
+            url: "/blog",
+            contentType: 'application/json',
+            data: JSON.stringify(data)
+          }).done(function(data){
+            console.log(data)
+            $("input[name='title']").val("").removeClass("red");
+            $("input[name='body']").val("").removeClass("red");
+            $("input[name='body']").val("");
+            $(".formErrors > p").remove();
+            var tags = "";
+            data.tags.forEach(function(tag){
+              tags += "<span>" + tag + "</span> "
+            })
+            var post = "<p>" + data.date + "</p><p>" + data.title + "</p><p>" + data.body + "</p><p>" + tags + "</p>"
+            $(".posts").prepend(post)
+          })
+      } else {
+        var error = "<p>Don't forget to fill out the fields marked in red</p>"
+        $(".formErrors").append(error)
+      }
+
+  }
+
+  $(".submitPost").on("click", submitPost)
 
   $(window).on('scroll resize', check_if_in_view);
 

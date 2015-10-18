@@ -16,16 +16,14 @@
       <div class="container">
         <div class="row">
             <!-- <img src="/images/logo-sample.00_png_srz" width="100px" > -->
-            <a href="#">Blog</a>
+            <% if (user) { %>
+              <a href="/logout">Log out</a>
+            <% } %>
+            <a href="/blog">Blog</a>
             <a href="#">Contact</a>
             <a href="#">Reviews</a>
             <a href="#">Schedule</a>
-            <a href="#">About</a>
-            <% if (user) { %>
-              <a href="/logout">Log out</a>
-            <% } else { %>
-              <a href="#">Blah</a>
-              <% } %>
+            <a href="/">About</a>
         </div>
       </div>
     </header>

@@ -22,11 +22,11 @@ header {
 .main_picture{
   background-image: url('/images/spine.jpg');
   background-size: cover;
-  height: 500px;
+  height: 450px;
   overflow: auto;
 }
 .main_picture p {
-  margin-top: 350px;
+  margin-top: 310px;
   margin-left: 806px;
   width: 400px;
   font-family: 'Carter One', cursive;
@@ -189,7 +189,7 @@ input[type="text"].red {
 label {
   display: inline-block;
 }
-input[type="text"]{
+input[type="text"], input[type="password"]{
   width: 23.5em;
   margin-left: 0.5em;
 }
@@ -247,7 +247,7 @@ legend {
   background-image: url('/images/lines.png');
   background-size: 30% 30%;
   background-repeat: no-repeat;
-  background-position: 85% 20%;
+  background-position: 85% 15%;
 }
 header a {
   font-family: 'Montserrat', sans-serif;
@@ -260,3 +260,15 @@ header a {
 a:hover {
   color: rgb(130, 130, 130);
 }
+.blog_centerpiece {
+  text-align: center;
+  margin-top: 3em;
+}
+.login {
+  text-align: center;
+  margin-top: 2em;
+}
+.login h1 {
+  font-family: 'Krona One', sans-serif;
+}
+

@@ -1,0 +1,30 @@
+<% layout('layout') -%>
+
+
+<div class="posts">
+  <% posts.forEach(function(post){ %>
+    <p><%= post.date %></p>
+    <p><%= post.title %></p>
+    <p><%= post.body %></p>
+    <p>
+      <% post.tags.forEach(function(tag){ %>
+        <span><%= tag %></span>
+      <% }) %>
+    </p>
+    <a href="/edit">Edit</a>
+    <button>Delete</button>
+    <button>Leave a comment</button>
+  <% }) %>
+</div>
+
+
+  <button>New post</button>
+  <div class="formErrors"></div>
+  <form method="post" action="/blog" id="blogForm">
+    <input type="text" id="title" placeholder="Title" name="title"><br>
+    <input type="textarea" id="body" placeholder="Share your insights" name="body"><br>
+    <input type="text" id="tags" name="tags">
+    <button class="submitPost">Submit</button>
+  </form>
+
+
