@@ -51,7 +51,7 @@ router.post('/register', function(req, res) {
     });
 });
 
-router.get('/blog', function(req, res, next){
+router.get('/blog', function(req, res){
   Post.find({}).sort({date: 'desc'}).exec(function(err, posts){
     if (err) {
       console.log("db error in GET /blog: " + err);
@@ -62,11 +62,42 @@ router.get('/blog', function(req, res, next){
   })
 })
 
-router.post('/blog', function(req, res, next){
+router.post('/blog', function(req, res){
   tagsArray = req.body.tags.split(', ');
   new Post({title: req.body.title, body: req.body.body, date: new Date(), tags: tagsArray})
     .save(function(err, post){
     res.send(post)
+  })
+})
+
+router.delete('/posts/:id', function(req, res){
+  Post.findOne({'_id': req.params.id}).remove().exec(function(err){
+    if (err) {
+      console.log("db error in DELETE /posts: " + err);
+      res.render('error');
+    } else {
+      res.send('success')
+    }
+  })
+})
+
+router.put('/posts/:id', function(req, res){
+  Post.findById(req.params.id, function(err, post){
+    if (err) {
+      res.send(err);
+    } else {
+      post.title = req.body.title;
+      post.body = req.body.body;
+      post.tags = req.body.tags.split(', ');
+
+      post.save(function(err){
+        if(err){
+          res.send(err)
+        } else {
+          res.send(post)
+        }
+      })
+    }
   })
 })
 

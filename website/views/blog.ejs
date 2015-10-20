@@ -3,17 +3,27 @@
 
 <div class="posts">
   <% posts.forEach(function(post){ %>
-    <p><%= post.date %></p>
-    <p><%= post.title %></p>
-    <p><%= post.body %></p>
-    <p>
-      <% post.tags.forEach(function(tag){ %>
-        <span><%= tag %></span>
-      <% }) %>
-    </p>
-    <a href="/edit">Edit</a>
-    <button>Delete</button>
-    <button>Leave a comment</button>
+    <div class="post" data-id= <%= post.id %>>
+      <p><%= post.date %></p>
+      <p><%= post.title %></p>
+      <p><%= post.body %></p>
+      <p>
+        <% post.tags.forEach(function(tag){ %>
+          <span><%= tag %></span>
+        <% }) %>
+      </p>
+      <button class="openEdit">Edit</button>
+      <div class="edit">
+        <form id="editPostForm">
+          <input type="text" value="<%= post.title %>">
+          <textarea><%= post.body %></textarea>
+          <input type="text" value="<%= post.tags.join(', ') %>">
+          <button class="editPost">Submit</button>
+        </form>
+      </div>
+      <button class="deletePost">Delete</button>
+      <button>Leave a comment</button>
+    </div>
   <% }) %>
 </div>
 
@@ -22,7 +32,7 @@
   <div class="formErrors"></div>
   <form method="post" action="/blog" id="blogForm">
     <input type="text" id="title" placeholder="Title" name="title"><br>
-    <input type="textarea" id="body" placeholder="Share your insights" name="body"><br>
+    <textarea id="body" placeholder="Share your insights" name="body"></textarea><br>
     <input type="text" id="tags" name="tags">
     <button class="submitPost">Submit</button>
   </form>

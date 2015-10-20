@@ -247,7 +247,7 @@ legend {
   background-image: url('/images/lines.png');
   background-size: 30% 30%;
   background-repeat: no-repeat;
-  background-position: 85% 15%;
+  background-position: 85% 10%;
 }
 header a {
   font-family: 'Montserrat', sans-serif;
@@ -270,5 +270,8 @@ a:hover {
 }
 .login h1 {
   font-family: 'Krona One', sans-serif;
+}
+.edit {
+  display: none;
 }
 

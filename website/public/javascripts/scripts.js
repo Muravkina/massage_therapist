@@ -92,7 +92,7 @@ $(document).ready(function() {
         tags: $("input[name='tags']").val()
       }
 
-    var checkable = [$("input[name='title']"), $("input[name='body']")];
+    var checkable = [$("input[name='title']"), $("textarea[name='body']")];
 
     validate(checkable);
 
@@ -112,17 +112,62 @@ $(document).ready(function() {
             data.tags.forEach(function(tag){
               tags += "<span>" + tag + "</span> "
             })
-            var post = "<p>" + data.date + "</p><p>" + data.title + "</p><p>" + data.body + "</p><p>" + tags + "</p>"
-            $(".posts").prepend(post)
+
+            var editForm = "<div class='edit'><form id='editPostForm'><input type='text' value='" + data.title + "'><textarea>" + data.body + "</textarea><input type='text' value='" + data.tags.join(', ') + "'><button class='editPost'>Edit</button></form></div>"
+            var post = "<div class='post' data-id='" + data._id + "'><p>" + data.date + "</p><p>" + data.title + "</p><p>" + data.body + "</p><p>" + tags + "</p> <button class='openEdit'>Edit</button>" + editForm + "<button class='deletePost'>Delete</button> <button>Leave a comment</button></div>";
+            $(".posts").prepend(post);
           })
       } else {
-        var error = "<p>Don't forget to fill out the fields marked in red</p>"
-        $(".formErrors").append(error)
+        var error = "<p>Don't forget to fill out the fields marked in red</p>";
+        $(".formErrors").append(error);
       }
 
   }
 
   $(".submitPost").on("click", submitPost)
+
+
+  //delete post
+  var deletePost = function(event){
+    event.preventDefault();
+    var post = $(this).parent();
+    var id = $(this).parent().attr("data-id")
+    $.ajax({
+        url: '/posts/' + id,
+        type: 'DELETE',
+        contentType: 'application/json'
+      }).done(function(data){
+        post.empty();
+      })
+  }
+  $(".posts").on("click", ".deletePost", deletePost);
+
+
+  //open edit form
+  var openEdit = function(){
+    var editForm = $(this).next();
+    if (!editForm.is(":visible")){
+      editForm.show()
+    } else {
+      editForm.hide()
+    }
+  }
+
+  //update post
+  var updatePost = function(event){
+    event.preventDefault();
+    id = $(this).parents(".post").attr("data-id");
+    $.ajax({
+        url: '/posts/' + id,
+        type: 'UPDATE',
+        contentType: 'application/json'
+      }).done(function(data){
+        console.log("wooho")
+      })
+  }
+
+  $(".posts").on("click", ".openEdit", openEdit);
+  $(".posts").on("click", ".editPost", updatePost);
 
   $(window).on('scroll resize', check_if_in_view);
 
