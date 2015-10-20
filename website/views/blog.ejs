@@ -4,10 +4,10 @@
 <div class="posts">
   <% posts.forEach(function(post){ %>
     <div class="post" data-id= <%= post.id %>>
-      <p><%= post.date %></p>
-      <p><%= post.title %></p>
-      <p><%= post.body %></p>
-      <p>
+      <p class="postDate"><%= post.date %></p>
+      <p class="postTitle"><%= post.title %></p>
+      <p class="postBody"><%= post.body %></p>
+      <p class="postTags">
         <% post.tags.forEach(function(tag){ %>
           <span><%= tag %></span>
         <% }) %>
@@ -15,9 +15,9 @@
       <button class="openEdit">Edit</button>
       <div class="edit">
         <form id="editPostForm">
-          <input type="text" value="<%= post.title %>">
-          <textarea><%= post.body %></textarea>
-          <input type="text" value="<%= post.tags.join(', ') %>">
+          <input type="text" name="editPostTitle" value="<%=post.title %>" class="editPostTitle">
+          <textarea name="editPostBody" class="editPostBody"><%= post.body %></textarea>
+          <input type="text" name="editPostTags" class="editPostTags" value="<%= post.tags.join(', ') %>">
           <button class="editPost">Submit</button>
         </form>
       </div>

@@ -88,7 +88,7 @@ $(document).ready(function() {
     event.preventDefault()
     var data = {
         title: $("input[name='title']").val(),
-        body: $("input[name='body']").val(),
+        body: $("textarea[name='body']").val(),
         tags: $("input[name='tags']").val()
       }
 
@@ -103,7 +103,6 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify(data)
           }).done(function(data){
-            console.log(data)
             $("input[name='title']").val("").removeClass("red");
             $("input[name='body']").val("").removeClass("red");
             $("input[name='body']").val("");
@@ -157,12 +156,35 @@ $(document).ready(function() {
   var updatePost = function(event){
     event.preventDefault();
     id = $(this).parents(".post").attr("data-id");
+
+    var data = {
+      title : $(this).parent().children(".editPostTitle").val(),
+      body  : $(this).parent().children(".editPostBody").val(),
+      tags  : $(this).parent().children(".editPostTags").val()
+    }
+
+    var editForm = $(this).parents(".edit");
+    var post = $(this).parents(".post");
+    var title = post.find(".postTitle");
+    var body = post.find(".postBody");
+    var tags = post.find(".postTags");
+
     $.ajax({
         url: '/posts/' + id,
-        type: 'UPDATE',
-        contentType: 'application/json'
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(data)
       }).done(function(data){
-        console.log("wooho")
+        var tagsText = "";
+        data.tags.forEach(function(tag){
+          tagsText += "<span>" + tag + "</span> "
+        })
+        editForm.hide()
+        console.log(tags)
+        title.text(data.title);
+        body.text(data.body);
+        tags.html(tagsText);
+
       })
   }
 

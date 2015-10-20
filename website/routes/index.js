@@ -66,6 +66,7 @@ router.post('/blog', function(req, res){
   tagsArray = req.body.tags.split(', ');
   new Post({title: req.body.title, body: req.body.body, date: new Date(), tags: tagsArray})
     .save(function(err, post){
+      console.log(post)
     res.send(post)
   })
 })
@@ -86,6 +87,7 @@ router.put('/posts/:id', function(req, res){
     if (err) {
       res.send(err);
     } else {
+      console.log(req.body)
       post.title = req.body.title;
       post.body = req.body.body;
       post.tags = req.body.tags.split(', ');

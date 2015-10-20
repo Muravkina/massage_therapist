@@ -4,7 +4,7 @@
 }
 
 body {
-  background-color: #F5F5F5;
+  background-color: rgba(251, 248, 244, 0.7);
 }
 header {
   margin-top: 20px;
@@ -247,7 +247,7 @@ legend {
   background-image: url('/images/lines.png');
   background-size: 30% 30%;
   background-repeat: no-repeat;
-  background-position: 85% 10%;
+  background-position: 85% 8%;
 }
 header a {
   font-family: 'Montserrat', sans-serif;
