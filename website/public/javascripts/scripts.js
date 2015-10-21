@@ -112,8 +112,8 @@ $(document).ready(function() {
               tags += "<span>" + tag + "</span> "
             })
 
-            var editForm = "<div class='edit'><form id='editPostForm'><input type='text' value='" + data.title + "'><textarea>" + data.body + "</textarea><input type='text' value='" + data.tags.join(', ') + "'><button class='editPost'>Edit</button></form></div>"
-            var post = "<div class='post' data-id='" + data._id + "'><p>" + data.date + "</p><p>" + data.title + "</p><p>" + data.body + "</p><p>" + tags + "</p> <button class='openEdit'>Edit</button>" + editForm + "<button class='deletePost'>Delete</button> <button>Leave a comment</button></div>";
+            var editForm = "<div class='edit'><form id='editPostForm'><input type='text' name='editPostTitle' class='editPostTitle' value='" + data.title + "'><textarea name='editPostBody' class='editPostBody'>" + data.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + data.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div>"
+            var post = "<div class='post' data-id='" + data._id + "'><div class='postData'><p class='postDate'>" + data.date + "</p><p class='postTitle'>" + data.title + "</p><p class='postBody'>" + data.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + "<button class='deletePost'>Delete</button> <button>Leave a comment</button></div>";
             $(".posts").prepend(post);
           })
       } else {
@@ -150,7 +150,7 @@ $(document).ready(function() {
       editForm.show();
       post.hide();
       $(this).text("Close");
-      console.log(post)
+      console.log($(this).parent())
     } else {
       editForm.hide();
       post.show();
@@ -174,7 +174,7 @@ $(document).ready(function() {
     var title = post.find(".postTitle");
     var body = post.find(".postBody");
     var tags = post.find(".postTags");
-
+    console.log(post)
     $.ajax({
         url: '/posts/' + id,
         type: 'PUT',
@@ -190,7 +190,8 @@ $(document).ready(function() {
         title.text(data.title);
         body.text(data.body);
         tags.html(tagsText);
-
+        post.children(".postData").show();
+        editForm.prev(".openEdit").text("Edit");
       })
   }
 
