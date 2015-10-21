@@ -4,14 +4,16 @@
 <div class="posts">
   <% posts.forEach(function(post){ %>
     <div class="post" data-id= <%= post.id %>>
-      <p class="postDate"><%= post.date %></p>
-      <p class="postTitle"><%= post.title %></p>
-      <p class="postBody"><%= post.body %></p>
-      <p class="postTags">
-        <% post.tags.forEach(function(tag){ %>
-          <span><%= tag %></span>
-        <% }) %>
-      </p>
+      <div class="postData">
+        <p class="postDate"><%= post.date %></p>
+        <p class="postTitle"><%= post.title %></p>
+        <p class="postBody"><%= post.body %></p>
+        <p class="postTags">
+          <% post.tags.forEach(function(tag){ %>
+            <span><%= tag %></span>
+          <% }) %>
+        </p>
+      </div>
       <button class="openEdit">Edit</button>
       <div class="edit">
         <form id="editPostForm">

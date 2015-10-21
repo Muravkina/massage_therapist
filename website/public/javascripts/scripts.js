@@ -145,10 +145,16 @@ $(document).ready(function() {
   //open edit form
   var openEdit = function(){
     var editForm = $(this).next();
+    var post = $(this).parent().children(".postData");
     if (!editForm.is(":visible")){
-      editForm.show()
+      editForm.show();
+      post.hide();
+      $(this).text("Close");
+      console.log(post)
     } else {
-      editForm.hide()
+      editForm.hide();
+      post.show();
+      $(this).text("Edit");
     }
   }
 
