@@ -10,15 +10,20 @@ var Comments = new Schema({
     website   : String
 });
 
-var Posts   = new Schema({
+var Tags = new Schema({
+    name: String
+})
+
+var Posts = new Schema({
     title     : String,
     body      : String,
-    tags      : Array,
+    tags      : [Tags],
     comments  : [Comments],
     date      : Date
 });
 
 
+var Tags = mongoose.model('Tag', Tags);
 var Post = mongoose.model('Post', Posts);
 var Comment = mongoose.model('Comment', Comments)
 module.exports = {

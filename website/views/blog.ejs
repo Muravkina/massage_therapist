@@ -10,7 +10,7 @@
         <p class="postBody"><%= post.body %></p>
         <p class="postTags">
           <% post.tags.forEach(function(tag){ %>
-            <span><%= tag %></span>
+            <span><%= tag.name %></span>
           <% }) %>
         </p>
       </div>
@@ -19,7 +19,7 @@
         <form id="editPostForm">
           <input type="text" name="editPostTitle" value="<%=post.title %>" class="editPostTitle">
           <textarea name="editPostBody" class="editPostBody"><%= post.body %></textarea>
-          <input type="text" name="editPostTags" class="editPostTags" value="<%= post.tags.join(', ') %>">
+          <input type="text" name="editPostTags" class="editPostTags" value="<% post.tags.forEach(function(tag){ %><%= tag.name %><% }) %>">
           <button class="editPost">Submit</button>
         </form>
       </div>

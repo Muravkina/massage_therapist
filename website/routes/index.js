@@ -63,10 +63,10 @@ router.get('/blog', function(req, res){
 })
 
 router.post('/blog', function(req, res){
-  tagsArray = req.body.tags.split(', ');
-  new Blog.Post({title: req.body.title, body: req.body.body, date: new Date(), tags: tagsArray})
-    .save(function(err, post){
-      console.log(post)
+  req.body.tags = req.body.tags.split(",").map(function(tag) {
+    return { "name": tag };
+  });
+  new Blog.Post(req.body).save(function(err, post){
     res.send(post)
   })
 })
@@ -89,7 +89,11 @@ router.put('/posts/:id', function(req, res){
     } else {
       post.title = req.body.title;
       post.body = req.body.body;
-      post.tags = req.body.tags.split(', ');
+
+      req.body.tags = req.body.tags.split(",").map(function(tag) {
+        return { "name": tag };
+      });
+      post.tags = req.body.tags;
 
       post.save(function(err){
         if(err){

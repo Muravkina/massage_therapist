@@ -33,7 +33,6 @@ $(document).ready(function() {
       }
     }
 
-
     var fieldsAreValid = function(checkable) {
       var fieldsAreValid = true;
       for (var i = 0; i < checkable.length; i++){
@@ -105,11 +104,15 @@ $(document).ready(function() {
           }).done(function(data){
             removeRed(checkable);
             var tags = "";
+            var editTags = "";
             data.tags.forEach(function(tag){
-              tags += "<span>" + tag + "</span> "
+              tags += "<span>" + tag.name+ "</span> "
+            })
+            data.tags.forEach(function(tag){
+              editTags += tag.name + " ";
             })
 
-            var editForm = "<div class='edit'><form id='editPostForm'><input type='text' name='editPostTitle' class='editPostTitle' value='" + data.title + "'><textarea name='editPostBody' class='editPostBody'>" + data.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + data.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div>"
+            var editForm = "<div class='edit'><form id='editPostForm'><input type='text' name='editPostTitle' class='editPostTitle' value='" + data.title + "'><textarea name='editPostBody' class='editPostBody'>" + data.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + editTags + "'><button class='editPost'>Submit</button></form></div>"
             var post = "<div class='post' data-id='" + data._id + "'><div class='postData'><p class='postDate'>" + data.date + "</p><a href='/posts/" + data._id + "' class='postTitle'>" + data.title + "</a><p class='postBody'>" + data.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + "<button class='deletePost'>Delete</button> <a href='/posts/"+data._id+"'>Comments (" + data.comments.length + ")</a></div>";
             $(".posts").prepend(post);
           })
@@ -179,7 +182,7 @@ $(document).ready(function() {
       }).done(function(data){
         var tagsText = "";
         data.tags.forEach(function(tag){
-          tagsText += "<span>" + tag + "</span> "
+          tagsText += "<span>" + tag.name + "</span> "
         })
         editForm.hide()
         title.text(data.title);
@@ -237,7 +240,6 @@ $(document).ready(function() {
         if(data.user){
           deleteButton = "<button class='deleteComment'>Delete</button>";
         }
-
 
         var comment = "<div class='comment'><p>" + data.comment.date + "</p><p class='commentTitle'>" + data.comment.title + "</p><p class='commentBody'>" + data.comment.body + "</p><p class='commentAuthorName'>" + data.comment.name + "</p><p class='commentAuthorWebsite'>" + data.comment.website + "</p>" + deleteButton + "</div>";
         $(".commentsCollection").prepend(comment);
