@@ -19,5 +19,10 @@ var Posts   = new Schema({
 });
 
 
-module.exports = mongoose.model('Post', Posts);
+var Post = mongoose.model('Post', Posts);
+var Comment = mongoose.model('Comment', Comments)
+module.exports = {
+    Post    : Post,
+    Comment: Comment
+}
 

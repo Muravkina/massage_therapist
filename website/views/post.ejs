@@ -1,0 +1,37 @@
+<% layout('layout') -%>
+<div class="post" data-id="<%= post.id %>">
+  <p><%= post.title %></p>
+  <p><%= post.body %></p>
+  <p>
+    <% post.tags.forEach(function(tag){ %>
+      <span><%= tag %></span>
+    <% }) %>
+  </p>
+  <p>Comments</p>
+  <button class="openComment">Leave a comment</button>
+  <div class="commentForm">
+    <div class="formErrors"></div>
+    <form id="commentForm">
+      <input type="text" name="commentTitle" placeholder="Title">
+      <textarea name="commentBody"></textarea>
+      <input type="text" name="commentAuthorName" placeholder="Name">
+      <input type="text" name="commentAuthorEmail" placeholder="Email">
+      <input type="text" name="commentAuthorWebsite" placeholder="Website">
+      <button class="submitComment">Submit comment</button>
+    </form>
+  </div>
+  <div class="commentsCollection">
+    <% post.comments.forEach(function(comment){ %>
+      <div class="comment" data-id="<%= comment.id %>">
+        <p><%= comment.date %></p>
+        <p class="commentTitle"><%= comment.title %></p>
+        <p class="commentBody"><%= comment.body %></p>
+        <p class="commentAuthorName"><%= comment.name %></p>
+        <p class="commentAuthorWebsite"><%= comment.website %></p>
+        <% if(user) { %>
+          <button class="deleteComment">Delete</button>
+        <% } %>
+      </div>
+    <% }) %>
+  </div><!--commentsCollection-->
+</div><!--post-->

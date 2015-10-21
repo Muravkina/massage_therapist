@@ -34,15 +34,22 @@ $(document).ready(function() {
     }
 
 
-    var fieldsAreValid = true;
-    var validate = function(checkable) {
-
+    var fieldsAreValid = function(checkable) {
+      var fieldsAreValid = true;
       for (var i = 0; i < checkable.length; i++){
         if(!isValid(checkable[i])){
-          fieldsAreValid = false;
           checkable[i].addClass("red");
+          fieldsAreValid = false;
         }
       }
+      return fieldsAreValid;
+    }
+
+    var removeRed = function(checkable) {
+      for(var i = 0; i < checkable.length; i++){
+        checkable[i].removeClass("red").val('');
+      }
+      $(".formErrors > p").remove();
     }
 
 // submit review
@@ -58,20 +65,14 @@ $(document).ready(function() {
 
       var checkable = [$(".reviewAuthor"), $(".reviewBody"), $("input[name=rating]:checked")];
 
-      validate(checkable);
-
-      if (fieldsAreValid) {
+      if (fieldsAreValid(checkable)) {
         $.ajax({
             type: 'POST',
             url: "/",
             contentType: 'application/json',
             data: JSON.stringify(data)
           }).done(function(data){
-            console.log(data)
-            $(".reviewAuthor").val("").removeClass("red");
-            $(".reviewBody").val("").removeClass("red");
-            $(".reviewEmail").val("").removeClass("red");
-            $(".formErrors > p").remove()
+            removeRed(checkable);
             $('input[name=rating]').attr('checked', false);
             var review = "<div class='review six columns'><div class='star-ratings-css' title= '." + data.stars + "'></div><p class='review_body'>" + data.body + "</p><p class='review_author'>" + data.author + "</p></div>"
             $(".reviews_collection > .row").append(review)
@@ -94,26 +95,22 @@ $(document).ready(function() {
 
     var checkable = [$("input[name='title']"), $("textarea[name='body']")];
 
-    validate(checkable);
 
-    if (fieldsAreValid) {
+    if (fieldsAreValid(checkable)) {
         $.ajax({
             type: 'POST',
             url: "/blog",
             contentType: 'application/json',
             data: JSON.stringify(data)
           }).done(function(data){
-            $("input[name='title']").val("").removeClass("red");
-            $("input[name='body']").val("").removeClass("red");
-            $("input[name='body']").val("");
-            $(".formErrors > p").remove();
+            removeRed(checkable);
             var tags = "";
             data.tags.forEach(function(tag){
               tags += "<span>" + tag + "</span> "
             })
 
             var editForm = "<div class='edit'><form id='editPostForm'><input type='text' name='editPostTitle' class='editPostTitle' value='" + data.title + "'><textarea name='editPostBody' class='editPostBody'>" + data.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + data.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div>"
-            var post = "<div class='post' data-id='" + data._id + "'><div class='postData'><p class='postDate'>" + data.date + "</p><p class='postTitle'>" + data.title + "</p><p class='postBody'>" + data.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + "<button class='deletePost'>Delete</button> <button>Leave a comment</button></div>";
+            var post = "<div class='post' data-id='" + data._id + "'><div class='postData'><p class='postDate'>" + data.date + "</p><a href='/posts/" + data._id + "' class='postTitle'>" + data.title + "</a><p class='postBody'>" + data.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + "<button class='deletePost'>Delete</button> <a href='/posts/"+data._id+"'>Comments (" + data.comments.length + ")</a></div>";
             $(".posts").prepend(post);
           })
       } else {
@@ -161,7 +158,7 @@ $(document).ready(function() {
   //update post
   var updatePost = function(event){
     event.preventDefault();
-    id = $(this).parents(".post").attr("data-id");
+    var id = $(this).parents(".post").attr("data-id");
 
     var data = {
       title : $(this).parent().children(".editPostTitle").val(),
@@ -174,7 +171,6 @@ $(document).ready(function() {
     var title = post.find(".postTitle");
     var body = post.find(".postBody");
     var tags = post.find(".postTags");
-    console.log(post)
     $.ajax({
         url: '/posts/' + id,
         type: 'PUT',
@@ -186,7 +182,6 @@ $(document).ready(function() {
           tagsText += "<span>" + tag + "</span> "
         })
         editForm.hide()
-        console.log(tags)
         title.text(data.title);
         body.text(data.body);
         tags.html(tagsText);
@@ -198,6 +193,85 @@ $(document).ready(function() {
   $(".posts").on("click", ".openEdit", openEdit);
   $(".posts").on("click", ".editPost", updatePost);
 
+
+// open comment form
+  var openComment = function(){
+    var commentForm = $(this).next();
+    if (!commentForm.is(":visible")){
+      commentForm.show();
+      $(this).text("Close");
+    } else {
+      commentForm.hide();
+      $(this).text("Leave a comment");
+    }
+   }
+
+//submit comment
+
+  var submitComment = function(event){
+    event.preventDefault();
+
+    var data = {
+      title   : $("input[name='commentTitle']").val(),
+      body    : $("textarea[name='commentBody']").val(),
+      name    : $("input[name='commentAuthorName']").val(),
+      email   : $("input[name='commentAuthorEmail']").val(),
+      website : $("input[name='commentAuthorWebsite']").val()
+    }
+
+    var id = $(this).parents(".post").attr("data-id");
+    var commentForm = $(this).parents(".commentForm");
+    var checkable = [$("textarea[name='commentBody']"), $("input[name='commentAuthorEmail']"), $("input[name='commentAuthorName']")];
+
+    if(fieldsAreValid(checkable)){
+     $.ajax({
+        url: '/posts/' + id + '/comments',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data)
+      }).done(function(data){
+        removeRed(checkable);
+        var deleteButton = "";
+
+        ///if admin - add delete the comment button
+        if(data.user){
+          deleteButton = "<button class='deleteComment'>Delete</button>";
+        }
+
+
+        var comment = "<div class='comment'><p>" + data.comment.date + "</p><p class='commentTitle'>" + data.comment.title + "</p><p class='commentBody'>" + data.comment.body + "</p><p class='commentAuthorName'>" + data.comment.name + "</p><p class='commentAuthorWebsite'>" + data.comment.website + "</p>" + deleteButton + "</div>";
+        $(".commentsCollection").prepend(comment);
+        commentForm.prev(".openComment").text('Leave a comment');
+        commentForm.hide();
+      })
+    } else {
+      var error = "<p>Don't forget to fill out the fields marked in red</p>";
+      $(".formErrors").append(error);
+    }
+  }
+
+   $(".post").on("click", ".openComment", openComment);
+   $(".post").on("click", ".submitComment", submitComment);
+
+// delete comment
+
+var deleteComment = function(event) {
+  event.preventDefault();
+
+  var postId = $(this).parents(".post").attr("data-id")
+  var commentId = $(this).parents(".comment").attr("data-id");
+  var comment = $(this).parents(".comment")
+
+  $.ajax({
+      url: '/posts/' + postId + '/comments/' + commentId,
+      type: 'DELETE',
+      contentType: 'application/json'
+    }).done(function(data){
+      comment.empty();
+    })
+}
+
+  $(".post").on("click", ".deleteComment", deleteComment)
   $(window).on('scroll resize', check_if_in_view);
 
 

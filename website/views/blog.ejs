@@ -6,7 +6,7 @@
     <div class="post" data-id= <%= post.id %>>
       <div class="postData">
         <p class="postDate"><%= post.date %></p>
-        <p class="postTitle"><%= post.title %></p>
+        <a  href="/posts/<%= post.id %>" class="postTitle"><%= post.title %></a>
         <p class="postBody"><%= post.body %></p>
         <p class="postTags">
           <% post.tags.forEach(function(tag){ %>
@@ -24,8 +24,8 @@
         </form>
       </div>
       <button class="deletePost">Delete</button>
-      <button>Leave a comment</button>
-    </div>
+      <a href="/posts/<%=post.id%>">Comments (<%= post.comments.length %>)</a>
+    </div><!--edit-->
   <% }) %>
 </div>
 

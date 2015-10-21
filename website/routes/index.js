@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var Review = require("./../models/reviews");
-var Post = require("./../models/blog");
+var Blog = require("./../models/blog");
 var User = require("./../models/user");
 
-/* GET home page. */
+
 router.get('/', function(req, res, next) {
   Review.find({}).exec(function(err, reviews) {
     if (err) {
@@ -52,7 +52,7 @@ router.post('/register', function(req, res) {
 });
 
 router.get('/blog', function(req, res){
-  Post.find({}).sort({date: 'desc'}).exec(function(err, posts){
+  Blog.Post.find({}).sort({date: 'desc'}).exec(function(err, posts){
     if (err) {
       console.log("db error in GET /blog: " + err);
       res.render('error');
@@ -64,7 +64,7 @@ router.get('/blog', function(req, res){
 
 router.post('/blog', function(req, res){
   tagsArray = req.body.tags.split(', ');
-  new Post({title: req.body.title, body: req.body.body, date: new Date(), tags: tagsArray})
+  new Blog.Post({title: req.body.title, body: req.body.body, date: new Date(), tags: tagsArray})
     .save(function(err, post){
       console.log(post)
     res.send(post)
@@ -72,7 +72,7 @@ router.post('/blog', function(req, res){
 })
 
 router.delete('/posts/:id', function(req, res){
-  Post.findOne({'_id': req.params.id}).remove().exec(function(err){
+  Blog.Post.findOne({'_id': req.params.id}).remove().exec(function(err){
     if (err) {
       console.log("db error in DELETE /posts: " + err);
       res.render('error');
@@ -83,11 +83,10 @@ router.delete('/posts/:id', function(req, res){
 })
 
 router.put('/posts/:id', function(req, res){
-  Post.findById(req.params.id, function(err, post){
+  Blog.Post.findById(req.params.id, function(err, post){
     if (err) {
       res.send(err);
     } else {
-      console.log(req.body)
       post.title = req.body.title;
       post.body = req.body.body;
       post.tags = req.body.tags.split(', ');
@@ -100,6 +99,56 @@ router.put('/posts/:id', function(req, res){
         }
       })
     }
+  })
+})
+
+router.get('/posts/:id', function(req, res){
+  Blog.Post.findById(req.params.id, function(err, post){
+    if (err) {
+      res.send(err)
+    } else {
+
+      res.render('post', {post: post, user: req.user})
+    }
+  })
+})
+
+router.post('/posts/:id/comments', function(req, res){
+  Blog.Post.findById(req.params.id, function(err, post){
+    if(err) {
+      res.send(err)
+    } else {
+
+      var newComment = new Blog.Comment();
+      newComment.date = new Date();
+      newComment.title = req.body.title;
+      newComment.body = req.body.body;
+      newComment.name = req.body.name;
+      newComment.email = req.body.email;
+      newComment.website = req.body.website;
+      post.comments.unshift(newComment)
+
+      post.save(function(err){
+        if (err) {
+          res.send(err)
+        } else {
+          res.send({comment: newComment, user: req.user})
+        }
+      })
+    }
+  })
+})
+
+router.delete('/posts/:postId/comments/:commentId', function(req, res){
+  Blog.Post.findById(req.params.postId, function(err, post){
+    post.comments.id(req.params.commentId).remove();
+    post.save(function(err){
+      if (err) {
+        res.send(err)
+      } else {
+        res.send('success')
+      }
+    })
   })
 })
 
