@@ -57,15 +57,30 @@ router.get('/blog', function(req, res){
       console.log("db error in GET /blog: " + err);
       res.render('error');
     } else {
-      res.render('blog', {posts: posts, user: req.user});
+
+      ///find all the tags
+      var tags = [];
+      var uniqueTags = [];
+      var getCategories = function(posts){
+        posts.forEach(function(post){
+          post.tags.forEach(function(tag){
+            tags.push(tag);
+          })
+        })
+        uniqueTags = tags.filter(function(elem, index, self){
+          return index == self.indexOf(elem);
+        })
+      }
+      getCategories(posts);
+
+      res.render('blog', {posts: posts, user: req.user, tags:uniqueTags});
     };
   })
 })
 
 router.post('/blog', function(req, res){
   tagsArray = req.body.tags.split(', ');
-  new Blog.Post({title: req.body.title, body: req.body.body, date: new Date(), tags: tagsArray})
-    .save(function(err, post){
+  new Blog.Post({title: req.body.title, body: req.body.body, date: new Date(), tags: tagsArray}).save(function(err, post){
       console.log(post)
     res.send(post)
   })
@@ -149,6 +164,12 @@ router.delete('/posts/:postId/comments/:commentId', function(req, res){
         res.send('success')
       }
     })
+  })
+})
+
+router.get('/tags/:name', function(req, res){
+  Blog.Post.find({tags: { $in: [req.params.name] }}, function(err, posts){
+    res.send(posts);
   })
 })
 

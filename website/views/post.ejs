@@ -1,5 +1,9 @@
 <% layout('layout') -%>
 <div class="post" data-id="<%= post.id %>">
+  <p>
+    <% var date = new Date(post.date); date = date.toDateString() %>
+    <%= date %>
+  </p>
   <p><%= post.title %></p>
   <p><%= post.body %></p>
   <p>
@@ -13,7 +17,7 @@
     <div class="formErrors"></div>
     <form id="commentForm">
       <input type="text" name="commentTitle" placeholder="Title">
-      <textarea name="commentBody"></textarea>
+      <textarea name="commentBody" placeholder="Leave a comment"></textarea>
       <input type="text" name="commentAuthorName" placeholder="Name">
       <input type="text" name="commentAuthorEmail" placeholder="Email">
       <input type="text" name="commentAuthorWebsite" placeholder="Website">
@@ -23,7 +27,10 @@
   <div class="commentsCollection">
     <% post.comments.forEach(function(comment){ %>
       <div class="comment" data-id="<%= comment.id %>">
-        <p><%= comment.date %></p>
+        <p>
+          <% var date = new Date(comment.date); date = date.toDateString() %>
+          <%= date %>
+        </p>
         <p class="commentTitle"><%= comment.title %></p>
         <p class="commentBody"><%= comment.body %></p>
         <p class="commentAuthorName"><%= comment.name %></p>

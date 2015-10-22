@@ -1,16 +1,28 @@
 <% layout('layout') -%>
 
+<div class="categories">
+  <% tags.forEach(function(tag){ %>
+    <p class="searchTag"><%= tag %></p>
+  <% }) %>
+</div><!--categories-->
+
+<div class="searchBox">
+  <input type="text" name="searchPosts" placeholder="To search type and hit enter">
+</div>
 
 <div class="posts">
   <% posts.forEach(function(post){ %>
     <div class="post" data-id= <%= post.id %>>
       <div class="postData">
-        <p class="postDate"><%= post.date %></p>
+        <p class="postDate">
+          <% var date = new Date(post.date); date = date.toDateString() %>
+          <%= date %>
+        </p>
         <a  href="/posts/<%= post.id %>" class="postTitle"><%= post.title %></a>
         <p class="postBody"><%= post.body %></p>
         <p class="postTags">
           <% post.tags.forEach(function(tag){ %>
-            <span><%= tag %></span>
+            <span class="searchTag"><%= tag %></span>
           <% }) %>
         </p>
       </div>

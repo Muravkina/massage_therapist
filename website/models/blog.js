@@ -10,6 +10,7 @@ var Comments = new Schema({
     website   : String
 });
 
+
 var Posts   = new Schema({
     title     : String,
     body      : String,
@@ -17,6 +18,7 @@ var Posts   = new Schema({
     comments  : [Comments],
     date      : Date
 });
+
 
 
 var Post = mongoose.model('Post', Posts);

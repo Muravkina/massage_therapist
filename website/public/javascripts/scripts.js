@@ -33,7 +33,6 @@ $(document).ready(function() {
       }
     }
 
-
     var fieldsAreValid = function(checkable) {
       var fieldsAreValid = true;
       for (var i = 0; i < checkable.length; i++){
@@ -52,6 +51,11 @@ $(document).ready(function() {
       $(".formErrors > p").remove();
     }
 
+    var dateFormat = function(date){
+      var date = new Date(date);
+      return date.toDateString()
+    }
+
 // submit review
     $(".submit").on("click", function(event){
 
@@ -64,6 +68,7 @@ $(document).ready(function() {
       }
 
       var checkable = [$(".reviewAuthor"), $(".reviewBody"), $("input[name=rating]:checked")];
+      var fields = [$(".reviewAuthor"), $(".reviewBody"), $("input[name=rating]:checked"), $(".reviewEmail")];
 
       if (fieldsAreValid(checkable)) {
         $.ajax({
@@ -72,7 +77,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify(data)
           }).done(function(data){
-            removeRed(checkable);
+            removeRed(fields);
             $('input[name=rating]').attr('checked', false);
             var review = "<div class='review six columns'><div class='star-ratings-css' title= '." + data.stars + "'></div><p class='review_body'>" + data.body + "</p><p class='review_author'>" + data.author + "</p></div>"
             $(".reviews_collection > .row").append(review)
@@ -94,7 +99,7 @@ $(document).ready(function() {
       }
 
     var checkable = [$("input[name='title']"), $("textarea[name='body']")];
-
+    var fields = [$("input[name='title']"), $("textarea[name='body']"), $("input[name='tags']")];
 
     if (fieldsAreValid(checkable)) {
         $.ajax({
@@ -103,14 +108,14 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify(data)
           }).done(function(data){
-            removeRed(checkable);
+            removeRed(fields);
             var tags = "";
             data.tags.forEach(function(tag){
-              tags += "<span>" + tag + "</span> "
+              tags += "<span class='searchTag'>" + tag + "</span> "
             })
 
             var editForm = "<div class='edit'><form id='editPostForm'><input type='text' name='editPostTitle' class='editPostTitle' value='" + data.title + "'><textarea name='editPostBody' class='editPostBody'>" + data.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + data.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div>"
-            var post = "<div class='post' data-id='" + data._id + "'><div class='postData'><p class='postDate'>" + data.date + "</p><a href='/posts/" + data._id + "' class='postTitle'>" + data.title + "</a><p class='postBody'>" + data.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + "<button class='deletePost'>Delete</button> <a href='/posts/"+data._id+"'>Comments (" + data.comments.length + ")</a></div>";
+            var post = "<div class='post' data-id='" + data._id + "'><div class='postData'><p class='postDate'>" + dateFormat(data.date) + "</p><a href='/posts/" + data._id + "' class='postTitle'>" + data.title + "</a><p class='postBody'>" + data.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + " <button class='deletePost'>Delete</button> <a href='/posts/"+data._id+"'>Comments (" + data.comments.length + ")</a></div>";
             $(".posts").prepend(post);
           })
       } else {
@@ -179,7 +184,7 @@ $(document).ready(function() {
       }).done(function(data){
         var tagsText = "";
         data.tags.forEach(function(tag){
-          tagsText += "<span>" + tag + "</span> "
+          tagsText += "<span class='searchTag'>" + tag + "</span> "
         })
         editForm.hide()
         title.text(data.title);
@@ -222,6 +227,7 @@ $(document).ready(function() {
     var id = $(this).parents(".post").attr("data-id");
     var commentForm = $(this).parents(".commentForm");
     var checkable = [$("textarea[name='commentBody']"), $("input[name='commentAuthorEmail']"), $("input[name='commentAuthorName']")];
+    var fields = [$("input[name='commentTitle']"), $("textarea[name='commentBody']"), $("input[name='commentAuthorEmail']"), $("input[name='commentAuthorName']"), $("input[name='commentAuthorWebsite']")];
 
     if(fieldsAreValid(checkable)){
      $.ajax({
@@ -230,7 +236,7 @@ $(document).ready(function() {
         contentType: 'application/json',
         data: JSON.stringify(data)
       }).done(function(data){
-        removeRed(checkable);
+        removeRed(fields);
         var deleteButton = "";
 
         ///if admin - add delete the comment button
@@ -238,8 +244,7 @@ $(document).ready(function() {
           deleteButton = "<button class='deleteComment'>Delete</button>";
         }
 
-
-        var comment = "<div class='comment'><p>" + data.comment.date + "</p><p class='commentTitle'>" + data.comment.title + "</p><p class='commentBody'>" + data.comment.body + "</p><p class='commentAuthorName'>" + data.comment.name + "</p><p class='commentAuthorWebsite'>" + data.comment.website + "</p>" + deleteButton + "</div>";
+        var comment = "<div class='comment'><p>" + dateFormat(data.comment.date) + "</p><p class='commentTitle'>" + data.comment.title + "</p><p class='commentBody'>" + data.comment.body + "</p><p class='commentAuthorName'>" + data.comment.name + "</p><p class='commentAuthorWebsite'>" + data.comment.website + "</p>" + deleteButton + "</div>";
         $(".commentsCollection").prepend(comment);
         commentForm.prev(".openComment").text('Leave a comment');
         commentForm.hide();
@@ -274,5 +279,27 @@ var deleteComment = function(event) {
   $(".post").on("click", ".deleteComment", deleteComment)
   $(window).on('scroll resize', check_if_in_view);
 
+// search by tags
+  var searchTag = function(){
+    var tag = $(this).text();
+    $.ajax({
+      url: '/tags/' + tag,
+      type: 'GET',
+      contentType: 'application/json'
+    }).done(function(posts){
+      $(".posts").empty();
+      posts.forEach(function(post){
+      var tags = "";
+          post.tags.forEach(function(tag){
+            tags += "<span class='searchTag'>" + tag + "</span> "
+          })
+       var editForm = "<div class='edit'><form id='editPostForm'><input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div>"
+        var post = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a><p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + " <button class='deletePost'>Delete</button> <a href='/posts/"+ post._id +"'>Comments (" + post.comments.length + ")</a></div>";
+        $(".posts").prepend(post);
+      })
+    });
+  }
+
+  $("body").on("click", ".searchTag", searchTag)
 
 });
