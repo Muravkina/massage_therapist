@@ -12,7 +12,6 @@ router.get('/', function(req, res, next) {
       console.log("db error in GET /reviews: " + err);
       res.render('error');
     } else {
-      console.log(req.user)
       res.render('index', {reviews: reviews, user: req.user});
     };
   });
@@ -39,7 +38,6 @@ router.get('/register', function(req, res) {
 });
 
 router.post('/register', function(req, res) {
-    console.log(req.body)
     User.register(new User({ name: req.body.name, username: req.body.username }), req.body.password, function(err, user) {
         if (err) {
             return res.render('register', { user : user });
@@ -52,7 +50,7 @@ router.post('/register', function(req, res) {
 });
 
 router.get('/blog', function(req, res){
-  Blog.Post.find({}).sort({date: 'desc'}).exec(function(err, posts){
+  Blog.Post.find({}).limit(10).sort({date: 'desc'}).exec(function(err, posts){
     if (err) {
       console.log("db error in GET /blog: " + err);
       res.render('error');
@@ -81,7 +79,6 @@ router.get('/blog', function(req, res){
 router.post('/blog', function(req, res){
   tagsArray = req.body.tags.split(', ');
   new Blog.Post({title: req.body.title, body: req.body.body, date: new Date(), tags: tagsArray}).save(function(err, post){
-      console.log(post)
     res.send(post)
   })
 })
@@ -168,7 +165,7 @@ router.delete('/posts/:postId/comments/:commentId', function(req, res){
 })
 
 router.get('/tags/:name', function(req, res){
-  Blog.Post.find({tags: { $in: [req.params.name] }}, function(err, posts){
+  Blog.Post.find({tags: { $in: [req.params.name] }}).sort({"_id":-1}).exec(function(err, posts){
     res.send(posts);
   })
 })
@@ -176,7 +173,7 @@ router.get('/tags/:name', function(req, res){
 router.get('/search', function(req, res){
   Blog.Post.find(
     { $text: {$search: req.query.params}}
-    ).exec(function(err, posts){
+    ).sort({"_id":-1}).exec(function(err, posts){
     if (err) {
       res.send(err);
     } else {
@@ -185,5 +182,26 @@ router.get('/search', function(req, res){
   })
 })
 
+router.get('/older', function(req, res){
+  Blog.Post.find( {_id : { "$lt" : req.query.id } } ).limit(50).sort({"_id":-1}).exec(function(err,posts){
+    if (err) {
+      console.log("db error in GET /next: " + err);
+      res.render('error');
+    } else {
+      res.send(posts)
+    }
+  });
+})
+
+router.get('/newer', function(req, res){
+  Blog.Post.find( {_id : { "$gt" : req.query.id } } ).limit(50).sort({"_id":-1}).exec(function(err,posts){
+    if (err) {
+      console.log("db error in GET /next: " + err);
+      res.render('error');
+    } else {
+      res.send(posts)
+    }
+  });
+})
 
 module.exports = router;
