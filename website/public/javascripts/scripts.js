@@ -69,6 +69,12 @@ $(document).ready(function() {
       })
     }
 
+    var errorForm = function(){
+      $(".formErrors > p").remove();
+      var error = "<p>Don't forget to fill out the fields marked in red</p>"
+      $(".formErrors").append(error)
+    }
+
     var firstPostId;
     var firstReviewId;
 
@@ -99,9 +105,7 @@ $(document).ready(function() {
             $(".reviews_collection > .row").append(review)
           })
       } else {
-        $(".formErrors > p").remove();
-        var error = "<p>Don't forget to fill out the fields marked in red</p>"
-        $(".formErrors").append(error)
+        errorForm();
       }
   })
 
@@ -136,9 +140,7 @@ $(document).ready(function() {
             $(".posts").prepend(post);
           })
       } else {
-        $(".formErrors > p").remove();
-        var error = "<p>Don't forget to fill out the fields marked in red</p>";
-        $(".formErrors").append(error);
+        errorForm()
       }
 
   }
@@ -268,9 +270,7 @@ $(document).ready(function() {
         commentForm.hide();
       })
     } else {
-      $(".formErrors > p").remove();
-      var error = "<p>Don't forget to fill out the fields marked in red</p>";
-      $(".formErrors").append(error);
+      errorForm();
     }
   }
 
