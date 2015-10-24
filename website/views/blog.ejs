@@ -26,7 +26,8 @@
           <% }) %>
         </p>
       </div>
-      <button class="openEdit">Edit</button>
+      <% if (user) { %>
+        <button class="openEdit">Edit</button>
       <div class="edit">
         <form id="editPostForm">
           <input type="text" name="editPostTitle" value="<%=post.title %>" class="editPostTitle">
@@ -36,6 +37,7 @@
         </form>
       </div>
       <button class="deletePost">Delete</button>
+      <% } %>
       <a href="/posts/<%=post.id%>">Comments (<%= post.comments.length %>)</a>
     </div><!--edit-->
   <% }) %>
@@ -45,7 +47,7 @@
   <p class="older">Older posts</p>
 </div>
 
-
+<% if (user) {%>
   <button>New post</button>
   <div class="formErrors"></div>
   <form method="post" action="/blog" id="blogForm">
@@ -54,5 +56,5 @@
     <input type="text" id="tags" name="tags">
     <button class="submitPost">Submit</button>
   </form>
-
+<% } %>
 
