@@ -12,7 +12,14 @@ router.get('/', function(req, res, next) {
       console.log("db error in GET /reviews: " + err);
       res.render('error');
     } else {
-      res.render('index', {reviews: reviews, user: req.user});
+      Review.count({}, function(err, count){
+        if(err){
+          console.log("db error in GET /reviews: " + err);
+          res.render('error');
+        } else {
+          res.render('index', {reviews: reviews, user: req.user, totalReviews: count});
+        }
+      })
     };
   });
 });
@@ -42,7 +49,6 @@ router.post('/register', function(req, res) {
         if (err) {
             return res.render('register', { user : user });
         }
-
         passport.authenticate('local')(req, res, function () {
             res.redirect('/');
         });
@@ -55,23 +61,27 @@ router.get('/blog', function(req, res){
       console.log("db error in GET /blog: " + err);
       res.render('error');
     } else {
-
-      ///find all the tags
-      var tags = [];
-      var uniqueTags = [];
-      var getCategories = function(posts){
-        posts.forEach(function(post){
-          post.tags.forEach(function(tag){
-            tags.push(tag);
+      Blog.Post.count({}, function(err, count){
+        ///find all the tags
+        var tags = [];
+        var uniqueTags = [];
+        var getCategories = function(posts){
+          posts.forEach(function(post){
+            post.tags.forEach(function(tag){
+              tags.push(tag);
+            })
           })
-        })
-        uniqueTags = tags.filter(function(elem, index, self){
-          return index == self.indexOf(elem);
-        })
-      }
-      getCategories(posts);
-
-      res.render('blog', {posts: posts, user: req.user, tags:uniqueTags});
+          uniqueTags = tags.filter(function(elem, index, self){
+            return index == self.indexOf(elem);
+          })
+        }
+        getCategories(posts);
+        if (req.query.back) {
+          res.send(posts)
+        } else {
+          res.render('blog', {posts: posts, user: req.user, tags:uniqueTags, totalPosts: count});
+        }
+      })
     };
   })
 })
@@ -183,7 +193,7 @@ router.get('/search', function(req, res){
 })
 
 router.get('/olderPosts', function(req, res){
-  Blog.Post.find( {_id : { "$lt" : req.query.id } } ).limit(20).sort({"_id":-1}).exec(function(err,posts){
+  Blog.Post.find( {_id : { "$lt" : req.query.id } } ).limit(10).sort({"_id":-1}).exec(function(err,posts){
     if (err) {
       console.log("db error in GET /olderPosts: " + err);
       res.render('error');
@@ -194,12 +204,13 @@ router.get('/olderPosts', function(req, res){
 })
 
 router.get('/newerPosts', function(req, res){
-  Blog.Post.find( {_id : { "$gt" : req.query.id } } ).limit(20).sort({"_id":-1}).exec(function(err,posts){
+  Blog.Post.find( {_id : { "$gt" : req.query.id } } ).sort({"_id": 1}).limit(10).exec(function(err,posts){
     if (err) {
       console.log("db error in GET /newerPosts: " + err);
       res.render('error');
     } else {
-      res.send(posts)
+      posts.reverse();
+      res.send(posts);
     }
   });
 })
@@ -217,12 +228,13 @@ router.get('/olderReviews', function(req, res){
 })
 
 router.get('/newerReviews', function(req, res){
-  Review.find( {_id : { "$gt" : req.query.id } } ).limit(10).sort({"_id":-1}).exec(function(err, reviews){
+  Review.find( {_id : { "$gt" : req.query.id } } ).limit(10).sort({"_id":1}).exec(function(err, reviews){
     if (err) {
       console.log("db error in GET /olderReviews: " + err);
       res.render('error');
     } else {
-      res.send(reviews)
+      reviews.reverse();
+      res.send(reviews);
     }
   });
 })

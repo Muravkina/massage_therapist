@@ -1,5 +1,7 @@
 <% layout('layout') -%>
 
+
+
 <div class="categories">
   <% tags.forEach(function(tag){ %>
     <p class="searchTag"><%= tag %></p>
@@ -9,7 +11,7 @@
 <div class="searchBox">
   <input type="search" autocomplete="on" name="searchPosts" placeholder="To search type and hit enter">
 </div>
-
+<button class="all_posts back">Back</button>
 <div class="posts">
   <% posts.forEach(function(post){ %>
     <div class="post" data-id= <%= post.id %>>
@@ -42,10 +44,10 @@
     </div><!--edit-->
   <% }) %>
 </div>
-<div class="pages">
-  <p class="newer">Newer posts</p>
+<div class="pages" data-id="<%= totalPosts %>">
+  <p class="newerPosts">Newer posts</p>
   <% if (posts.length === 10) { %>
-    <p class="older">Older posts</p>
+    <p class="olderPosts">Older posts</p>
   <% } %>
 </div>
 

@@ -271,7 +271,7 @@ a:hover {
 .login h1 {
   font-family: 'Krona One', sans-serif;
 }
-.edit, .closeEdit, .commentForm, .newer {
+.edit, .closeEdit, .commentForm, .newerReviews, .newerPosts, .all_posts {
   display: none;
 }
 

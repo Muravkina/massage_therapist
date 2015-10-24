@@ -75,8 +75,16 @@ $(document).ready(function() {
       $(".formErrors").append(error)
     }
 
-    var firstPostId;
-    var firstReviewId;
+    var postPages = {
+      totalPages: Math.ceil($(".pages").attr("data-id")/10),
+      currentPage: 1
+    }
+
+    var reviewsPages = {
+      totalPages: Math.ceil($(".reviews_collection").attr("data-id")/10),
+      currentPage: 1
+    }
+    console.log(reviewsPages.totalPages)
 
 // submit review
     $(".submit").on("click", function(event){
@@ -104,6 +112,8 @@ $(document).ready(function() {
             removeRed(fields);
             $('input[name=rating]').attr('checked', false);
             var review = "<div class='review six columns'><div class='star-ratings-css' title= '." + review.stars + "'></div><p class='review_body'>" + review.body + "</p><p class='review_author'>" + review.author + "</p></div>"
+
+            //empty the last review if the number of reviews on the page is 10
             if (data.reviewsNumber === 10) {
               data.lastReview.empty()
             }
@@ -161,6 +171,8 @@ $(document).ready(function() {
               var categoryField = "<p class='searchTag'>" + category + "</p>"
               $(".categories").append(categoryField)
             })
+
+            //empty the last post if the number of posts on the page is 10
             if (data.postsNumber === 10) {
               data.lastPost.empty()
             }
@@ -331,6 +343,7 @@ var deleteComment = function(event) {
       contentType: 'application/json'
     }).done(function(posts){
       newPost(posts);
+      $('.all_posts').show();
     });
   }
 
@@ -349,6 +362,7 @@ var deleteComment = function(event) {
       }).done(function(posts){
         $("input[name='searchPosts']").val('');
         newPost(posts);
+        $('.all_posts').show();
       })
     }
   })
@@ -356,9 +370,8 @@ var deleteComment = function(event) {
   //pagination
 
   //older posts
-  $(".pages").on("click", ".older", function(){
+  $(".pages").on("click", ".olderPosts", function(){
     var id = {id: $(".posts div:nth-child(10)").attr("data-id")};
-    firstPostId = $(".posts div:nth-child(1)").attr("data-id");
     $.ajax({
       url: '/olderPosts',
       type: 'GET',
@@ -366,12 +379,17 @@ var deleteComment = function(event) {
       contentType: 'application/json'
     }).done(function(posts){
       newPost(posts);
-      $(".newer").show();
+      $(".newerPosts").show();
+      $(".all_posts").show();
+      postPages.currentPage += 1;
+      if (postPages.totalPages === postPages.currentPage){
+          $(".olderPosts").hide();
+      }
     })
   })
 
   //newer posts
-  $(".pages").on("click", ".newer", function(){
+  $(".pages").on("click", ".newerPosts", function(){
     var id = {id: $(".posts div:nth-child(1)").attr("data-id")};
     $.ajax({
       url: '/newerPosts',
@@ -380,16 +398,22 @@ var deleteComment = function(event) {
       contentType: 'application/json'
     }).done(function(posts){
       newPost(posts);
-      if (firstPostId === posts[0]._id) {
-        $(".newer").hide();
+      postPages.currentPage -=1;
+      if (postPages.currentPage === 1) {
+        $(".newerPosts").hide();
+        $(".all_posts").hide();
       }
+      if (postPages.totalPages !== postPages.currentPage) {
+        console.log("hi")
+        $(".olderPosts").show();
+      }
+
     })
   })
 
    //older reviews
-  $(".pages").on("click", ".older", function(){
+  $(".pages").on("click", ".olderReviews", function(){
     var id = {id: $(".reviews_collection div:nth-child(10)").attr("data-id")};
-    firstReviewId = $(".reviews_collection div:nth-child(1)").attr("data-id");
     $.ajax({
       url: '/olderReviews',
       type: 'GET',
@@ -401,12 +425,16 @@ var deleteComment = function(event) {
         var review = "<div class='review six columns' data-id='" + review._id + "'><div class='star-ratings-css' title='" + review.stars + "'></div><p class='review_body'>" + review.body + "</p><p class='review_author'>" + review.author + "</p></div>";
         $(".reviews_collection").append(review);
       })
-      $(".newer").show();
+      reviewsPages.currentPage += 1;
+      if (reviewsPages.totalPages === reviewsPages.currentPage){
+          $(".olderReviews").hide();
+      }
+      $(".newerReviews").show();
     })
   })
 
    //newer reviews
-  $(".pages").on("click", ".newer", function(){
+  $(".pages").on("click", ".newerReviews", function(){
     var id = {id: $(".reviews_collection div:nth-child(1)").attr("data-id")};
     $.ajax({
       url: '/newerReviews',
@@ -419,8 +447,13 @@ var deleteComment = function(event) {
         var review = "<div class='review six columns' data-id='" + review._id + "'><div class='star-ratings-css' title='" + review.stars + "'></div><p class='review_body'>" + review.body + "</p><p class='review_author'>" + review.author + "</p></div>";
         $(".reviews_collection").append(review);
       })
-      if (firstReviewId === reviews[0]._id) {
-        $(".newer").hide();
+      reviewsPages.currentPage -=1;
+
+      if (reviewsPages.currentPage === 1) {
+        $(".newerReviews").hide();
+      }
+      if (reviewsPages.totalPages !== reviewsPages.currentPage) {
+        $(".olderReviews").show();
       }
     })
   })
@@ -440,5 +473,22 @@ var deleteComment = function(event) {
   }
   $(".reviews_collection").on("click", ".deleteReview", deleteReview);
 
+//back to all posts
+
+  var backToPosts = function(){
+    $.ajax({
+        url: '/blog',
+        type: 'GET',
+        data: {back: true},
+        contentType: 'application/json'
+      }).done(function(posts){
+        newPost(posts);
+        postPages.currentPage = 1;
+        $(".all_posts").hide();
+        $(".newerReviews").hide();
+      })
+  }
+
+  $(".all_posts").on("click", backToPosts)
 
 });
