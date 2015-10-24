@@ -19,10 +19,11 @@ var Posts   = new Schema({
     date      : Date
 });
 
-
+Posts.index({title: "text", body: "text"});
 
 var Post = mongoose.model('Post', Posts);
-var Comment = mongoose.model('Comment', Comments)
+var Comment = mongoose.model('Comment', Comments);
+
 module.exports = {
     Post    : Post,
     Comment: Comment

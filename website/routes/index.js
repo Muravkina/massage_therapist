@@ -173,5 +173,17 @@ router.get('/tags/:name', function(req, res){
   })
 })
 
+router.get('/search', function(req, res){
+  Blog.Post.find(
+    { $text: {$search: req.query.params}}
+    ).exec(function(err, posts){
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(posts);
+    }
+  })
+})
+
 
 module.exports = router;

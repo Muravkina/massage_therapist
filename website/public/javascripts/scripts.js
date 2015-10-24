@@ -302,4 +302,31 @@ var deleteComment = function(event) {
 
   $("body").on("click", ".searchTag", searchTag)
 
+  //search
+
+  $("input[name='searchPosts']").on("keypress", function(event){
+    if(event.which == 13){
+      var searchArray = {params: $(this).val().trim().replace(/[^a-zA-Z ]/g, '')};
+      $.ajax({
+      url: '/search',
+      type: 'GET',
+      data: searchArray,
+      contentType: 'application/json'
+    }).done(function(posts){
+      $('.posts').empty();
+      $("input[name='searchPosts']").val('');
+      posts.forEach(function(post){
+        var tags = "";
+          post.tags.forEach(function(tag){
+            tags += "<span class='searchTag'>" + tag + "</span> "
+          })
+       var editForm = "<div class='edit'><form id='editPostForm'><input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div>"
+        var post = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a><p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + " <button class='deletePost'>Delete</button> <a href='/posts/"+ post._id +"'>Comments (" + post.comments.length + ")</a></div>";
+        $(".posts").prepend(post);
+      })
+    })
+
+    }
+  })
+
 });
