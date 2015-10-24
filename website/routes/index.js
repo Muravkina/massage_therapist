@@ -77,7 +77,7 @@ router.get('/blog', function(req, res){
 })
 
 router.post('/blog', function(req, res){
-  tagsArray = req.body.tags.split(', ');
+  tagsArray = req.body.tags.replace(" ", "").split(',');
   new Blog.Post({title: req.body.title, body: req.body.body, date: new Date(), tags: tagsArray}).save(function(err, post){
     res.send(post)
   })

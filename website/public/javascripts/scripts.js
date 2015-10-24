@@ -131,22 +131,36 @@ $(document).ready(function() {
           }).done(function(data){
             removeRed(fields);
             var tags = "";
+            var categories = [];
             data.tags.forEach(function(tag){
-              tags += "<span class='searchTag'>" + tag + "</span> "
+              tags += "<span class='searchTag'>" + tag + "</span> ";
+              categories.push(tag)
             })
 
             var editForm = "<div class='edit'><form id='editPostForm'><input type='text' name='editPostTitle' class='editPostTitle' value='" + data.title + "'><textarea name='editPostBody' class='editPostBody'>" + data.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + data.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div>"
             var post = "<div class='post' data-id='" + data._id + "'><div class='postData'><p class='postDate'>" + dateFormat(data.date) + "</p><a href='/posts/" + data._id + "' class='postTitle'>" + data.title + "</a><p class='postBody'>" + data.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + " <button class='deletePost'>Delete</button> <a href='/posts/"+data._id+"'>Comments (" + data.comments.length + ")</a></div>";
             $(".posts").prepend(post);
+
+            //update the categories
+            var uniqueCategories = [];
+            $(".categories").children().each(function(category){
+              categories.push($(this).text())
+            })
+            uniqueCategories = categories.filter(function(elem, index, self){
+              return index == self.indexOf(elem);
+            })
+            $(".categories").empty()
+            uniqueCategories.forEach(function(category){
+              var categoryField = "<p class='searchTag'>" + category + "</p>"
+              $(".categories").append(categoryField)
+            })
           })
       } else {
         errorForm()
       }
-
   }
 
   $(".submitPost").on("click", submitPost)
-
 
   //delete post
   var deletePost = function(event){
