@@ -7,7 +7,7 @@ var User = require("./../models/user");
 
 
 router.get('/', function(req, res, next) {
-  Review.find({}).exec(function(err, reviews) {
+  Review.find({}).sort({"_id":-1}).limit(10).exec(function(err, reviews) {
     if (err) {
       console.log("db error in GET /reviews: " + err);
       res.render('error');
@@ -182,10 +182,10 @@ router.get('/search', function(req, res){
   })
 })
 
-router.get('/older', function(req, res){
-  Blog.Post.find( {_id : { "$lt" : req.query.id } } ).limit(50).sort({"_id":-1}).exec(function(err,posts){
+router.get('/olderPosts', function(req, res){
+  Blog.Post.find( {_id : { "$lt" : req.query.id } } ).limit(20).sort({"_id":-1}).exec(function(err,posts){
     if (err) {
-      console.log("db error in GET /next: " + err);
+      console.log("db error in GET /olderPosts: " + err);
       res.render('error');
     } else {
       res.send(posts)
@@ -193,13 +193,36 @@ router.get('/older', function(req, res){
   });
 })
 
-router.get('/newer', function(req, res){
-  Blog.Post.find( {_id : { "$gt" : req.query.id } } ).limit(50).sort({"_id":-1}).exec(function(err,posts){
+router.get('/newerPosts', function(req, res){
+  Blog.Post.find( {_id : { "$gt" : req.query.id } } ).limit(20).sort({"_id":-1}).exec(function(err,posts){
     if (err) {
-      console.log("db error in GET /next: " + err);
+      console.log("db error in GET /newerPosts: " + err);
       res.render('error');
     } else {
       res.send(posts)
+    }
+  });
+})
+
+router.get('/olderReviews', function(req, res){
+  Review.find( {_id : { "$lt" : req.query.id } } ).limit(10).sort({"_id":-1}).exec(function(err, reviews){
+    if (err) {
+      console.log("db error in GET /olderReviews: " + err);
+      res.render('error');
+    } else {
+
+      res.send(reviews)
+    }
+  });
+})
+
+router.get('/newerReviews', function(req, res){
+  Review.find( {_id : { "$gt" : req.query.id } } ).limit(10).sort({"_id":-1}).exec(function(err, reviews){
+    if (err) {
+      console.log("db error in GET /olderReviews: " + err);
+      res.render('error');
+    } else {
+      res.send(reviews)
     }
   });
 })

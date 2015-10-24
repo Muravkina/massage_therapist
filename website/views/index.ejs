@@ -55,17 +55,19 @@
         </div><!-- row -->
       </div><!-- container -->
       <div class="container">
-        <div class="reviews_collection">
-          <div class="row">
+          <div class="reviews_collection row">
           <% reviews.forEach(function(review){ %>
-            <div class="review six columns">
+            <div class="review six columns" data-id="<%=review.id%>">
               <div class="star-ratings-css" title= ".<%= review.stars %>" ></div>
               <p class="review_body"><%= review.body %></p>
               <p class="review_author"><%= review.author %></p>
             </div><!-- review -->
-         <% }) %>
-         </div><!-- row -->
-        </div><!-- reviews_collection -->
+          <% }) %>
+        </div><!-- reviews_collection row -->
+        <div class="pages">
+          <p class="newer">Newer reviews</p>
+          <p class="older">Older reviews</p>
+        </div>
       </div><!-- container -->
     <div class="menu bounce_up contact scrollable">
       <div class="title">

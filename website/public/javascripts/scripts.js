@@ -70,6 +70,7 @@ $(document).ready(function() {
     }
 
     var firstPostId;
+    var firstReviewId;
 
 // submit review
     $(".submit").on("click", function(event){
@@ -332,7 +333,7 @@ var deleteComment = function(event) {
     var id = {id: $(".posts div:nth-child(10)").attr("data-id")};
     firstPostId = $(".posts div:nth-child(1)").attr("data-id");
     $.ajax({
-      url: '/older',
+      url: '/olderPosts',
       type: 'GET',
       data: id,
       contentType: 'application/json'
@@ -343,10 +344,10 @@ var deleteComment = function(event) {
   })
 
   //newer posts
-   $(".pages").on("click", ".newer", function(){
+  $(".pages").on("click", ".newer", function(){
     var id = {id: $(".posts div:nth-child(1)").attr("data-id")};
     $.ajax({
-      url: '/newer',
+      url: '/newerPosts',
       type: 'GET',
       data: id,
       contentType: 'application/json'
@@ -358,6 +359,44 @@ var deleteComment = function(event) {
     })
   })
 
+   //older reviews
+  $(".pages").on("click", ".older", function(){
+    var id = {id: $(".reviews_collection div:nth-child(10)").attr("data-id")};
+    firstReviewId = $(".reviews_collection div:nth-child(1)").attr("data-id");
+    $.ajax({
+      url: '/olderReviews',
+      type: 'GET',
+      data: id,
+      contentType: 'application/json'
+    }).done(function(reviews){
+      $(".reviews_collection").empty();
+      reviews.forEach(function(review){
+        var review = "<div class='review six columns' data-id='" + review._id + "'><div class='star-ratings-css' title='" + review.stars + "'></div><p class='review_body'>" + review.body + "</p><p class='review_author'>" + review.author + "</p></div>";
+        $(".reviews_collection").append(review);
+      })
+      $(".newer").show();
+    })
+  })
+
+   //newer reviews
+  $(".pages").on("click", ".newer", function(){
+    var id = {id: $(".reviews_collection div:nth-child(1)").attr("data-id")};
+    $.ajax({
+      url: '/newerReviews',
+      type: 'GET',
+      data: id,
+      contentType: 'application/json'
+    }).done(function(reviews){
+      $(".reviews_collection").empty();
+      reviews.forEach(function(review){
+        var review = "<div class='review six columns' data-id='" + review._id + "'><div class='star-ratings-css' title='" + review.stars + "'></div><p class='review_body'>" + review.body + "</p><p class='review_author'>" + review.author + "</p></div>";
+        $(".reviews_collection").append(review);
+      })
+      if (firstReviewId === reviews[0]._id) {
+        $(".newer").hide();
+      }
+    })
+  })
 
 
 });
