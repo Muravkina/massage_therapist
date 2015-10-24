@@ -61,12 +61,17 @@
               <div class="star-ratings-css" title= ".<%= review.stars %>" ></div>
               <p class="review_body"><%= review.body %></p>
               <p class="review_author"><%= review.author %></p>
+              <% if(user) { %>
+                <button class="deleteReview">Delete</button>
+              <% } %>
             </div><!-- review -->
           <% }) %>
         </div><!-- reviews_collection row -->
         <div class="pages">
           <p class="newer">Newer reviews</p>
-          <p class="older">Older reviews</p>
+          <% if (reviews.length === 10) { %>
+            <p class="older">Older reviews</p>
+          <% } %>
         </div>
       </div><!-- container -->
     <div class="menu bounce_up contact scrollable">

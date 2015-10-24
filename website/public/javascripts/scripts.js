@@ -86,7 +86,9 @@ $(document).ready(function() {
         author: $(".reviewAuthor").val(),
         body: $(".reviewBody").val(),
         stars: $("input[name=rating]:checked").val(),
-        email: $(".reviewEmail").val()
+        email: $(".reviewEmail").val(),
+        lastReview: $(".reviews_collection div:nth-child(10)"),
+        reviewsNumber: $(".reviews_collection").children().length
       }
 
       var checkable = [$(".reviewAuthor"), $(".reviewBody"), $("input[name=rating]:checked")];
@@ -98,11 +100,14 @@ $(document).ready(function() {
             url: "/",
             contentType: 'application/json',
             data: JSON.stringify(data)
-          }).done(function(data){
+          }).done(function(review){
             removeRed(fields);
             $('input[name=rating]').attr('checked', false);
-            var review = "<div class='review six columns'><div class='star-ratings-css' title= '." + data.stars + "'></div><p class='review_body'>" + data.body + "</p><p class='review_author'>" + data.author + "</p></div>"
-            $(".reviews_collection > .row").append(review)
+            var review = "<div class='review six columns'><div class='star-ratings-css' title= '." + review.stars + "'></div><p class='review_body'>" + review.body + "</p><p class='review_author'>" + review.author + "</p></div>"
+            if (data.reviewsNumber === 10) {
+              data.lastReview.empty()
+            }
+            $(".reviews_collection").prepend(review);
           })
       } else {
         errorForm();
@@ -116,7 +121,9 @@ $(document).ready(function() {
     var data = {
         title: $("input[name='title']").val(),
         body: $("textarea[name='body']").val(),
-        tags: $("input[name='tags']").val()
+        tags: $("input[name='tags']").val(),
+        lastPost: $(".posts div:nth-child(10)"),
+        postsNumber: $(".posts").children().length
       }
 
     var checkable = [$("input[name='title']"), $("textarea[name='body']")];
@@ -128,18 +135,18 @@ $(document).ready(function() {
             url: "/blog",
             contentType: 'application/json',
             data: JSON.stringify(data)
-          }).done(function(data){
+          }).done(function(post){
             removeRed(fields);
             var tags = "";
             var categories = [];
-            data.tags.forEach(function(tag){
+            post.tags.forEach(function(tag){
               tags += "<span class='searchTag'>" + tag + "</span> ";
               categories.push(tag)
             })
 
-            var editForm = "<div class='edit'><form id='editPostForm'><input type='text' name='editPostTitle' class='editPostTitle' value='" + data.title + "'><textarea name='editPostBody' class='editPostBody'>" + data.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + data.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div>"
-            var post = "<div class='post' data-id='" + data._id + "'><div class='postData'><p class='postDate'>" + dateFormat(data.date) + "</p><a href='/posts/" + data._id + "' class='postTitle'>" + data.title + "</a><p class='postBody'>" + data.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + " <button class='deletePost'>Delete</button> <a href='/posts/"+data._id+"'>Comments (" + data.comments.length + ")</a></div>";
-            $(".posts").prepend(post);
+            var editForm = "<div class='edit'><form id='editPostForm'><input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div>"
+            var newPost = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a><p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + " <button class='deletePost'>Delete</button> <a href='/posts/"+post._id+"'>Comments (" + post.comments.length + ")</a></div>";
+            $(".posts").prepend(newPost);
 
             //update the categories
             var uniqueCategories = [];
@@ -154,6 +161,9 @@ $(document).ready(function() {
               var categoryField = "<p class='searchTag'>" + category + "</p>"
               $(".categories").append(categoryField)
             })
+            if (data.postsNumber === 10) {
+              data.lastPost.empty()
+            }
           })
       } else {
         errorForm()
@@ -414,6 +424,21 @@ var deleteComment = function(event) {
       }
     })
   })
+
+// delete review
+  var deleteReview = function(event){
+    event.preventDefault();
+    var review = $(this).parent();
+    var id = $(this).parent().attr("data-id")
+    $.ajax({
+        url: '/reviews/' + id,
+        type: 'DELETE',
+        contentType: 'application/json'
+      }).done(function(data){
+        review.empty();
+      })
+  }
+  $(".reviews_collection").on("click", ".deleteReview", deleteReview);
 
 
 });

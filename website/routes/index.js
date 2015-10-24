@@ -227,4 +227,15 @@ router.get('/newerReviews', function(req, res){
   });
 })
 
+router.delete('/reviews/:id', function(req, res){
+  Review.findOne({'_id': req.params.id}).remove().exec(function(err){
+    if (err) {
+      console.log("db error in DELETE /posts: " + err);
+      res.render('error');
+    } else {
+      res.send('success')
+    }
+  })
+})
+
 module.exports = router;

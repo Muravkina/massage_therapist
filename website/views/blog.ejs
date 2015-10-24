@@ -44,7 +44,9 @@
 </div>
 <div class="pages">
   <p class="newer">Newer posts</p>
-  <p class="older">Older posts</p>
+  <% if (posts.length === 10) { %>
+    <p class="older">Older posts</p>
+  <% } %>
 </div>
 
 <% if (user) {%>
