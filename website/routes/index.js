@@ -62,25 +62,31 @@ router.get('/blog', function(req, res){
       res.render('error');
     } else {
       Blog.Post.count({}, function(err, count){
-        ///find all the tags
-        var tags = [];
-        var uniqueTags = [];
-        var getCategories = function(posts){
-          posts.forEach(function(post){
-            post.tags.forEach(function(tag){
-              tags.push(tag);
-            })
-          })
-          uniqueTags = tags.filter(function(elem, index, self){
-            return index == self.indexOf(elem);
-          })
-        }
-        getCategories(posts);
-        if (req.query.back) {
-          res.send(posts)
-        } else {
-          res.render('blog', {posts: posts, user: req.user, tags:uniqueTags, totalPosts: count});
-        }
+        Blog.Post.aggregate([
+          {$unwind: "$comments"},
+          {$group: {_id:"$_id", title: {$first :"$title"}, body: {$first :"$body"}, comments: {$push:"$comments"}, size: {$sum:1}}},
+          {$sort:{size:1}}]).exec(function(err, popularPosts){
+            popularPosts.reverse();
+            ///find all the tags
+            var tags = [];
+            var uniqueTags = [];
+            var getCategories = function(posts){
+              posts.forEach(function(post){
+                post.tags.forEach(function(tag){
+                  tags.push(tag);
+                })
+              })
+              uniqueTags = tags.filter(function(elem, index, self){
+                return index == self.indexOf(elem);
+              })
+            }
+            getCategories(posts);
+            if (req.query.back) {
+              res.send(posts)
+            } else {
+              res.render('blog', {posts: posts, user: req.user, tags:uniqueTags, totalPosts: count, popularPosts: popularPosts});
+            }
+        })
       })
     };
   })
