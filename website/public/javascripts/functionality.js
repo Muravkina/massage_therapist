@@ -35,7 +35,7 @@ $(document).ready(function() {
     var newPost = function(posts){
       $.ajax({
           type: 'GET',
-          url: "/m",
+          url: "/isAuthenticated",
           contentType: 'application/json'
       }).done(function(isAuthenticated){
         $(".posts").empty()
@@ -51,8 +51,26 @@ $(document).ready(function() {
           var post = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a><p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p>" + editForm + "<a href='/posts/"+ post._id +"'>Comments (" + post.comments.length + ")</a></div>";
           $(".posts").append(post);
         });
-      })
-    }
+      });
+    };
+
+    var newReview = function(reviews){
+      $.ajax({
+          type: 'GET',
+          url: "/isAuthenticated",
+          contentType: 'application/json'
+      }).done(function(isAuthenticated){
+        $(".reviews_collection").empty();
+        reviews.forEach(function(review){
+          var deleteButton = '';
+          if (isAuthenticated) {
+            deleteButton = "<button class='deleteReview'>Delete</button>"
+          }
+          var review = "<div class='review six columns' data-id='" + review._id + "'><div class='star-ratings-css' title='" + review.stars + "'></div><p class='review_body'>" + review.body + "</p><p class='review_author'>" + review.author + "</p>" + deleteButton + "</div>";
+          $(".reviews_collection").append(review);
+        });
+      });
+    };
 
     var errorForm = function(){
       $(".formErrors > p").remove();
@@ -403,11 +421,7 @@ $(document).ready(function() {
       data: id,
       contentType: 'application/json'
     }).done(function(reviews){
-      $(".reviews_collection").empty();
-      reviews.forEach(function(review){
-        var review = "<div class='review six columns' data-id='" + review._id + "'><div class='star-ratings-css' title='" + review.stars + "'></div><p class='review_body'>" + review.body + "</p><p class='review_author'>" + review.author + "</p></div>";
-        $(".reviews_collection").append(review);
-      })
+      newReview(reviews);
       reviewsPages.currentPage += 1;
       if (reviewsPages.totalPages === reviewsPages.currentPage){
           $(".olderReviews").hide();
@@ -425,11 +439,7 @@ $(document).ready(function() {
       data: id,
       contentType: 'application/json'
     }).done(function(reviews){
-      $(".reviews_collection").empty();
-      reviews.forEach(function(review){
-        var review = "<div class='review six columns' data-id='" + review._id + "'><div class='star-ratings-css' title='" + review.stars + "'></div><p class='review_body'>" + review.body + "</p><p class='review_author'>" + review.author + "</p></div>";
-        $(".reviews_collection").append(review);
-      })
+      newReview(reviews);
       reviewsPages.currentPage -=1;
 
       if (reviewsPages.currentPage === 1) {
