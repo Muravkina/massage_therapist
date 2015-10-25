@@ -1,29 +1,5 @@
 $(document).ready(function() {
 
-
-  $(window).trigger('scroll');
-  var animation_elements = $(".scrollable");
-
-  var check_if_in_view = function() {
-  var window_height = $(window).height();
-  var window_top_position = $(window).scrollTop();
-  var window_bottom_position = (window_top_position + window_height);
-
-
-  $.each(animation_elements, function() {
-    var element_height = $(this).outerHeight();
-    var element_top_position = $(this).offset().top;
-    var element_bottom_position = (element_top_position + element_height);
-
-    //check to see if this current container is within viewport
-    if ((element_bottom_position >= window_top_position) &&
-        (element_top_position <= window_bottom_position)) {
-      $(this).addClass('in-view');
-    } else {
-      $(this).removeClass('in-view');
-    }
-  });
-}
     //check if the fields are valid
     var isValid = function(field){
       if (!field.val()){
@@ -57,15 +33,24 @@ $(document).ready(function() {
     }
 
     var newPost = function(posts){
-        $(".posts").empty();
+      $.ajax({
+          type: 'GET',
+          url: "/m",
+          contentType: 'application/json'
+      }).done(function(isAuthenticated){
+        $(".posts").empty()
+        var editForm = '';
         posts.forEach(function(post){
-        var tags = "";
+          var tags = "";
           post.tags.forEach(function(tag){
             tags += "<span class='searchTag'>" + tag + "</span> "
           })
-       var editForm = "<div class='edit'><form id='editPostForm'><input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div>"
-        var post = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a><p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + " <button class='deletePost'>Delete</button> <a href='/posts/"+ post._id +"'>Comments (" + post.comments.length + ")</a></div>";
-        $(".posts").append(post);
+          if (isAuthenticated) {
+           editForm = " </div><button class='openEdit'>Edit</button><div class='edit'><form id='editPostForm'><input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div><button class='deletePost'>Delete</button> "
+          }
+          var post = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a><p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p>" + editForm + "<a href='/posts/"+ post._id +"'>Comments (" + post.comments.length + ")</a></div>";
+          $(".posts").append(post);
+        });
       })
     }
 
@@ -84,7 +69,6 @@ $(document).ready(function() {
       totalPages: Math.ceil($(".reviews_collection").attr("data-id")/10),
       currentPage: 1
     }
-    console.log(reviewsPages.totalPages)
 
 // submit review
     $(".submit").on("click", function(event){
@@ -315,7 +299,7 @@ $(document).ready(function() {
 
 // delete comment
 
-var deleteComment = function(event) {
+  var deleteComment = function(event) {
   event.preventDefault();
 
   var postId = $(this).parents(".post").attr("data-id")
@@ -329,10 +313,9 @@ var deleteComment = function(event) {
     }).done(function(data){
       comment.empty();
     })
-}
+  }
 
   $(".post").on("click", ".deleteComment", deleteComment)
-  $(window).on('scroll resize', check_if_in_view);
 
 // search by tags
   var searchTag = function(){

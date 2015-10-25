@@ -260,17 +260,6 @@ header a {
 a:hover {
   color: rgb(130, 130, 130);
 }
-.blog_centerpiece {
-  text-align: center;
-  margin-top: 3em;
-}
-.login {
-  text-align: center;
-  margin-top: 2em;
-}
-.login h1 {
-  font-family: 'Krona One', sans-serif;
-}
 .edit, .closeEdit, .commentForm, .newerReviews, .newerPosts, .all_posts {
   display: none;
 }

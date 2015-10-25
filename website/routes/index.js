@@ -250,4 +250,12 @@ router.delete('/reviews/:id', function(req, res){
   })
 })
 
+router.get('/m', function(req, res, next){
+  if(req.user){
+    res.send(true)
+  } else {
+    res.send(false)
+  }
+})
+
 module.exports = router;

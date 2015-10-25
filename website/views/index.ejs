@@ -1,5 +1,32 @@
-<% layout('layout') -%>
-
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ilia Gerassimov - Massage Therapy</title>
+    <link rel='stylesheet' href='/stylesheets/normalize.css' />
+    <link rel='stylesheet' href='/stylesheets/base.css' />
+    <link rel='stylesheet' href='/stylesheets/skeleton.css' />
+    <link rel='stylesheet' href='/stylesheets/index.css' />
+    <link href='https://fonts.googleapis.com/css?family=Carter+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Krona+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="row">
+            <!-- <img src="/images/logo-sample.00_png_srz" width="100px" > -->
+            <% if (user) { %>
+              <a href="/logout">Log out</a>
+            <% } %>
+            <a href="/blog">Blog</a>
+            <a href="#">Contact</a>
+            <a href="#">Reviews</a>
+            <a href="#">Schedule</a>
+            <a href="/">About</a>
+        </div>
+      </div>
+    </header>
     <div class="main_picture bounce_up in-view scrollable">
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna.</p>
@@ -79,4 +106,10 @@
         <h3>Contact</h3>
       </div>
     </div>
-
+    <footer>
+    </footer>
+  </body>
+  <script src="/javascripts/functionality.js"></script>
+  <script src="/javascripts/beauty.js"></script>
+  </body>
+</html>
