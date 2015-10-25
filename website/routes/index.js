@@ -67,6 +67,7 @@ router.get('/blog', function(req, res){
           {$group: {_id:"$_id", title: {$first :"$title"}, body: {$first :"$body"}, comments: {$push:"$comments"}, size: {$sum:1}}},
           {$sort:{size:1}}]).exec(function(err, popularPosts){
             popularPosts.reverse();
+            console.log(popularPosts)
             ///find all the tags
             var tags = [];
             var uniqueTags = [];
@@ -135,8 +136,11 @@ router.get('/posts/:id', function(req, res){
     if (err) {
       res.send(err)
     } else {
-
-      res.render('post', {post: post, user: req.user})
+      tags = post.tags.join(', ')
+      Blog.Post.find({tags: {$in: post.tags}}).limit(3).exec(function(err, relatedPosts){
+      console.log(relatedPosts)
+      res.render('post', {post: post, user: req.user, relatedPosts: relatedPosts})
+    })
     }
   })
 })
