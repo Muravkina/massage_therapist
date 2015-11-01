@@ -4,6 +4,9 @@ var passport = require('passport');
 var Review = require("./../models/reviews");
 var Blog = require("./../models/blog");
 var User = require("./../models/user");
+var crypto = require( "crypto" );
+var formidable = require('formidable');
+
 
 
 router.get('/', function(req, res, next) {
@@ -93,10 +96,15 @@ router.get('/blog', function(req, res){
 })
 
 router.post('/blog', function(req, res){
-  tagsArray = req.body.tags.replace(" ", "").split(',');
-  new Blog.Post({title: req.body.title, body: req.body.body, date: new Date(), tags: tagsArray}).save(function(err, post){
-    res.send(post)
-  })
+  var form = new formidable.IncomingForm();
+   form.parse(req, function(err, fields, files) {
+      tagsArray = fields.tags.replace(" ", "").split(',');
+      new Blog.Post({title: fields.title, body: fields.body, date: new Date(), tags: tagsArray}).save(function(err, post){
+        post.attach('image', {path: files.image.path}, function(error){
+          res.send(post)
+        })
+      })
+    });
 })
 
 router.delete('/posts/:id', function(req, res){
@@ -263,5 +271,6 @@ router.get('/isAuthenticated', function(req, res, next){
     res.send(false)
   }
 })
+
 
 module.exports = router;

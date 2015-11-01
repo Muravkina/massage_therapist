@@ -1,7 +1,5 @@
 <% layout('layout') -%>
 
-
-
 <div class="categories">
   <% tags.forEach(function(tag){ %>
     <p class="searchTag"><%= tag %></p>
@@ -58,14 +56,18 @@
   <% } %>
 </div>
 
-<% if (user) {%>
+
   <button>New post</button>
   <div class="formErrors"></div>
   <form method="post" action="/blog" id="blogForm">
     <input type="text" id="title" placeholder="Title" name="title"><br>
     <textarea id="body" placeholder="Share your insights" name="body"></textarea><br>
     <input type="text" id="tags" name="tags">
+    <input type="file" name="image">
+    <img id="preview" alt="your image" height="100"/>
     <button class="submitPost">Submit</button>
   </form>
-<% } %>
+
+
+
 

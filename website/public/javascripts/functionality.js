@@ -88,6 +88,22 @@ $(document).ready(function() {
       currentPage: 1
     }
 
+//image preview before submitting the post
+    var readURL = function(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('#preview').attr('src', e.target.result);
+          $("#preview").show();
+        }
+      reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+$(":file").change(function(){
+    readURL(this);
+});
+
 // submit review
     $(".submit").on("click", function(event){
 
@@ -130,13 +146,17 @@ $(document).ready(function() {
 
   var submitPost = function(event){
     event.preventDefault()
-    var data = {
-        title: $("input[name='title']").val(),
-        body: $("textarea[name='body']").val(),
-        tags: $("input[name='tags']").val(),
-        lastPost: $(".posts div:nth-child(10)"),
-        postsNumber: $(".posts").children().length
-      }
+
+    var formData = new FormData();
+    var form = $('form').serializeArray();
+    formData.append("image", $(":file")[0].files[0]);
+    $.each(form,function(key,input){
+        formData.append(input.name,input.value);
+    });
+    var postsData = {
+      lastPost : $(".posts div:nth-child(10)"),
+      postsNumber: $(".posts div:nth-child(10)")
+    }
 
     var checkable = [$("input[name='title']"), $("textarea[name='body']")];
     var fields = [$("input[name='title']"), $("textarea[name='body']"), $("input[name='tags']")];
@@ -146,9 +166,13 @@ $(document).ready(function() {
             type: 'POST',
             url: "/blog",
             contentType: 'application/json',
-            data: JSON.stringify(data)
+            contentType: false,
+            processData: false,
+            data: formData
           }).done(function(post){
+            console.log(post)
             removeRed(fields);
+            $("#preview").attr('src', '').hide()
             var tags = "";
             var categories = [];
             post.tags.forEach(function(tag){
@@ -157,7 +181,7 @@ $(document).ready(function() {
             })
 
             var editForm = "<div class='edit'><form id='editPostForm'><input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div>"
-            var newPost = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a><p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + " <button class='deletePost'>Delete</button> <a href='/posts/"+post._id+"'>Comments (" + post.comments.length + ")</a></div>";
+            var newPost = "<div class='post' data-id='" + post._id + "'><div class='postData'><img src='" + post.image.url + "'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a><p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + " <button class='deletePost'>Delete</button> <a href='/posts/"+post._id+"'>Comments (" + post.comments.length + ")</a></div>";
             $(".posts").prepend(newPost);
 
             //update the categories
@@ -175,9 +199,10 @@ $(document).ready(function() {
             })
 
             //empty the last post if the number of posts on the page is 10
-            if (data.postsNumber === 10) {
-              data.lastPost.empty()
+            if (postsData.postsNumber === 10) {
+              postsData.lastPost.empty()
             }
+
           })
       } else {
         errorForm()
@@ -483,5 +508,6 @@ $(document).ready(function() {
   }
 
   $(".all_posts").on("click", backToPosts)
+
 
 });

@@ -8,6 +8,9 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
+
+require('dotenv').load();
+
 var routes = require('./routes/index');
 
 var app = express();
@@ -29,6 +32,7 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 app.use(require('express-session')({
     secret: 'keyboard cat',
@@ -41,7 +45,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', routes);
-
 // passport config
 var User = require('./models/user');
 passport.use(new LocalStrategy(User.authenticate()));
