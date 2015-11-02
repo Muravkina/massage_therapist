@@ -26,6 +26,9 @@
           <%= date %>
         </p>
         <a  href="/posts/<%= post.id %>" class="postTitle"><%= post.title %></a>
+        <% if (post.image.url) { %>
+          <img src="<%= post.image.url%>">
+        <% } %>
         <p class="postBody"><%= post.body %></p>
         <p class="postTags">
           <% post.tags.forEach(function(tag){ %>

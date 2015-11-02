@@ -67,7 +67,7 @@ router.get('/blog', function(req, res){
       Blog.Post.count({}, function(err, count){
         Blog.Post.aggregate([
           {$unwind: "$comments"},
-          {$group: {_id:"$_id", title: {$first :"$title"}, body: {$first :"$body"}, comments: {$push:"$comments"}, size: {$sum:1}}},
+          {$group: {_id:"$_id", title: {$first :"$title"}, body: {$first :"$body"}, image: {$first: "$image"}, comments: {$push:"$comments"}, size: {$sum:1}}},
           {$sort:{size:1}}]).exec(function(err, popularPosts){
             popularPosts.reverse();
             ///find all the tags
@@ -100,9 +100,13 @@ router.post('/blog', function(req, res){
    form.parse(req, function(err, fields, files) {
       tagsArray = fields.tags.replace(" ", "").split(',');
       new Blog.Post({title: fields.title, body: fields.body, date: new Date(), tags: tagsArray}).save(function(err, post){
-        post.attach('image', {path: files.image.path}, function(error){
-          res.send(post)
-        })
+        console.log(files)
+        if (Object.keys(files).length !== 0) {
+          post.attach('image', {path: files.image.path}, function(error){
+          post.save()
+          })
+        }
+        res.send(post)
       })
     });
 })

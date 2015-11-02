@@ -40,6 +40,7 @@ $(document).ready(function() {
       }).done(function(isAuthenticated){
         $(".posts").empty()
         var editForm = '';
+        var image ='';
         posts.forEach(function(post){
           var tags = "";
           post.tags.forEach(function(tag){
@@ -48,7 +49,11 @@ $(document).ready(function() {
           if (isAuthenticated) {
            editForm = " </div><button class='openEdit'>Edit</button><div class='edit'><form id='editPostForm'><input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div><button class='deletePost'>Delete</button> "
           }
-          var post = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a><p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p>" + editForm + "<a href='/posts/"+ post._id +"'>Comments (" + post.comments.length + ")</a></div>";
+          console.log(post.image)
+          if (post.image) {
+            image = "<img src='" + post.image.url +"'>"
+          }
+          var post = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a>" + image + "<p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p>" + editForm + "<a href='/posts/"+ post._id +"'>Comments (" + post.comments.length + ")</a></div>";
           $(".posts").append(post);
         });
       });
