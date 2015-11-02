@@ -1,10 +1,14 @@
 <% layout('layout') -%>
+
 <div class="post" data-id="<%= post.id %>">
   <p>
     <% var date = new Date(post.date); date = date.toDateString() %>
     <%= date %>
   </p>
   <p><%= post.title %></p>
+  <% if (post.image.url) { %>
+    <img src="<%= post.image.url%>">
+  <% } %>
   <p><%= post.body %></p>
   <p>
     <% post.tags.forEach(function(tag){ %>

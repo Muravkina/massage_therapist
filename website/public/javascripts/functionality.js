@@ -32,6 +32,17 @@ $(document).ready(function() {
       return date.toDateString()
     }
 
+    var removePreview = function(event){
+      event.preventDefault();
+      var preview = $(this).prev();
+      preview.fadeOut(1000, function() {
+        $(this).removeProp('src');
+        $(this).parents().find(".editFile").replaceWith(selected_photo = $(this).parents().find(".editFile").clone(true));
+      });
+    }
+
+    $("body").on("click", ".removePreview", removePreview)
+
     var newPost = function(posts){
       $.ajax({
           type: 'GET',
@@ -40,16 +51,20 @@ $(document).ready(function() {
       }).done(function(isAuthenticated){
         $(".posts").empty()
         var editForm = '';
-        var image ='';
+        var image = "<img class='postImage' id='preview'>";
+        var deleteImageButton = "";
         posts.forEach(function(post){
           var tags = "";
           post.tags.forEach(function(tag){
             tags += "<span class='searchTag'>" + tag + "</span> "
           })
           if (isAuthenticated) {
-           editForm = " </div><button class='openEdit'>Edit</button><div class='edit'><form id='editPostForm'><input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div><button class='deletePost'>Delete</button> "
+            if (post.image.url) {
+              image = "<img src='post.image.url' class='postImage' id='preview'>";
+              deleteImageButton = "<button class='deleteImage'>Delete Image</button>";
+            }
+           editForm = " </div><button class='openEdit'>Edit</button><div class='edit'><form id='editPostForm'>" + image + deleteImageButton + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><input type='file' name='image' class='editFile'><img id='preview' height='100'/><p class='removePreview'>X</p><button class='editPost'>Submit</button></form></div><button class='deletePost'>Delete</button> "
           }
-          console.log(post.image)
           if (post.image) {
             image = "<img src='" + post.image.url +"'>"
           }
@@ -98,14 +113,14 @@ $(document).ready(function() {
       if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-          $('#preview').attr('src', e.target.result);
-          $("#preview").show();
+          $(input).parents().find("#preview").attr('src', e.target.result);
+          $(input).parents().find("#preview").show();
         }
       reader.readAsDataURL(input.files[0]);
       }
     }
 
-$(":file").change(function(){
+$("body").delegate(".editFile","change", function(){
     readURL(this);
 });
 
@@ -170,7 +185,6 @@ $(":file").change(function(){
         $.ajax({
             type: 'POST',
             url: "/blog",
-            contentType: 'application/json',
             contentType: false,
             processData: false,
             data: formData
@@ -179,14 +193,20 @@ $(":file").change(function(){
             removeRed(fields);
             $("#preview").attr('src', '').hide()
             var tags = "";
+            var image = "<img class='postImage' id='preview'>";
+            var deleteImageButton ='';
             var categories = [];
             post.tags.forEach(function(tag){
               tags += "<span class='searchTag'>" + tag + "</span> ";
               categories.push(tag)
             })
+            if (post.image) {
+              image = "<img src='" + post.image.url + "' class='postImage' id='preview'>";
+              deleteImageButton = "<button class='deleteImage'>Delete Image</button>";
+            }
 
-            var editForm = "<div class='edit'><form id='editPostForm'><input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div>"
-            var newPost = "<div class='post' data-id='" + post._id + "'><div class='postData'><img src='" + post.image.url + "'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a><p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + " <button class='deletePost'>Delete</button> <a href='/posts/"+post._id+"'>Comments (" + post.comments.length + ")</a></div>";
+            var editForm = "<div class='edit'><form id='editPostForm'>" + image + deleteImageButton + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><input type='file' name='image' class='editFile'><img id='preview' height='100'/><p class='removePreview'>X</p><button class='editPost'>Submit</button></form></div>";
+            var newPost = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a>" + image + "<p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + " <button class='deletePost'>Delete</button> <a href='/posts/"+post._id+"'>Comments (" + post.comments.length + ")</a></div>";
             $(".posts").prepend(newPost);
 
             //update the categories
@@ -239,8 +259,8 @@ $(":file").change(function(){
     if (!editForm.is(":visible")){
       editForm.show();
       post.hide();
+      editForm.find("#preview").show()
       $(this).text("Close");
-      console.log($(this).parent())
     } else {
       editForm.hide();
       post.show();
@@ -251,33 +271,41 @@ $(":file").change(function(){
   //update post
   var updatePost = function(event){
     event.preventDefault();
+    console.log("wrong")
     var id = $(this).parents(".post").attr("data-id");
-
-    var data = {
-      title : $(this).parent().children(".editPostTitle").val(),
-      body  : $(this).parent().children(".editPostBody").val(),
-      tags  : $(this).parent().children(".editPostTags").val()
-    }
+    var formData = new FormData();
+    formData.append('image', $(this).parent().find('.editFile')[0].files[0]);
+    formData.append('title', $(this).parent().children(".editPostTitle").val());
+    formData.append('body', $(this).parent().children(".editPostBody").val());
+    formData.append('tags', $(this).parent().children(".editPostTags").val());
 
     var editForm = $(this).parents(".edit");
     var post = $(this).parents(".post");
-    var title = post.find(".postTitle");
-    var body = post.find(".postBody");
-    var tags = post.find(".postTags");
+
+    var editedPost = {
+      title : post.find(".postTitle"),
+      body  : post.find(".postBody"),
+      tags  : post.find(".postTags"),
+      image : post.find(".postImage")
+    }
     $.ajax({
         url: '/posts/' + id,
         type: 'PUT',
-        contentType: 'application/json',
-        data: JSON.stringify(data)
+        contentType: false,
+        processData: false,
+        data: formData
       }).done(function(data){
         var tagsText = "";
         data.tags.forEach(function(tag){
           tagsText += "<span class='searchTag'>" + tag + "</span> "
         })
         editForm.hide()
-        title.text(data.title);
-        body.text(data.body);
-        tags.html(tagsText);
+        editedPost.title.text(data.title);
+        editedPost.body.text(data.body);
+        editedPost.tags.html(tagsText);
+        if (data.image){
+          editedPost.image.attr('src', data.image.url)
+        }
         post.children(".postData").show();
         editForm.prev(".openEdit").text("Edit");
       })
@@ -514,5 +542,23 @@ $(":file").change(function(){
 
   $(".all_posts").on("click", backToPosts)
 
+
+  $(".posts").on("click", ".deleteImage", function(event){
+    event.preventDefault()
+    var id = $(this).parents(".post").attr("data-id");
+    var editImage = $(this).prev();
+    var postImage = $(this).parents().find(".postImage")
+    var deleteButton = $(this)
+
+    $.ajax({
+        url: '/deleteImage/' + id,
+        type: 'DELETE',
+        contentType: 'application/json'
+      }).done(function(data){
+        editImage.remove();
+        deleteButton.hide();
+        postImage.attr('src', '')
+      })
+  })
 
 });

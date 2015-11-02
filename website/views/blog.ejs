@@ -26,9 +26,12 @@
           <%= date %>
         </p>
         <a  href="/posts/<%= post.id %>" class="postTitle"><%= post.title %></a>
+
+        <img
         <% if (post.image.url) { %>
-          <img src="<%= post.image.url%>">
+          src="<%= post.image.url%>"
         <% } %>
+        class="postImage">
         <p class="postBody"><%= post.body %></p>
         <p class="postTags">
           <% post.tags.forEach(function(tag){ %>
@@ -40,9 +43,19 @@
         <button class="openEdit">Edit</button>
       <div class="edit">
         <form id="editPostForm">
+          <img
+            <% if (post.image.url) { %>
+              src="<%= post.image.url%>"
+            <% } %>
+          class="postImage" id="preview">
+            <% if (post.image.url) { %>
+              <button class="deleteImage">Delete Image</button>
+            <% } %>
           <input type="text" name="editPostTitle" value="<%=post.title %>" class="editPostTitle">
           <textarea name="editPostBody" class="editPostBody"><%= post.body %></textarea>
           <input type="text" name="editPostTags" class="editPostTags" value="<%= post.tags.join(', ') %>">
+          <input type="file" name="image" class="editFile">
+          <p class="removePreview">X</p>
           <button class="editPost">Submit</button>
         </form>
       </div>
@@ -66,8 +79,9 @@
     <input type="text" id="title" placeholder="Title" name="title"><br>
     <textarea id="body" placeholder="Share your insights" name="body"></textarea><br>
     <input type="text" id="tags" name="tags">
-    <input type="file" name="image">
-    <img id="preview" alt="your image" height="100"/>
+    <input type="file" name="image" class="editFile">
+    <img id="preview" height="100" />
+    <p class="removePreview">X</p>
     <button class="submitPost">Submit</button>
   </form>
 

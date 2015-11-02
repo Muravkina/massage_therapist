@@ -100,13 +100,14 @@ router.post('/blog', function(req, res){
    form.parse(req, function(err, fields, files) {
       tagsArray = fields.tags.replace(" ", "").split(',');
       new Blog.Post({title: fields.title, body: fields.body, date: new Date(), tags: tagsArray}).save(function(err, post){
-        console.log(files)
         if (Object.keys(files).length !== 0) {
           post.attach('image', {path: files.image.path}, function(error){
           post.save()
+          res.send(post)
           })
+        } else {
+          res.send(post)
         }
-        res.send(post)
       })
     });
 })
@@ -123,23 +124,20 @@ router.delete('/posts/:id', function(req, res){
 })
 
 router.put('/posts/:id', function(req, res){
-  Blog.Post.findById(req.params.id, function(err, post){
-    if (err) {
-      res.send(err);
-    } else {
-      post.title = req.body.title;
-      post.body = req.body.body;
-      post.tags = req.body.tags.split(', ');
-
-      post.save(function(err){
-        if(err){
-          res.send(err)
+  var form = new formidable.IncomingForm();
+  form.parse(req, function(err, fields, files) {
+    Blog.Post.findByIdAndUpdate(req.params.id, { $set: { title: fields.title, body: fields.body, tags: fields.tags.split(', ') }, $unset: {image: ''}}, {new: true}, function (err, post) {
+        if (err) res.send(err);
+        if (Object.keys(files).length !== 0) {
+          post.attach('image', {path: files.image.path}, function(error){
+          post.save()
+          res.send(post)
+          })
         } else {
           res.send(post)
         }
-      })
-    }
-  })
+    });
+  });
 })
 
 router.get('/posts/:id', function(req, res){
@@ -274,6 +272,14 @@ router.get('/isAuthenticated', function(req, res, next){
   } else {
     res.send(false)
   }
+})
+
+router.delete('/deleteImage/:id', function(req,res, next){
+  Blog.Post.findByIdAndUpdate(req.params.id, {$unset: {image: ''}}, {new: true}, function (err, post) {
+        if (err) res.send(err);
+        console.log(post)
+        res.send('success')
+      })
 })
 
 
