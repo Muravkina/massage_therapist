@@ -59,17 +59,18 @@ $(document).ready(function() {
             tags += "<span class='searchTag'>" + tag + "</span> "
           })
           if (isAuthenticated) {
-            if (post.image.url) {
-              image = "<img src='post.image.url' class='postImage' id='preview'>";
+            if (post.image) {
+              image = "<img src='" + post.image.url + "' class='postImage' id='preview'>";
               deleteImageButton = "<button class='deleteImage'>Delete Image</button>";
             }
            editForm = " </div><button class='openEdit'>Edit</button><div class='edit'><form id='editPostForm'>" + image + deleteImageButton + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><input type='file' name='image' class='editFile'><img id='preview' height='100'/><p class='removePreview'>X</p><button class='editPost'>Submit</button></form></div><button class='deletePost'>Delete</button> "
           }
           if (post.image) {
-            image = "<img src='" + post.image.url +"'>"
+            image = "<img src='" + post.image.url +"' class='postImage' id='preview'>"
           }
           var post = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a>" + image + "<p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p>" + editForm + "<a href='/posts/"+ post._id +"'>Comments (" + post.comments.length + ")</a></div>";
           $(".posts").append(post);
+          $(".postImage#preview").show()
         });
       });
     };
@@ -175,9 +176,10 @@ $("body").delegate(".editFile","change", function(){
     });
     var postsData = {
       lastPost : $(".posts div:nth-child(10)"),
-      postsNumber: $(".posts div:nth-child(10)")
+      postsNumber: $(".posts div:nth-child(10)"),
+      previewImage : $(this).parents().find("#preview")
     }
-
+    console.log(postsData.image)
     var checkable = [$("input[name='title']"), $("textarea[name='body']")];
     var fields = [$("input[name='title']"), $("textarea[name='body']"), $("input[name='tags']")];
 
@@ -189,12 +191,12 @@ $("body").delegate(".editFile","change", function(){
             processData: false,
             data: formData
           }).done(function(post){
-            console.log(post)
             removeRed(fields);
-            $("#preview").attr('src', '').hide()
+            postsData.previewImage.attr('src', '').hide();
             var tags = "";
             var image = "<img class='postImage' id='preview'>";
             var deleteImageButton ='';
+            $(":file").val('')
             var categories = [];
             post.tags.forEach(function(tag){
               tags += "<span class='searchTag'>" + tag + "</span> ";
@@ -208,6 +210,7 @@ $("body").delegate(".editFile","change", function(){
             var editForm = "<div class='edit'><form id='editPostForm'>" + image + deleteImageButton + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><input type='file' name='image' class='editFile'><img id='preview' height='100'/><p class='removePreview'>X</p><button class='editPost'>Submit</button></form></div>";
             var newPost = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a>" + image + "<p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + " <button class='deletePost'>Delete</button> <a href='/posts/"+post._id+"'>Comments (" + post.comments.length + ")</a></div>";
             $(".posts").prepend(newPost);
+            $(".postImage#preview").show()
 
             //update the categories
             var uniqueCategories = [];
@@ -307,6 +310,7 @@ $("body").delegate(".editFile","change", function(){
           editedPost.image.attr('src', data.image.url)
         }
         post.children(".postData").show();
+        $(":file").val('');
         editForm.prev(".openEdit").text("Edit");
       })
   }
@@ -548,6 +552,7 @@ $("body").delegate(".editFile","change", function(){
     var id = $(this).parents(".post").attr("data-id");
     var editImage = $(this).prev();
     var postImage = $(this).parents().find(".postImage")
+    console.log(postImage)
     var deleteButton = $(this)
 
     $.ajax({
