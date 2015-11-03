@@ -6,14 +6,11 @@ var Blog = require("./../models/blog");
 var User = require("./../models/user");
 var crypto = require( "crypto" );
 var formidable = require('formidable');
-
-var S3_KEY = process.env.AWS_ACCESS_KEY;
-var S3_SECRET = process.env.AWS_SECRET_KEY;
-var S3_BUCKET = process.env.S3_BUCKET;
+var S3 = require("../config")
 var knox = require('knox').createClient({
-    key: S3_KEY,
-    secret: S3_SECRET,
-    bucket: S3_BUCKET
+    key: S3.S3_KEY,
+    secret: S3.S3_SECRET,
+    bucket: S3.S3_BUCKET
 });
 
 
