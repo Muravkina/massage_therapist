@@ -7,6 +7,15 @@ var User = require("./../models/user");
 var crypto = require( "crypto" );
 var formidable = require('formidable');
 
+var S3_KEY = process.env.AWS_ACCESS_KEY;
+var S3_SECRET = process.env.AWS_SECRET_KEY;
+var S3_BUCKET = process.env.S3_BUCKET;
+var knox = require('knox').createClient({
+    key: S3_KEY,
+    secret: S3_SECRET,
+    bucket: S3_BUCKET
+});
+
 
 
 router.get('/', function(req, res, next) {
@@ -126,16 +135,21 @@ router.delete('/posts/:id', function(req, res){
 router.put('/posts/:id', function(req, res){
   var form = new formidable.IncomingForm();
   form.parse(req, function(err, fields, files) {
-    Blog.Post.findByIdAndUpdate(req.params.id, { $set: { title: fields.title, body: fields.body, tags: fields.tags.split(', ') }, $unset: {image: ''}}, {new: true}, function (err, post) {
+    Blog.Post.findById(req.params.id, function (err, post) {
+      if (err) res.send(err);
+      post.title = fields.title;
+      post.body = fields.body;
+      post.tags = fields.tags.split(', ')
+      post.save()
+      if (Object.keys(files).length === 0) {
+        res.send(post)
+      } else {
+        post.attach('image', {path: files.image.path}, function(error){
         if (err) res.send(err);
-        if (Object.keys(files).length !== 0) {
-          post.attach('image', {path: files.image.path}, function(error){
-          post.save()
-          res.send(post)
-          })
-        } else {
-          res.send(post)
-        }
+        post.save()
+        res.send(post)
+        })
+      }
     });
   });
 })
@@ -275,11 +289,12 @@ router.get('/isAuthenticated', function(req, res, next){
 })
 
 router.delete('/deleteImage/:id', function(req,res, next){
-  Blog.Post.findByIdAndUpdate(req.params.id, {$unset: {image: ''}}, {new: true}, function (err, post) {
-        if (err) res.send(err);
-        console.log(post)
-        res.send('success')
-      })
+  Blog.Post.findByIdAndUpdate(req.params.id, {$unset: {image: ''}}, function (err, post) {
+    knox.deleteFile(post.image.name, function(err, result) {
+      if (err) res.send(err);
+      res.send('success')
+    });
+  })
 })
 
 

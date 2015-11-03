@@ -31,7 +31,7 @@
         <% if (post.image.url) { %>
           src="<%= post.image.url%>"
         <% } %>
-        class="postImage">
+        class="postImage" id="preview">
         <p class="postBody"><%= post.body %></p>
         <p class="postTags">
           <% post.tags.forEach(function(tag){ %>
@@ -43,19 +43,16 @@
         <button class="openEdit">Edit</button>
       <div class="edit">
         <form id="editPostForm">
-          <img
             <% if (post.image.url) { %>
-              src="<%= post.image.url%>"
-            <% } %>
-          class="postImage" id="preview">
-            <% if (post.image.url) { %>
+              <button class="changeImage">Change Image</button>
               <button class="deleteImage">Delete Image</button>
+            <% } else { %>
+              <input type="file" name="image" class="editFile">
+              <p class="removePreview">X</p>
             <% } %>
           <input type="text" name="editPostTitle" value="<%=post.title %>" class="editPostTitle">
           <textarea name="editPostBody" class="editPostBody"><%= post.body %></textarea>
           <input type="text" name="editPostTags" class="editPostTags" value="<%= post.tags.join(', ') %>">
-          <input type="file" name="image" class="editFile">
-          <p class="removePreview">X</p>
           <button class="editPost">Submit</button>
         </form>
       </div>
