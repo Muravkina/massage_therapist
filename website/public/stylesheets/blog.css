@@ -1,4 +1,4 @@
-.edit, .closeEdit, .commentForm, .newerReviews, .newerPosts, .all_posts {
+.edit, .closeEdit, .commentForm, .newerReviews, .newerPosts, .all_posts, .changeImageInput {
   display: none;
 }
 .blog_centerpiece {
@@ -12,4 +12,3 @@
 .login h1 {
   font-family: 'Krona One', sans-serif;
 }
-

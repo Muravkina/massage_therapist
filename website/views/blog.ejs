@@ -44,7 +44,12 @@
       <div class="edit">
         <form id="editPostForm">
             <% if (post.image.url) { %>
-              <button class="changeImage">Change Image</button>
+              <button class="openChangeImage">Change Image</button>
+              <div class="changeImageInput">
+                <input type="file" name="image" class="editFile">
+                <p class="removePreview">X</p>
+                <button class="changeImage">Submit Image</button>
+              </div><!--changeImageInput-->
               <button class="deleteImage">Delete Image</button>
             <% } else { %>
               <input type="file" name="image" class="editFile">

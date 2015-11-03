@@ -577,12 +577,47 @@ $("body").delegate(".editFile","change", function(){
         postImage.attr('src', '')
       })
   })
+
+// open change image input
+  var openChange = function(event){
+    event.preventDefault();
+    var editForm = $(this).parent();
+    var changeImageInput = editForm.find(".changeImageInput");
+    if (!changeImageInput.is(":visible")){
+      changeImageInput.show();
+      $(this).text("Nevermind, the picture is perfect");
+    } else {
+      changeImageInput.hide();
+      $(this).text("Change Image");
+    }
+
+  }
 // change Image
 var changeImage = function(event){
   event.preventDefault();
   var id = $(this).parents(".post").attr("data-id");
+  var images = $(this).parents(".post").find(".postImage");
+  var editForm = $(this).parents("#editPostForm");
+  var formData = new FormData();
+  if ($(this).parent().find(".editFile").length !== 0) {
+    formData.append('image', $(this).parent().find('.editFile')[0].files[0]);
+  }
+  $.ajax({
+    url: '/changeImage/' + id,
+    type: 'PUT',
+    contentType: false,
+    processData: false,
+    data: formData
+  }).done(function(data){
+    images.attr("src", data.image.url);
+    editForm.find(".changeImageInput").hide();
+    editForm.find(".openChangeImage").text('Change Image');
+    console.log(editForm)
+  });
 }
 
+
+ $(".posts").on("click", ".openChangeImage", openChange)
  $(".posts").on("click", ".changeImage", changeImage)
 
 

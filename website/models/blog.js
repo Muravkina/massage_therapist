@@ -1,7 +1,8 @@
 var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 var crate = require('mongoose-crate');
-var  S3 = require('mongoose-crate-s3');
+var S3 = require('mongoose-crate-s3');
+var S3info = require('../config')
 
 var Comments = new mongoose.Schema({
     title     : String,
@@ -23,9 +24,9 @@ var Posts   = new mongoose.Schema({
 
 Posts.plugin(crate, {
     storage: new S3({
-    key: process.env.AWS_ACCESS_KEY,
-    secret: process.env.AWS_SECRET_KEY,
-    bucket: process.env.S3_BUCKET,
+    key: S3info.S3_KEY,
+    secret: S3info.S3_SECRET,
+    bucket: S3info.S3_BUCKET,
     path: function(attachment) {
       return '/' + attachment.name
     }
