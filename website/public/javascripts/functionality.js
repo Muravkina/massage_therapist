@@ -43,6 +43,8 @@ $(document).ready(function() {
 
     $("body").on("click", ".removePreview", removePreview)
 
+
+
     var newPost = function(posts){
       $.ajax({
           type: 'GET',
@@ -51,9 +53,12 @@ $(document).ready(function() {
       }).done(function(isAuthenticated){
         $(".posts").empty()
         var editForm = '';
-        var image = "<img class='postImage' id='preview'>";
-        var deleteImageButton = "";
         posts.forEach(function(post){
+          var image = "<img class='postImage' id='preview'>";
+          var deleteImageButton ='';
+          var changeImageForm = '';
+          var changeImageButton = '';
+          var fileUploadInput = '';
           var tags = "";
           post.tags.forEach(function(tag){
             tags += "<span class='searchTag'>" + tag + "</span> "
@@ -62,8 +67,12 @@ $(document).ready(function() {
             if (post.image) {
               image = "<img src='" + post.image.url + "' class='postImage' id='preview'>";
               deleteImageButton = "<button class='deleteImage'>Delete Image</button>";
+              changeImageButton = "<button class='changeImage'>Change Image</button>";
+              changeImageForm = "<button class='openChangeImage'>Change Image</button><div class='changeImageInput'><input type='file' name='image' class='editFile'><p class='removePreview'>X</p><button class='changeImage'>Submit Image</button></div>"
+            } else {
+              fileUploadInput = "<input type='file' name='image' class='editFile'><img id='preview' height='100'/><p class='removePreview'>X</p>";
             }
-           editForm = " </div><button class='openEdit'>Edit</button><div class='edit'><form id='editPostForm'>" + image + deleteImageButton + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><input type='file' name='image' class='editFile'><img id='preview' height='100'/><p class='removePreview'>X</p><button class='editPost'>Submit</button></form></div><button class='deletePost'>Delete</button> "
+           editForm = " </div><button class='openEdit'>Edit</button><div class='edit'><form id='editPostForm'>" + changeImageForm + deleteImageButton + fileUploadInput + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><input type='file' name='image' class='editFile'><img id='preview' height='100'/><p class='removePreview'>X</p><button class='editPost'>Submit</button></form></div><button class='deletePost'>Delete</button> "
           }
           if (post.image) {
             image = "<img src='" + post.image.url +"' class='postImage' id='preview'>"
@@ -179,7 +188,6 @@ $("body").delegate(".editFile","change", function(){
       postsNumber: $(".posts div:nth-child(10)"),
       previewImage : $(this).parents("#blogForm").find("#preview")
     }
-    console.log(postsData.previewImage)
     var checkable = [$("input[name='title']"), $("textarea[name='body']")];
     var fields = [$("input[name='title']"), $("textarea[name='body']"), $("input[name='tags']")];
 
@@ -191,13 +199,14 @@ $("body").delegate(".editFile","change", function(){
             processData: false,
             data: formData
           }).done(function(post){
+
             removeRed(fields);
             postsData.previewImage.attr('src', '');
             var tags = "";
             $(":file").val('')
             var image = "<img class='postImage' id='preview'>";
             var deleteImageButton ='';
-            var changeImageButton = '';
+            var changeImageForm = '';
             var fileUploadInput = '';
             var categories = [];
             post.tags.forEach(function(tag){
@@ -205,14 +214,15 @@ $("body").delegate(".editFile","change", function(){
               categories.push(tag)
             })
             if (post.image) {
-              image = "<img src='" + post.image.url + "' class='postImage' id='preview'>";
+              image = "<img src='" + post.image.url + "' class='postImage' id='preview'>";;
               deleteImageButton = "<button class='deleteImage'>Delete Image</button>";
-              changeImageButton = "<button class='changeImage'>Change Image</button>"
+              changeImageButton = "<button class='changeImage'>Change Image</button>";
+              changeImageForm = "<button class='openChangeImage'>Change Image</button><div class='changeImageInput'><input type='file' name='image' class='editFile'><p class='removePreview'>X</p><button class='changeImage'>Submit Image</button></div>"
             } else {
               fileUploadInput = "<input type='file' name='image' class='editFile'><img id='preview' height='100'/><p class='removePreview'>X</p>";
             }
 
-            var editForm = "<div class='edit'><form id='editPostForm'>" + changeImageButton + deleteImageButton + fileUploadInput + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div>";
+            var editForm = "<div class='edit'><form id='editPostForm'>" + changeImageForm + deleteImageButton + fileUploadInput + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div>";
 
             var newPost = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a>" + image + "<p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + " <button class='deletePost'>Delete</button> <a href='/posts/"+post._id+"'>Comments (" + post.comments.length + ")</a></div>";
             $(".posts").prepend(newPost);
@@ -599,6 +609,7 @@ var changeImage = function(event){
   var images = $(this).parents(".post").find(".postImage");
   var editForm = $(this).parents("#editPostForm");
   var formData = new FormData();
+  console.log($(this).parent().find('.editFile')[0].files[0])
   if ($(this).parent().find(".editFile").length !== 0) {
     formData.append('image', $(this).parent().find('.editFile')[0].files[0]);
   }
