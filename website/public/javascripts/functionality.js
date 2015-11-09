@@ -262,7 +262,7 @@ $("body").delegate(".editFile","change", function(){
 
             //empty the last post if the number of posts on the page is 10
             if (postsData.postsNumber === 10) {
-              postsData.lastPost.empty()
+              postsData.lastPost.empty();p
             }
 
           })
@@ -277,13 +277,17 @@ $("body").delegate(".editFile","change", function(){
   var deletePost = function(event){
     event.preventDefault();
     var post = $(this).parent();
-    var id = $(this).parent().attr("data-id")
+    var id = $(this).parent().attr("data-id");
+    var data = {
+      postNumber: $(".posts div:nth-child(1)").attr("data-id")
+    }
     $.ajax({
         url: '/posts/' + id,
         type: 'DELETE',
-        contentType: 'application/json'
+        contentType: 'application/json',
+        data: JSON.stringify(data)
       }).done(function(data){
-        post.empty();
+        newPost(data)
       })
   }
   $(".posts").on("click", ".deletePost", deletePost);
