@@ -210,12 +210,14 @@ router.get('/tags/:name', function(req, res){
 })
 
 router.get('/search', function(req, res){
+    console.log(req.query.params)
   Blog.Post.find(
     { $text: {$search: req.query.params}}
     ).sort({"_id":-1}).exec(function(err, posts){
     if (err) {
       res.send(err);
     } else {
+      console.log(posts)
       res.send(posts);
     }
   })

@@ -56,7 +56,7 @@ $(document).ready(function() {
     $("body").on("click", ".removeEditPreview", removeEditPreview)
 
 
-    var newPost = function(posts){
+    var newPost = function(posts, searchArray){
       $.ajax({
           type: 'GET',
           url: "/isAuthenticated",
@@ -92,6 +92,9 @@ $(document).ready(function() {
           $(".posts").append(post);
           $(".postImage#preview").show()
         });
+        if (searchArray) {
+          $("p").highlight(searchArray);
+        }
       });
     };
 
@@ -457,7 +460,9 @@ $("body").delegate(".editFile","change", function(){
 
   $("input[name='searchPosts']").on("keypress", function(event){
     if(event.which == 13){
-      var searchArray = {params: $(this).val().trim().replace(/[^a-zA-Z ]/g, '')};
+      var searchArray = {params: $(this).val().trim().toLowerCase()};
+      var word = $(this).val().replace(/[^a-zA-Z ]/g, '');
+      console.log($(this).val())
       $.ajax({
         url: '/search',
         type: 'GET',
@@ -465,7 +470,7 @@ $("body").delegate(".editFile","change", function(){
         contentType: 'application/json'
       }).done(function(posts){
         $("input[name='searchPosts']").val('');
-        newPost(posts);
+        newPost(posts, word);
         $('.all_posts').show();
       })
     }
