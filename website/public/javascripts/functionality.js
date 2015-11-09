@@ -32,17 +32,28 @@ $(document).ready(function() {
       return date.toDateString()
     }
 
-    var removePreview = function(event){
+    var removePostPreview = function(event){
       event.preventDefault();
       var preview = $(this).prev();
       preview.fadeOut(1000, function() {
         $(this).removeProp('src');
-        $(this).parents().find(".editFile").replaceWith(selected_photo = $(this).parents().find(".editFile").clone(true));
+        $(this).parents().find(".editFile").replaceWith(selected_photo = $(this).parents().find(".editFile"));
       });
     }
 
-    $("body").on("click", ".removePreview", removePreview)
+    var removeEditPreview = function(event){
+      event.preventDefault();
+      var preview = $(this).parents(".edit").find("img#preview");
+      var imageUrl = $(this).data("img_url")
+      preview.fadeOut(1000, function(){
+        $(this).attr("src", imageUrl).show();
+        $(":file").val('');
+        $(this).parents().find(".editFile").replaceWith(selected_photo = $(this).parents().find(".editFile"));
+      })
+    }
 
+    $("body").on("click", ".removePostPreview", removePostPreview)
+    $("body").on("click", ".removeEditPreview", removeEditPreview)
 
 
     var newPost = function(posts){
@@ -68,11 +79,11 @@ $(document).ready(function() {
               image = "<img src='" + post.image.url + "' class='postImage' id='preview'>";
               deleteImageButton = "<button class='deleteImage'>Delete Image</button>";
               changeImageButton = "<button class='changeImage'>Change Image</button>";
-              changeImageForm = "<button class='openChangeImage'>Change Image</button><div class='changeImageInput'><input type='file' name='image' class='editFile'><p class='removePreview'>X</p><button class='changeImage'>Submit Image</button></div>"
+              changeImageForm = "<button class='openChangeImage'>Change Image</button><div class='changeImageInput'><button class='removeEditPreview'>Remove preview</button><input type='file' name='image' class='editFile'><button class='changeImage'>Submit Image</button></div>"
             } else {
-              fileUploadInput = "<input type='file' name='image' class='editFile'><img id='preview' height='100'/><p class='removePreview'>X</p>";
+              fileUploadInput = "<input type='file' name='image' class='editFile'>";
             }
-           editForm = " </div><button class='openEdit'>Edit</button><div class='edit'><form id='editPostForm'>" + changeImageForm + deleteImageButton + fileUploadInput + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><input type='file' name='image' class='editFile'><img id='preview' height='100'/><p class='removePreview'>X</p><button class='editPost'>Submit</button></form></div><button class='deletePost'>Delete</button> "
+           editForm = " </div><button class='openEdit'>Edit</button><div class='edit'><form id='editPostForm'>" + changeImageForm + deleteImageButton + fileUploadInput + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><input type='file' name='image' class='editFile'><button class='editPost'>Submit</button></form></div><button class='deletePost'>Delete</button> "
           }
           if (post.image) {
             image = "<img src='" + post.image.url +"' class='postImage' id='preview'>"
@@ -123,7 +134,12 @@ $(document).ready(function() {
       if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-          $(input).parents("form").find("#preview").attr('src', e.target.result);
+          if($(input).parents("#blogForm").length){
+            $(input).parents("form").find("#preview").attr('src', e.target.result);
+          } else {
+            $(input).parents(".edit").find(".removeEditPreview").data("img_url", $(input).parents(".post").find("#preview").attr('src'))
+            $(input).parents(".edit").find("#preview").attr('src', e.target.result);
+          }
           $(input).parents("form").find("#preview").show();
         }
       reader.readAsDataURL(input.files[0]);
@@ -179,7 +195,7 @@ $("body").delegate(".editFile","change", function(){
 
     var formData = new FormData();
     var form = $('form').serializeArray();
-    formData.append("image", $(":file")[0].files[0]);
+    formData.append("image", $(":file")[$(":file").length-1].files[0]);
     $.each(form,function(key,input){
         formData.append(input.name,input.value);
     });
@@ -217,7 +233,7 @@ $("body").delegate(".editFile","change", function(){
               image = "<img src='" + post.image.url + "' class='postImage' id='preview'>";;
               deleteImageButton = "<button class='deleteImage'>Delete Image</button>";
               changeImageButton = "<button class='changeImage'>Change Image</button>";
-              changeImageForm = "<button class='openChangeImage'>Change Image</button><div class='changeImageInput'><input type='file' name='image' class='editFile'><p class='removePreview'>X</p><button class='changeImage'>Submit Image</button></div>"
+              changeImageForm = "<button class='openChangeImage'>Change Image</button><div class='changeImageInput'><button class='removeEditPreview'>Remove preview</button><input type='file' name='image' class='editFile'><button class='changeImage'>Submit Image</button></div>"
             } else {
               fileUploadInput = "<input type='file' name='image' class='editFile'><img id='preview' height='100'/><p class='removePreview'>X</p>";
             }
@@ -274,12 +290,17 @@ $("body").delegate(".editFile","change", function(){
   var openEdit = function(){
     var editForm = $(this).next();
     var post = $(this).parent().children(".postData");
+    var changeImageInput = editForm.find(".changeImageInput");
     if (!editForm.is(":visible")){
       editForm.show();
       post.hide();
       post.find("#preview").clone().prependTo(editForm)
       $(this).text("Close");
     } else {
+      post.find("img").attr("src", editForm.find(".removeEditPreview").data("img_url"))
+      changeImageInput.hide();
+      editForm.find(".openChangeImage").text("Change Image");
+      $(":file").val("");
       editForm.hide();
       post.show();
       editForm.find("#preview").remove();
@@ -487,7 +508,6 @@ $("body").delegate(".editFile","change", function(){
         $(".all_posts").hide();
       }
       if (postPages.totalPages !== postPages.currentPage) {
-        console.log("hi")
         $(".olderPosts").show();
       }
 
@@ -597,6 +617,8 @@ $("body").delegate(".editFile","change", function(){
       changeImageInput.show();
       $(this).text("Nevermind, the picture is perfect");
     } else {
+      $(this).parents(".post").find("img").attr("src", editForm.find(".removeEditPreview").data("img_url"))
+      $(":file").val("")
       changeImageInput.hide();
       $(this).text("Change Image");
     }
@@ -609,7 +631,6 @@ var changeImage = function(event){
   var images = $(this).parents(".post").find(".postImage");
   var editForm = $(this).parents("#editPostForm");
   var formData = new FormData();
-  console.log($(this).parent().find('.editFile')[0].files[0])
   if ($(this).parent().find(".editFile").length !== 0) {
     formData.append('image', $(this).parent().find('.editFile')[0].files[0]);
   }
@@ -623,7 +644,6 @@ var changeImage = function(event){
     images.attr("src", data.image.url);
     editForm.find(".changeImageInput").hide();
     editForm.find(".openChangeImage").text('Change Image');
-    console.log(editForm)
   });
 }
 

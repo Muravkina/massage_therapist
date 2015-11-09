@@ -156,8 +156,10 @@ router.get('/posts/:id', function(req, res){
     if (err) {
       res.send(err)
     } else {
-
-      res.render('post', {post: post, user: req.user})
+      tags = post.tags.join(', ')
+      Blog.Post.find({tags: {$in: post.tags}}).sort({"_id":-1}).limit(3).exec(function(err, relatedPosts){
+        res.render('post', {post: post, user: req.user, relatedPosts: relatedPosts})
+      })
     }
   })
 })

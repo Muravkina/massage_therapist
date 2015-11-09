@@ -46,3 +46,14 @@
     <% }) %>
   </div><!--commentsCollection-->
 </div><!--post-->
+<div class="relatedPosts">
+  <% relatedPosts.forEach(function(relatedPost){ %>
+    <% if(relatedPost.id !== post.id) { %>
+      <% if (relatedPost.image.url) { %>
+        <img src="<%=relatedPost.image.url%>">
+      <% } %>
+      <a href="/posts/<%=post.id%>"><%= relatedPost.title %></a>
+      <p><%= relatedPost.body.substr(0, 200) %></p>
+    <% } %>
+  <% }) %>
+</div><!--relatedPosts-->

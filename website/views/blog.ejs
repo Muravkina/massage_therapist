@@ -46,8 +46,8 @@
             <% if (post.image.url) { %>
               <button class="openChangeImage">Change Image</button>
               <div class="changeImageInput">
+                <button class="removeEditPreview">Remove preview</button>
                 <input type="file" name="image" class="editFile">
-                <p class="removePreview">X</p>
                 <button class="changeImage">Submit Image</button>
               </div><!--changeImageInput-->
               <button class="deleteImage">Delete Image</button>
@@ -83,7 +83,7 @@
     <input type="text" id="tags" name="tags">
     <input type="file" name="image" class="editFile">
     <img id="preview" height="100" />
-    <p class="removePreview">X</p>
+    <p class="removePostPreview">X</p>
     <button class="submitPost">Submit</button>
   </form>
 
