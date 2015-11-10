@@ -1,82 +1,82 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <title>Ilia Gerassimov - Massage Therapy</title>
-    <head>
+    <title>Ilia Gerassimov - Massage Therapy</title>
 
-      <% include ./partials/head %>
+    <% include ./partials/head %>
+    <!-- Facebook sharing content -->
+    <meta property="og:url"           content="http://87e30bfa.ngrok.io/posts/<%= post._id %>" />
+    <meta property="og:title"         content="<%= post.title %>" />
+    <meta property="og:description"   content="<%= post.body %>" />
+    <meta property="og:image"         content="<%= post.image.url %>" />
+    <meta property="og:image:type"    content="image/png">
+    <meta property="og:image:width"        content="1200" />
+    <meta property="og:image:height"        content="1200" />
+  </head>
+  <body>
 
-      <meta property="og:url"           content="http://87e30bfa.ngrok.io/posts/<%= post._id %>" />
-      <meta property="og:title"         content="<%= post.title %>" />
-      <meta property="og:description"   content="<%= post.body %>" />
-      <meta property="og:image"         content="<%= post.image.url %>" />
-      <meta property="og:image:type"    content="image/png">
-      <meta property="og:image:width"        content="1200" />
-      <meta property="og:image:height"        content="1200" />
-    </head>
-    <body>
+    <div class="socialShare">
+      <div class="fb-share-button" data-href="https://a69379a9.ngrok.io/blog" data-layout="button"></div>
+    </div><!--socialShare-->
 
-<div class="socialShare">
-  <div class="fb-share-button" data-href="https://a69379a9.ngrok.io/blog" data-layout="button"></div>
-</div>
-<div class="post" data-id="<%= post.id %>">
-  <p>
-    <% var date = new Date(post.date); date = date.toDateString() %>
-    <%= date %>
-  </p>
-  <p><%= post.title %></p>
-  <% if (post.image.url) { %>
-    <img src="<%= post.image.url%>">
-  <% } %>
-  <p><%= post.body %></p>
-  <p>
-    <% post.tags.forEach(function(tag){ %>
-      <span><%= tag %></span>
-    <% }) %>
-  </p>
-  <p>Comments</p>
-  <button class="openComment">Leave a comment</button>
-  <div class="commentForm">
-    <div class="formErrors"></div>
-    <form id="commentForm">
-      <input type="text" name="commentTitle" placeholder="Title">
-      <textarea name="commentBody" placeholder="Leave a comment"></textarea>
-      <input type="text" name="commentAuthorName" placeholder="Name">
-      <input type="text" name="commentAuthorEmail" placeholder="Email">
-      <input type="text" name="commentAuthorWebsite" placeholder="Website">
-      <button class="submitComment">Submit comment</button>
-    </form>
-  </div>
-  <div class="commentsCollection">
-    <% post.comments.forEach(function(comment){ %>
-      <div class="comment" data-id="<%= comment.id %>">
-        <p>
-          <% var date = new Date(comment.date); date = date.toDateString() %>
-          <%= date %>
-        </p>
-        <p class="commentTitle"><%= comment.title %></p>
-        <p class="commentBody"><%= comment.body %></p>
-        <p class="commentAuthorName"><%= comment.name %></p>
-        <p class="commentAuthorWebsite"><%= comment.website %></p>
-        <% if(user) { %>
-          <button class="deleteComment">Delete</button>
-        <% } %>
-      </div>
-    <% }) %>
-  </div><!--commentsCollection-->
-</div><!--post-->
-<div class="relatedPosts">
-  <% relatedPosts.forEach(function(relatedPost){ %>
-    <% if(relatedPost.id !== post.id) { %>
-      <% if (relatedPost.image.url) { %>
-        <img src="<%=relatedPost.image.url%>">
+    <div class="post" data-id="<%= post.id %>">
+      <p>
+        <% var date = new Date(post.date); date = date.toDateString() %>
+        <%= date %>
+      </p>
+      <p><%= post.title %></p>
+      <% if (post.image.url) { %>
+        <img src="<%= post.image.url%>">
       <% } %>
-      <a href="/posts/<%=post.id%>"><%= relatedPost.title %></a>
-      <p><%= relatedPost.body.substr(0, 200) %></p>
-    <% } %>
-  <% }) %>
-</div><!--relatedPosts-->
+      <p><%= post.body %></p>
+      <p>
+        <% post.tags.forEach(function(tag){ %>
+          <span><%= tag %></span>
+        <% }) %>
+      </p>
+      <p>Comments</p>
+      <button class="openComment">Leave a comment</button>
+      <div class="commentForm">
+        <div class="formErrors"></div>
+        <form id="commentForm">
+          <input type="text" name="commentTitle" placeholder="Title">
+          <textarea name="commentBody" placeholder="Leave a comment"></textarea>
+          <input type="text" name="commentAuthorName" placeholder="Name">
+          <input type="text" name="commentAuthorEmail" placeholder="Email">
+          <input type="text" name="commentAuthorWebsite" placeholder="Website">
+          <button class="submitComment">Submit comment</button>
+        </form>
+      </div>
+      <div class="commentsCollection">
+        <% post.comments.forEach(function(comment){ %>
+          <div class="comment" data-id="<%= comment.id %>">
+            <p>
+              <% var date = new Date(comment.date); date = date.toDateString() %>
+              <%= date %>
+            </p>
+            <p class="commentTitle"><%= comment.title %></p>
+            <p class="commentBody"><%= comment.body %></p>
+            <p class="commentAuthorName"><%= comment.name %></p>
+            <p class="commentAuthorWebsite"><%= comment.website %></p>
+            <% if(user) { %>
+              <button class="deleteComment">Delete</button>
+            <% } %>
+          </div>
+        <% }) %>
+      </div><!--commentsCollection-->
+    </div><!--post-->
+    <div class="relatedPosts">
+      <% relatedPosts.forEach(function(relatedPost){ %>
+        <% if(relatedPost.id !== post.id) { %>
+          <% if (relatedPost.image.url) { %>
+            <img src="<%=relatedPost.image.url%>">
+          <% } %>
+          <a href="/posts/<%=post.id%>"><%= relatedPost.title %></a>
+          <p><%= relatedPost.body.substr(0, 200) %></p>
+        <% } %>
+      <% }) %>
+    </div><!--relatedPosts-->
 
-<% include ./partials/fb_share.ejs %>
+    <% include ./partials/fb_share.ejs %>
 
-</body>
+  </body>
