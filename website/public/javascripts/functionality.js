@@ -46,6 +46,11 @@ $(document).ready(function() {
       currentPage: 1
     }
 
+    var tagPostsPages = {
+      totalPages: 0,
+      currentPage: 1
+    }
+
     var removeEditPreview = function(event){
       event.preventDefault();
       var preview = $(this).parents(".edit").find("img#preview");
@@ -102,13 +107,19 @@ $(document).ready(function() {
             $(".posts").append(post);
             $(".postImage#preview").show()
           });
-          if (searchArray) {
+          if (searchArray && searchArray !== "searchByTags") {
             $("p").highlight(searchArray);
-          }
-          if(totalPosts > 10) {
-            searchPostsPages.totalPages = Math.ceil(totalPosts/10);
-            $(".olderSearchPosts").show()
-            $(".olderPosts").hide();
+            if(totalPosts > 10) {
+              searchPostsPages.totalPages = Math.ceil(totalPosts/10);
+              $(".olderSearchPosts").show()
+              $(".olderPosts").hide();
+            }
+          } else if (searchArray && searchArray === "searchByTags"){
+            if(totalPosts > 10) {
+              tagPostsPages.totalPages = Math.ceil(totalPosts/10);
+              $(".olderTagPosts").show()
+              $(".olderPosts").hide();
+            }
           }
         }
       });
@@ -443,12 +454,13 @@ $("body").delegate(".editFile","change", function(){
 // search by tags
   var searchTag = function(){
     var tag = $(this).text();
+    $(".tagPagination").data('searchTag', tag)
     $.ajax({
       url: '/tags/' + tag,
       type: 'GET',
       contentType: 'application/json'
-    }).done(function(posts){
-      newPost(posts);
+    }).done(function(data){
+      newPost(data.posts, "searchByTags", data.count);
       $('.all_posts').show();
     });
   }
@@ -573,8 +585,7 @@ $("body").delegate(".editFile","change", function(){
 //back to all posts
 
   var backToPosts = function(){
-    $('.olderSearchPosts').hide();
-    $('.newerSearchPosts').hide();
+    $('.olderSearchPosts, .newerSearchPosts, .olderTagPosts, .newerTagPosts').hide();
     $('.olderPosts').show();
     $.ajax({
         url: '/blog',
@@ -712,7 +723,6 @@ var changeImage = function(event){
       contentType: 'application/json',
       data: data
     }).done(function(posts){
-      console.log(posts)
       newPost(posts, data.word);
       searchPostsPages.currentPage -=1;
       if (searchPostsPages.currentPage === 1) {
@@ -730,5 +740,50 @@ var changeImage = function(event){
 
   //pagination on search by tag
 
+  var getOlderTagPosts = function(){
+    var data = {
+      id: $(".posts div:nth-child(10)").attr("data-id"),
+      searchTag: $(".tagPagination").data('searchTag')
+    };
+     $.ajax({
+      url: '/olderTagPosts',
+      type: 'GET',
+      contentType: 'application/json',
+      data: data
+    }).done(function(posts){
+      newPost(posts, "searchByTags");
+      $(".newerTagPosts").show();
+      $(".all_posts").show();
+      tagPostsPages .currentPage += 1;
+      if (tagPostsPages.totalPages === tagPostsPages.currentPage){
+          $(".olderTagPosts").hide();
+      }
+    })
+  }
 
+  var getNewerTagPosts = function(){
+    var data = {
+      id: $(".posts div:nth-child(1)").attr("data-id"),
+      searchTag: $(".tagPagination").data('searchTag')
+    };
+     $.ajax({
+      url: '/newerTagPosts',
+      type: 'GET',
+      contentType: 'application/json',
+      data: data
+    }).done(function(posts){
+      console.log(posts)
+      newPost(posts, "serachByTags");
+      tagPostsPages.currentPage -=1;
+      if (tagPostsPages.currentPage === 1) {
+        $(".newerTagPosts").hide();
+      }
+      if (tagPostsPages.totalPages !== tagPostsPages.currentPage) {
+        $(".olderTagPosts").show();
+      }
+    })
+  }
+
+  $(".pages").on("click", ".olderTagPosts", getOlderTagPosts);
+  $(".pages").on("click", ".newerTagPosts", getNewerTagPosts)
 });

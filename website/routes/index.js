@@ -261,7 +261,15 @@ router.delete('/posts/:postId/comments/:commentId', function(req, res){
 
 router.get('/tags/:name', function(req, res){
   Blog.Post.find({tags: { $in: [req.params.name] }}).sort({"_id":-1}).limit(10).exec(function(err, posts){
-    res.send(posts);
+    if (err) {res.send(err)}
+    else {
+      Blog.Post.count({tags: { $in: [req.params.name] }}, function(err, count){
+        if(err){res.send(err)}
+        else{
+          res.send({posts:posts, count:count});
+        }
+      })
+    }
   })
 })
 
@@ -384,7 +392,7 @@ router.post('/addEmail', function(req, res, next){
 })
 
 router.get('/olderSearchPosts', function(req, res, next){
-  Blog.Post.find({ $text: {$search: req.query.searchWords}, _id : { "$lt" : req.query.id } } ).sort({"_id":-1}).exec(function(err,posts){
+  Blog.Post.find({ $text: {$search: req.query.searchWords}, _id : { "$lt" : req.query.id } } ).sort({"_id":-1}).limit(10).exec(function(err,posts){
     if (err) {
       console.log("db error in GET /olderPosts: " + err);
       res.render('error');
@@ -395,7 +403,7 @@ router.get('/olderSearchPosts', function(req, res, next){
 })
 
 router.get('/newerSearchPosts', function(req, res, next){
-  Blog.Post.find({ $text: {$search: req.query.searchWords}, _id : { "$gt" : req.query.id } } ).sort({"_id":1}).exec(function(err,posts){
+  Blog.Post.find({ $text: {$search: req.query.searchWords}, _id : { "$gt" : req.query.id } } ).sort({"_id":1}).limit(10).exec(function(err,posts){
     if (err) {
       console.log("db error in GET /olderPosts: " + err);
       res.render('error');
@@ -406,5 +414,28 @@ router.get('/newerSearchPosts', function(req, res, next){
   });
 })
 
+router.get('/olderTagPosts', function(req, res, next){
+  Blog.Post.find({ tags: { $in: [req.query.searchTag] }, _id : { "$lt" : req.query.id } } ).sort({"_id":-1}).limit(10).exec(function(err,posts){
+    if (err) {
+      console.log("db error in GET /olderPosts: " + err);
+      res.render('error');
+    } else {
+      res.send(posts)
+    }
+  });
+})
+
+router.get('/newerTagPosts', function(req, res, next){
+  Blog.Post.find({ tags: { $in: [req.query.searchTag] }, _id : { "$gt" : req.query.id } } ).sort({"_id":1}).limit(10).exec(function(err,posts){
+    console.log(posts)
+    if (err) {
+      console.log("db error in GET /olderPosts: " + err);
+      res.render('error');
+    } else {
+      posts.reverse();
+      res.send(posts)
+    }
+  });
+})
 
 module.exports = router;
