@@ -637,5 +637,23 @@ var changeImage = function(event){
  $(".posts").on("click", ".openChangeImage", openChange)
  $(".posts").on("click", ".changeImage", changeImage)
 
+// subscribe by email
 
+var addEmailToSubscribeList = function(event){
+  event.preventDefault();
+  var data = {
+    email : $(".subscribeEmail").val()
+  }
+  $.ajax({
+    url: '/addEmail',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify(data)
+  }).done(function(email){
+    console.log(email)
+  });
+
+}
+
+$(".subscribeByEmail").on("click", addEmailToSubscribeList)
 });

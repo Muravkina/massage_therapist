@@ -6,13 +6,54 @@ var Blog = require("./../models/blog");
 var User = require("./../models/user");
 var crypto = require( "crypto" );
 var formidable = require('formidable');
-var S3 = require("../config")
+var S3 = require("../config");
+var nodemailer = require('nodemailer');
+var sgTransport = require('nodemailer-sendgrid-transport');
+
+//emailer
+var options = {
+    auth: {
+        api_user: process.env.SG_USERNAME,
+        api_key: process.env.SG_PASSWORD
+    }
+}
+
+var mailer = nodemailer.createTransport(sgTransport(options));
+
+//Amazon S3 configuration
 var knox = require('knox').createClient({
     key: S3.S3_KEY,
     secret: S3.S3_SECRET,
     bucket: S3.S3_BUCKET
 });
 
+// send email with the email template
+var sendEmails = function(){
+  Blog.EmailList.find({}, {email: 1, _id: 0 }).exec(function(err, emails){
+    if(err){res.send(err)}
+    else {
+      var emailList = [];
+      emails.forEach(function(email){
+        emailList.push(email.email)
+      })
+      var email = {
+        from: 'massagebygerill@gmail.com',
+        to: emailList.join(", "),
+        subject: 'Hello',
+        text: 'Hello world',
+        html: '<b>Hello world</b>'
+      };
+      mailer.sendMail(email, function(err, info){
+        if (err ){
+          console.log(err);
+        }
+        else {
+          console.log('Message sent: ' + info.response);
+        }
+      });
+    }
+  })
+}
 
 
 router.get('/', function(req, res, next) {
@@ -111,13 +152,20 @@ router.post('/blog', function(req, res){
           post.save()
           Blog.Post.find({}).limit(10).sort({date: 'desc'}).exec(function(err, posts){
             if (err) {res.send(err)}
-            else {res.send({posts: posts, post: post})}
+            else {
+              //send notification to subscribed users
+              // sendEmails();
+              res.send({posts: posts, post: post})
+            }
           })
           })
         } else {
           Blog.Post.find({}).limit(10).sort({date: 'desc'}).exec(function(err, posts){
             if (err) {res.send(err)}
-            else {res.send({posts: posts, post: post})}
+            else {
+              // sendEmails();
+              res.send({posts: posts, post: post})
+            }
           })
         }
       })
@@ -321,6 +369,13 @@ router.put('/changeImage/:id', function(req, res, next){
       });
     });
   })
+})
+
+router.post('/addEmail', function(req, res, next){
+  new Blog.EmailList({email: req.body.email}).save(function(err, email){
+    if(err){res.send(err)}
+    else {res.send(email)}
+  });
 })
 
 

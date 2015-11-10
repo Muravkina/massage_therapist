@@ -36,17 +36,19 @@ Posts.plugin(crate, {
   }
 })
 
-Posts.index({title: "text", body: "text"});
+var EmailList = new mongoose.Schema({
+    email : String
+})
 
-Posts.methods.getFirstTen = function(callback){
-    callback("wooho")
-}
+Posts.index({title: "text", body: "text"});
 
 var Post = mongoose.model('Post', Posts);
 var Comment = mongoose.model('Comment', Comments);
+var EmailList = mongoose.model('EmailList', EmailList)
 
 module.exports = {
     Post    : Post,
-    Comment: Comment
+    Comment : Comment,
+    EmailList : EmailList
 }
 

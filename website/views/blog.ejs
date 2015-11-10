@@ -16,7 +16,10 @@
     <div class="socialShare">
       <div class="fb-share-button" data-href="https://a69379a9.ngrok.io/blog" data-layout="button"></div>
       <a href="https://twitter.com/share" class="twitter-share-button" data-via="Muravkina">Tweet</a>
-    </div>
+    </div><!--socialShare-->
+
+    <% include ./partials/side_bar %>
+
     <div class="categories">
       <% tags.forEach(function(tag){ %>
         <p class="searchTag"><%= tag %></p>

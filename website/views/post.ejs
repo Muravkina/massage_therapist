@@ -17,10 +17,12 @@
 
     <div class="socialShare">
       <!--Facebook share button-->
-      <div class="fb-share-button" data-href="http://16c4d911.ngrok.io/blog" data-layout="button_count"></div>
+      <div class="fb-share-button" data-href="http://16c4d911.ngrok.io/posts<%= post._id %>" data-layout="button_count"></div>
       <!--Twitter share button-->
       <a href="https://twitter.com/share" class="twitter-share-button" data-via="Muravkina">Tweet</a>
     </div><!--socialShare-->
+
+    <% include ./partials/side_bar %>
 
     <div class="post" data-id="<%= post.id %>">
       <p>
