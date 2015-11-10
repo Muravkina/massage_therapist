@@ -38,6 +38,10 @@ Posts.plugin(crate, {
 
 Posts.index({title: "text", body: "text"});
 
+Posts.methods.getFirstTen = function(callback){
+    callback("wooho")
+}
+
 var Post = mongoose.model('Post', Posts);
 var Comment = mongoose.model('Comment', Comments);
 

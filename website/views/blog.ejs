@@ -1,92 +1,111 @@
-<% layout('layout') -%>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ilia Gerassimov - Massage Therapy</title>
+    <% include ./partials/head %>
+    <meta property="og:type"          content="blog" />
+    <meta property="og:title"         content="Ilia Gerassimov - Massage" />
+    <meta property="og:description"   content="Relaxed blog" />
+    <meta property="og:image"         content="http://localhost:3000/images/hands_massage.jpg" />
+    <meta property="og:image:type"    content="image/png">
+    <meta property="og:image:width"        content="1200" />
+    <meta property="og:image:height"        content="1200" />
+    <link rel='stylesheet' href='/stylesheets/blog.css' />
+  </head>
+  <body>
+    <div class="socialShare">
+      <div class="fb-share-button" data-href="https://a69379a9.ngrok.io/blog" data-layout="button"></div>
+    </div>
+    <div class="categories">
+      <% tags.forEach(function(tag){ %>
+        <p class="searchTag"><%= tag %></p>
+      <% }) %>
+    </div><!--categories-->
 
-<div class="categories">
-  <% tags.forEach(function(tag){ %>
-    <p class="searchTag"><%= tag %></p>
-  <% }) %>
-</div><!--categories-->
+    <div class="searchBox">
+      <input type="search" autocomplete="on" name="searchPosts" placeholder="To search type and hit enter">
+    </div><!--searchBox-->
 
-<div class="searchBox">
-  <input type="search" autocomplete="on" name="searchPosts" placeholder="To search type and hit enter">
-</div><!--searchBox-->
+    <div class="popularPosts">
+      <% popularPosts.forEach(function(post){ %>
+        <p><%= post.title %></p>
+        <p><%= post.body.substr(0, 100) %></p>
+      <% }) %>
+    </div>
 
-<div class="popularPosts">
-  <% popularPosts.forEach(function(post){ %>
-    <p><%= post.title %></p>
-    <p><%= post.body.substr(0, 100) %></p>
-  <% }) %>
-</div>
-<button class="all_posts back">Back</button>
-<div class="posts">
-  <% posts.forEach(function(post){ %>
-    <div class="post" data-id= <%= post.id %>>
-      <div class="postData">
-        <p class="postDate">
-          <% var date = new Date(post.date); date = date.toDateString() %>
-          <%= date %>
-        </p>
-        <a  href="/posts/<%= post.id %>" class="postTitle"><%= post.title %></a>
+    <button class="all_posts back">Back</button>
+    <div class="posts">
+      <% posts.forEach(function(post){ %>
+        <div class="post" data-id= <%= post.id %>>
+          <div class="postData">
+            <p class="postDate">
+              <% var date = new Date(post.date); date = date.toDateString() %>
+              <%= date %>
+            </p>
+            <a  href="/posts/<%= post.id %>" class="postTitle"><%= post.title %></a>
 
-        <img
-        <% if (post.image.url) { %>
-          src="<%= post.image.url%>"
-        <% } %>
-        class="postImage" id="preview">
-        <p class="postBody"><%= post.body %></p>
-        <p class="postTags">
-          <% post.tags.forEach(function(tag){ %>
-            <span class="searchTag"><%= tag %></span>
-          <% }) %>
-        </p>
-      </div>
-      <% if (user) { %>
-        <button class="openEdit">Edit</button>
-      <div class="edit">
-        <form id="editPostForm">
+            <img
             <% if (post.image.url) { %>
-              <button class="openChangeImage">Change Image</button>
-              <div class="changeImageInput">
-                <button class="removeEditPreview">Remove preview</button>
-                <input type="file" name="image" class="editFile">
-                <button class="changeImage">Submit Image</button>
-              </div><!--changeImageInput-->
-              <button class="deleteImage">Delete Image</button>
-            <% } else { %>
-              <input type="file" name="image" class="editFile">
-              <p class="removePreview">X</p>
+              src="<%= post.image.url%>"
             <% } %>
-          <input type="text" name="editPostTitle" value="<%=post.title %>" class="editPostTitle">
-          <textarea name="editPostBody" class="editPostBody"><%= post.body %></textarea>
-          <input type="text" name="editPostTags" class="editPostTags" value="<%= post.tags.join(', ') %>">
-          <button class="editPost">Submit</button>
-        </form>
-      </div>
-      <button class="deletePost">Delete</button>
+            class="postImage" id="preview">
+            <p class="postBody"><%= post.body %></p>
+            <p class="postTags">
+              <% post.tags.forEach(function(tag){ %>
+                <span class="searchTag"><%= tag %></span>
+              <% }) %>
+            </p>
+          </div>
+          <% if (user) { %>
+            <button class="openEdit">Edit</button>
+          <div class="edit">
+            <form id="editPostForm">
+                <% if (post.image.url) { %>
+                  <button class="openChangeImage">Change Image</button>
+                  <div class="changeImageInput">
+                    <button class="removeEditPreview">Remove preview</button>
+                    <input type="file" name="image" class="editFile">
+                    <button class="changeImage">Submit Image</button>
+                  </div><!--changeImageInput-->
+                  <button class="deleteImage">Delete Image</button>
+                <% } else { %>
+                  <input type="file" name="image" class="editFile">
+                  <p class="removePreview">X</p>
+                <% } %>
+              <input type="text" name="editPostTitle" value="<%=post.title %>" class="editPostTitle">
+              <textarea name="editPostBody" class="editPostBody"><%= post.body %></textarea>
+              <input type="text" name="editPostTags" class="editPostTags" value="<%= post.tags.join(', ') %>">
+              <button class="editPost">Submit</button>
+            </form>
+          </div>
+          <button class="deletePost">Delete</button>
+          <% } %>
+          <a href="/posts/<%=post.id%>">Comments (<%= post.comments.length %>)</a>
+        </div><!--edit-->
+      <% }) %>
+    </div>
+    <div class="pages" data-id="<%= totalPosts %>">
+      <p class="newerPosts">Newer posts</p>
+      <% if (posts.length === 10) { %>
+        <p class="olderPosts">Older posts</p>
       <% } %>
-      <a href="/posts/<%=post.id%>">Comments (<%= post.comments.length %>)</a>
-    </div><!--edit-->
-  <% }) %>
-</div>
-<div class="pages" data-id="<%= totalPosts %>">
-  <p class="newerPosts">Newer posts</p>
-  <% if (posts.length === 10) { %>
-    <p class="olderPosts">Older posts</p>
-  <% } %>
-</div>
+    </div>
 
+    <button>New post</button>
+    <div class="formErrors"></div>
+    <form method="post" action="/blog" id="blogForm">
+      <input type="text" id="title" placeholder="Title" name="title"><br>
+      <textarea id="body" placeholder="Share your insights" name="body"></textarea><br>
+      <input type="text" id="tags" name="tags">
+      <input type="file" name="image" class="editFile">
+      <img id="preview" height="100" />
+      <p class="removePostPreview">X</p>
+      <button class="submitPost">Submit</button>
+    </form>
 
-  <button>New post</button>
-  <div class="formErrors"></div>
-  <form method="post" action="/blog" id="blogForm">
-    <input type="text" id="title" placeholder="Title" name="title"><br>
-    <textarea id="body" placeholder="Share your insights" name="body"></textarea><br>
-    <input type="text" id="tags" name="tags">
-    <input type="file" name="image" class="editFile">
-    <img id="preview" height="100" />
-    <p class="removePostPreview">X</p>
-    <button class="submitPost">Submit</button>
-  </form>
-
-
-<script src="/javascripts/highlight.js"></script>
-
+    <script src="/javascripts/highlight.js"></script>
+    <script src="/javascripts/functionality.js"></script>
+    <script src="/javascripts/beauty.js"></script>
+    <% include ./partials/fb_share.ejs %>
+  </body>
+</html>

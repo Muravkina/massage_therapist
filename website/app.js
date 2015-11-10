@@ -8,7 +8,6 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-
 require('dotenv').load();
 
 var routes = require('./routes/index');

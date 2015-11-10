@@ -1,5 +1,24 @@
-<% layout('layout') -%>
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Ilia Gerassimov - Massage Therapy</title>
+    <head>
 
+      <% include ./partials/head %>
+
+      <meta property="og:url"           content="http://87e30bfa.ngrok.io/posts/<%= post._id %>" />
+      <meta property="og:title"         content="<%= post.title %>" />
+      <meta property="og:description"   content="<%= post.body %>" />
+      <meta property="og:image"         content="<%= post.image.url %>" />
+      <meta property="og:image:type"    content="image/png">
+      <meta property="og:image:width"        content="1200" />
+      <meta property="og:image:height"        content="1200" />
+    </head>
+    <body>
+
+<div class="socialShare">
+  <div class="fb-share-button" data-href="https://a69379a9.ngrok.io/blog" data-layout="button"></div>
+</div>
 <div class="post" data-id="<%= post.id %>">
   <p>
     <% var date = new Date(post.date); date = date.toDateString() %>
@@ -57,3 +76,7 @@
     <% } %>
   <% }) %>
 </div><!--relatedPosts-->
+
+<% include ./partials/fb_share.ejs %>
+
+</body>

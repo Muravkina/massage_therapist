@@ -109,10 +109,16 @@ router.post('/blog', function(req, res){
         if (Object.keys(files).length !== 0) {
           post.attach('image', {path: files.image.path}, function(error){
           post.save()
-          res.send(post)
+          Blog.Post.find({}).limit(10).sort({date: 'desc'}).exec(function(err, posts){
+            if (err) {res.send(err)}
+            else {res.send({posts: posts, post: post})}
+          })
           })
         } else {
-          res.send(post)
+          Blog.Post.find({}).limit(10).sort({date: 'desc'}).exec(function(err, posts){
+            if (err) {res.send(err)}
+            else {res.send({posts: posts, post: post})}
+          })
         }
       })
     });

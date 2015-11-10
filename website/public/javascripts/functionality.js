@@ -211,64 +211,41 @@ $("body").delegate(".editFile","change", function(){
     var fields = [$("input[name='title']"), $("textarea[name='body']"), $("input[name='tags']")];
 
     if (fieldsAreValid(checkable)) {
-        $.ajax({
-            type: 'POST',
-            url: "/blog",
-            contentType: false,
-            processData: false,
-            data: formData
-          }).done(function(post){
+      $.ajax({
+        type: 'POST',
+        url: "/blog",
+        contentType: false,
+        processData: false,
+        data: formData
+      }).done(function(data){
+        removeRed(fields);
+        postsData.previewImage.attr('src', '');
+        var tags = "";
+        $(":file").val('')
+        newPost(data.posts);
 
-            removeRed(fields);
-            postsData.previewImage.attr('src', '');
-            var tags = "";
-            $(":file").val('')
-            var image = "<img class='postImage' id='preview'>";
-            var deleteImageButton ='';
-            var changeImageForm = '';
-            var fileUploadInput = '';
-            var categories = [];
-            post.tags.forEach(function(tag){
-              tags += "<span class='searchTag'>" + tag + "</span> ";
-              categories.push(tag)
-            })
-            if (post.image) {
-              image = "<img src='" + post.image.url + "' class='postImage' id='preview'>";;
-              deleteImageButton = "<button class='deleteImage'>Delete Image</button>";
-              changeImageButton = "<button class='changeImage'>Change Image</button>";
-              changeImageForm = "<button class='openChangeImage'>Change Image</button><div class='changeImageInput'><button class='removeEditPreview'>Remove preview</button><input type='file' name='image' class='editFile'><button class='changeImage'>Submit Image</button></div>"
-            } else {
-              fileUploadInput = "<input type='file' name='image' class='editFile'><img id='preview' height='100'/><p class='removePreview'>X</p>";
-            }
-
-            var editForm = "<div class='edit'><form id='editPostForm'>" + changeImageForm + deleteImageButton + fileUploadInput + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><button class='editPost'>Submit</button></form></div>";
-
-            var newPost = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a>" + image + "<p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p> </div><button class='openEdit'>Edit</button>" + editForm + " <button class='deletePost'>Delete</button> <a href='/posts/"+post._id+"'>Comments (" + post.comments.length + ")</a></div>";
-            $(".posts").prepend(newPost);
-
-            //update the categories
-            var uniqueCategories = [];
-            $(".categories").children().each(function(category){
-              categories.push($(this).text())
-            })
-            uniqueCategories = categories.filter(function(elem, index, self){
-              return index == self.indexOf(elem);
-            })
-            $(".categories").empty()
-            uniqueCategories.forEach(function(category){
-              var categoryField = "<p class='searchTag'>" + category + "</p>"
-              $(".categories").append(categoryField)
-            })
-
-            //empty the last post if the number of posts on the page is 10
-            if (postsData.postsNumber === 10) {
-              postsData.lastPost.empty();p
-            }
-
-          })
-      } else {
-        errorForm()
-      }
+        //update the categories
+        var categories = [];
+        data.post.tags.forEach(function(tag){
+          tags += "<span class='searchTag'>" + tag + "</span> ";
+          categories.push(tag)
+        })
+        var uniqueCategories = [];
+        $(".categories").children().each(function(category){
+          categories.push($(this).text())
+        })
+        uniqueCategories = categories.filter(function(elem, index, self){
+          return index == self.indexOf(elem);
+        })
+        $(".categories").empty()
+        uniqueCategories.forEach(function(category){
+          var categoryField = "<p class='searchTag'>" + category + "</p>"
+          $(".categories").append(categoryField)
+        })
+      })
+    } else {
+      errorForm()
+    }
   }
 
   $(".submitPost").on("click", submitPost)
