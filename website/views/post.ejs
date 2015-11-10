@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Ilia Gerassimov - Massage Therapy</title>
+    <title>Ilia Gerassimov - <%= post.title %></title>
 
     <% include ./partials/head %>
     <!-- Facebook sharing content -->
@@ -16,7 +16,10 @@
   <body>
 
     <div class="socialShare">
+      <!--Facebook share button-->
       <div class="fb-share-button" data-href="https://a69379a9.ngrok.io/blog" data-layout="button"></div>
+      <!--Twitter share button-->
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="Muravkina">Tweet</a>
     </div><!--socialShare-->
 
     <div class="post" data-id="<%= post.id %>">
@@ -77,6 +80,6 @@
       <% }) %>
     </div><!--relatedPosts-->
 
-    <% include ./partials/fb_share.ejs %>
+    <% include ./partials/social_share.ejs %>
 
   </body>
