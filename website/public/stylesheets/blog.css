@@ -1,4 +1,4 @@
-.edit, .closeEdit, .commentForm, .newerReviews, .newerPosts, .all_posts, .changeImageInput {
+.edit, .closeEdit, .commentForm, .newerReviews, .newerPosts, .all_posts, .changeImageInput,.olderSearchPosts, .newerSearchPosts {
   display: none;
 }
 .blog_centerpiece {

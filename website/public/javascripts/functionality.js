@@ -41,6 +41,11 @@ $(document).ready(function() {
       });
     }
 
+    var searchPostsPages = {
+      totalPages: 0,
+      currentPage: 1
+    }
+
     var removeEditPreview = function(event){
       event.preventDefault();
       var preview = $(this).parents(".edit").find("img#preview");
@@ -56,7 +61,7 @@ $(document).ready(function() {
     $("body").on("click", ".removeEditPreview", removeEditPreview)
 
 
-    var newPost = function(posts, searchArray){
+    var newPost = function(posts, searchArray, totalPosts){
       $.ajax({
           type: 'GET',
           url: "/isAuthenticated",
@@ -64,36 +69,47 @@ $(document).ready(function() {
       }).done(function(isAuthenticated){
         $(".posts").empty()
         var editForm = '';
-        posts.forEach(function(post){
-          var image = "<img class='postImage' id='preview'>";
-          var deleteImageButton ='';
-          var changeImageForm = '';
-          var changeImageButton = '';
-          var fileUploadInput = '';
-          var tags = "";
-          post.tags.forEach(function(tag){
-            tags += "<span class='searchTag'>" + tag + "</span> "
-          })
-          if (isAuthenticated) {
-            if (post.image) {
-              image = "<img src='" + post.image.url + "' class='postImage' id='preview'>";
-              deleteImageButton = "<button class='deleteImage'>Delete Image</button>";
-              changeImageButton = "<button class='changeImage'>Change Image</button>";
-              changeImageForm = "<button class='openChangeImage'>Change Image</button><div class='changeImageInput'><button class='removeEditPreview'>Remove preview</button><input type='file' name='image' class='editFile'><button class='changeImage'>Submit Image</button></div>"
-            } else {
-              fileUploadInput = "<input type='file' name='image' class='editFile'>";
+        if (posts.length === 0) {
+          var noPosts = "<p> Oops, no posts are found </p>"
+          $(".posts").append(noPosts);
+          $(".olderPosts").hide();
+        } else {
+          posts.forEach(function(post){
+            var image = "<img class='postImage' id='preview'>";
+            var deleteImageButton ='';
+            var changeImageForm = '';
+            var changeImageButton = '';
+            var fileUploadInput = '';
+            var tags = "";
+            post.tags.forEach(function(tag){
+              tags += "<span class='searchTag'>" + tag + "</span> "
+            })
+            if (isAuthenticated) {
+              if (post.image) {
+                image = "<img src='" + post.image.url + "' class='postImage' id='preview'>";
+                deleteImageButton = "<button class='deleteImage'>Delete Image</button>";
+                changeImageButton = "<button class='changeImage'>Change Image</button>";
+                changeImageForm = "<button class='openChangeImage'>Change Image</button><div class='changeImageInput'><button class='removeEditPreview'>Remove preview</button><input type='file' name='image' class='editFile'><button class='changeImage'>Submit Image</button></div>"
+              } else {
+                fileUploadInput = "<input type='file' name='image' class='editFile'>";
+              }
+             editForm = " </div><button class='openEdit'>Edit</button><div class='edit'><form id='editPostForm'>" + changeImageForm + deleteImageButton + fileUploadInput + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><input type='file' name='image' class='editFile'><button class='editPost'>Submit</button></form></div><button class='deletePost'>Delete</button> "
             }
-           editForm = " </div><button class='openEdit'>Edit</button><div class='edit'><form id='editPostForm'>" + changeImageForm + deleteImageButton + fileUploadInput + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><input type='file' name='image' class='editFile'><button class='editPost'>Submit</button></form></div><button class='deletePost'>Delete</button> "
+            if (post.image) {
+              image = "<img src='" + post.image.url +"' class='postImage' id='preview'>"
+            }
+            var post = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a>" + image + "<p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p>" + editForm + "<a href='/posts/"+ post._id +"'>Comments (" + post.comments.length + ")</a></div>";
+            $(".posts").append(post);
+            $(".postImage#preview").show()
+          });
+          if (searchArray) {
+            $("p").highlight(searchArray);
           }
-          if (post.image) {
-            image = "<img src='" + post.image.url +"' class='postImage' id='preview'>"
+          if(totalPosts > 10) {
+            searchPostsPages.totalPages = Math.ceil(totalPosts/10);
+            $(".olderSearchPosts").show()
+            $(".olderPosts").hide();
           }
-          var post = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a>" + image + "<p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p>" + editForm + "<a href='/posts/"+ post._id +"'>Comments (" + post.comments.length + ")</a></div>";
-          $(".posts").append(post);
-          $(".postImage#preview").show()
-        });
-        if (searchArray) {
-          $("p").highlight(searchArray);
         }
       });
     };
@@ -131,6 +147,8 @@ $(document).ready(function() {
       totalPages: Math.ceil($(".reviews_collection").attr("data-id")/10),
       currentPage: 1
     }
+
+
 
 //image preview before submitting the post
     var readURL = function(input) {
@@ -443,15 +461,13 @@ $("body").delegate(".editFile","change", function(){
     if(event.which == 13){
       var searchArray = {params: $(this).val().trim().toLowerCase()};
       var word = $(this).val().replace(/[^a-zA-Z ]/g, '');
-      console.log($(this).val())
       $.ajax({
         url: '/search',
         type: 'GET',
         data: searchArray,
         contentType: 'application/json'
-      }).done(function(posts){
-        $("input[name='searchPosts']").val('');
-        newPost(posts, word);
+      }).done(function(data){
+        newPost(data.posts, word, data.count);
         $('.all_posts').show();
       })
     }
@@ -557,6 +573,9 @@ $("body").delegate(".editFile","change", function(){
 //back to all posts
 
   var backToPosts = function(){
+    $('.olderSearchPosts').hide();
+    $('.newerSearchPosts').hide();
+    $('.olderPosts').show();
     $.ajax({
         url: '/blog',
         type: 'GET',
@@ -639,21 +658,77 @@ var changeImage = function(event){
 
 // subscribe by email
 
-var addEmailToSubscribeList = function(event){
-  event.preventDefault();
-  var data = {
-    email : $(".subscribeEmail").val()
+  var addEmailToSubscribeList = function(event){
+    event.preventDefault();
+    var data = {
+      email : $(".subscribeEmail").val()
+    }
+    $.ajax({
+      url: '/addEmail',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(data)
+    }).done(function(email){
+      console.log(email)
+    });
   }
-  $.ajax({
-    url: '/addEmail',
-    type: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify(data)
-  }).done(function(email){
-    console.log(email)
-  });
 
-}
+  $(".subscribeByEmail").on("click", addEmailToSubscribeList)
 
-$(".subscribeByEmail").on("click", addEmailToSubscribeList)
+
+  //pagination on serach by word
+
+  var getOlderSearchPosts = function(){
+    var data = {
+      id: $(".posts div:nth-child(10)").attr("data-id"),
+      searchWords: $("input[name='searchPosts']").val().trim().toLowerCase(),
+      word : $("input[name='searchPosts']").val().replace(/[^a-zA-Z ]/g, '')
+    };
+     $.ajax({
+      url: '/olderSearchPosts',
+      type: 'GET',
+      contentType: 'application/json',
+      data: data
+    }).done(function(posts){
+      newPost(posts, data.word);
+      $(".newerSearchPosts").show();
+      $(".all_posts").show();
+      searchPostsPages .currentPage += 1;
+      if (searchPostsPages.totalPages === searchPostsPages.currentPage){
+          $(".olderSearchPosts").hide();
+      }
+    })
+  }
+
+  var getNewerSearchPosts = function(){
+    var data = {
+      id: $(".posts div:nth-child(1)").attr("data-id"),
+      searchWords: $("input[name='searchPosts']").val().trim().toLowerCase(),
+      word : $("input[name='searchPosts']").val().replace(/[^a-zA-Z ]/g, '')
+    };
+     $.ajax({
+      url: '/newerSearchPosts',
+      type: 'GET',
+      contentType: 'application/json',
+      data: data
+    }).done(function(posts){
+      console.log(posts)
+      newPost(posts, data.word);
+      searchPostsPages.currentPage -=1;
+      if (searchPostsPages.currentPage === 1) {
+        $(".newerSearchPosts").hide();
+      }
+      if (searchPostsPages.totalPages !== searchPostsPages.currentPage) {
+        $(".olderSearchPosts").show();
+      }
+    })
+  }
+
+  $(".pages").on("click", ".olderSearchPosts", getOlderSearchPosts)
+  $(".pages").on("click", ".newerSearchPosts", getNewerSearchPosts)
+
+
+  //pagination on search by tag
+
+
 });
