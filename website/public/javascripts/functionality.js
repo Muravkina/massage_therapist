@@ -1,5 +1,11 @@
 $(document).ready(function() {
 
+    $(".postBody").each(function(){
+      html = $.parseHTML($(this).text());
+      $(this).text('');
+      $(this).append(html)
+    })
+
     //check if the fields are valid
     var isValid = function(field){
       if (!field.val()){
