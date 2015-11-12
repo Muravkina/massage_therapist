@@ -101,9 +101,15 @@ $(document).ready(function() {
             var changeImageButton = '';
             var fileUploadInput = '';
             var tags = "";
+            var maxLength = 700;
+            var postBody = '';
+            var tagsImage = '';
             post.tags.forEach(function(tag){
               tags += "<span class='searchTag'>" + tag + "</span> "
             })
+            if (post.tags[0] !== "") {
+              tagsImage = "<img src='/images/tag.png' width='20px'>"
+            }
             if (isAuthenticated) {
               if (post.image) {
                 image = "<img src='" + post.image.url + "' class='postImage' id='preview'>";
@@ -113,12 +119,20 @@ $(document).ready(function() {
               } else {
                 fileUploadInput = "<input type='file' name='image' class='editFile'>";
               }
-             editForm = " </div><button class='openEdit'>Edit</button><div class='edit'><form id='editPostForm'>" + changeImageForm + deleteImageButton + fileUploadInput + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><input type='file' name='image' class='editFile'><button class='editPost'>Submit</button></form></div><button class='deletePost'>Delete</button> "
+             editForm = " </div><div class='edit_delete_wrapper'><p class='deletePost'>Delete</p><p class='openEdit'>Edit</p><div class='edit'><form id='editPostForm'>" + changeImageForm + deleteImageButton + fileUploadInput + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><input type='file' name='image' class='editFile'><button class='editPost'>Submit</button></form></div></div>"
             }
             if (post.image) {
               image = "<img src='" + post.image.url +"' class='postImage' id='preview'>"
             }
-            var post = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a>" + image + "<p class='postBody'>" + post.body + "</p><p class='postTags'>" + tags + "</p>" + editForm + "<a href='/posts/"+ post._id +"'>Comments (" + post.comments.length + ")</a></div>";
+            if (post.body.length > maxLength) {
+              var trimmedString = post.body.substr(0, maxLength);
+              var trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")));
+              postBody = "<p class='postBody'>" + trimmedString + " ... </p><div class='read_more_wrap'><a href='/posts/" + post.id + "' class='readMore'>READ MORE</a></div>"
+            } else {
+              postBody = "<p class='postBody'>" + post.body + "</p>"
+            }
+
+            var post = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a>" + image + "<div class='post_body_wrap'>" + postBody + "</div><p class='postTags'>" + tagsImage + tags + "</p><a href='/posts/"+ post._id +"' class='comment_link'>Comments (" + post.comments.length + ")</a>" + editForm + "</div>";
             $(".posts").append(post);
             $(".postImage#preview").show()
           });
@@ -799,6 +813,18 @@ var changeImage = function(event){
     })
   }
 
+  var openPostForm = function(){
+    blogForm = $("#blogForm");
+    if (!blogForm.is(":visible")){
+      blogForm.show();
+      $(".openPostForm").text("Close")
+    } else {
+      blogForm.hide();
+      $(".openPostForm").text("New Post")
+    }
+
+  }
+  $(".openPostForm").on("click", openPostForm)
   $(".pages").on("click", ".olderTagPosts", getOlderTagPosts);
   $(".pages").on("click", ".newerTagPosts", getNewerTagPosts)
 });

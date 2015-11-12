@@ -19,9 +19,22 @@
 
     <div class="container main_wrapper">
       <div class="row">
-        <div class="main_wrapper_bg nine columns">
+        <div class="main_wrapper_bg eight columns">
           <div class="content_wrapper">
-            <button class="all_posts back">Back</button>
+          <% if (user) { %>
+            <p class="openPostForm">New post</p>
+            <div class="formErrors"></div>
+            <form method="post" action="/blog" id="blogForm">
+              <input type="text" id="title" placeholder="Title" name="title"><br>
+              <textarea id="body" placeholder="Share your insights" name="body"></textarea><br>
+              <input type="text" id="tags" name="tags">
+              <input type="file" name="image" class="editFile">
+              <img id="preview" height="100" />
+              <p class="removePostPreview">X</p>
+              <button class="submitPost">Submit</button>
+            </form>
+            <% } %>
+            <p class="all_posts back">Back to all posts</p>
             <div class="posts">
               <% posts.forEach(function(post){ %>
               <div class="post" data-id= <%= post.id %>>
@@ -31,13 +44,11 @@
                     <%= date %>
                   </p>
                   <a  href="/posts/<%= post.id %>" class="postTitle"><%= post.title %></a>
-                  <div class="post_image_wrap">
-                    <img
-                    <% if (post.image.url) { %>
-                      src="<%= post.image.url%>"
-                    <% } %>
-                    class="postImage" id="preview">
-                  </div><!--post_image_wrap-->
+                  <img
+                  <% if (post.image.url) { %>
+                    src="<%= post.image.url%>"
+                  <% } %>
+                  class="postImage" id="preview">
                   <div class="post_body_wrap">
                     <% var maxLength = 700; %>
                     <% if (post.body.length > maxLength) {
@@ -63,7 +74,8 @@
                 <a href="/posts/<%=post.id%>" class="comment_link">Comments (<%= post.comments.length %>)</a>
                 <% if (user) { %>
                 <div class="edit_delete_wrapper">
-                  <button class="openEdit">Edit</button>
+                  <p class="deletePost">Delete</p>
+                  <p class="openEdit">Edit</p>
                   <div class="edit">
                     <form id="editPostForm">
                       <% if (post.image.url) { %>
@@ -84,7 +96,6 @@
                       <button class="editPost">Submit</button>
                     </form>
                   </div><!--edit-->
-                  <button class="deletePost">Delete</button>
                 </div><!--edit_delete_wrapper-->
                 <% } %>
               </div><!--post-->
@@ -103,17 +114,6 @@
               </div><!--tagPagination-->
             </div><!--pages-->
 
-            <button>New post</button>
-            <div class="formErrors"></div>
-            <form method="post" action="/blog" id="blogForm">
-              <input type="text" id="title" placeholder="Title" name="title"><br>
-              <textarea id="body" placeholder="Share your insights" name="body"></textarea><br>
-              <input type="text" id="tags" name="tags">
-              <input type="file" name="image" class="editFile">
-              <img id="preview" height="100" />
-              <p class="removePostPreview">X</p>
-              <button class="submitPost">Submit</button>
-            </form>
           </div><!--content_wrapper-->
         </div><!--main_wrapper_bg-->
 
@@ -130,11 +130,9 @@
     </div><!--container main_wrapper-->
 
 
-
     <script src="/javascripts/highlight.js"></script>
     <script src="/javascripts/functionality.js"></script>
     <script src="/javascripts/beauty.js"></script>
-    <% include ./partials/social_share.ejs %>
 
   </body>
 </html>

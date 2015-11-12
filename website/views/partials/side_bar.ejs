@@ -1,17 +1,50 @@
-<div class="subscribe">
-  <input type="email" class="subscribeEmail" name="subscribeEmail">
-  <button class="subscribeByEmail">Subscribe by email</button>
+<div class="social_follow widget">
+  <h2>social follow</h2>
+  <div class="box_content">
+    <div class="social_box">
+      <a href="https://www.facebook.com/ilia.gerassimov" target="_blank"><img src="/images/fol-facebook.png" alt="facebook logo"></a>
+      <a href="https://www.instagram.com/ger_ill/" target="_blank"><img src="/images/fol-instagram.png" alt="twitter logo"></a>
+      <a href="https://www.linkedin.com/in/ilia-gerassimov-67958146" target="_blank"><img src="/images/fol-linkedin.png" alt="linkedin logo"></a>
+    </div><!--social_box-->
+  </div><!--box_content-->
+</div><!--social follow-->
+
+<div class="about_author widget">
+  <h2>About</h2>
+  <div class="profile_image_wrap">
+    <img src="/images/profile.jpg" alt="profile picture">
+  </div><!--profile_image_wrap-->
+  <h2>Ilia Gerassimov</h2>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+  consequat. </p>
+</div>
+
+<div class="subscribe widget">
+  <h2>Follow by email</h2>
+  <div class="follow_by_email_wrap">
+    <input type="email" class="subscribeEmail" name="subscribeEmail" placeholder="Email address..">
+    <button class="subscribeByEmail">Submit</button>
+  </div><!--follow_by_email_wrap-->
 </div><!--subscribe-->
 
-<div class="categories">
-  <% tags.forEach(function(tag){ %>
-    <p class="searchTag"><%= tag %></p>
-  <% }) %>
+<div class="searchBox widget">
+  <h2>Search</h2>
+  <input type="search" autocomplete="on" name="searchPosts" placeholder="TYPE + ENTER">
+</div><!--searchBox-->
+
+<div class="categories widget">
+  <div class="categories_wrap">
+    <h2>Tags</h2>
+    <% tags.forEach(function(tag){ %>
+      <% if (tag !== "") { %>
+        <p class="searchTag"><%= tag %></p>
+      <% } %>
+    <% }) %>
+  </div>
 </div><!--categories-->
 
-<div class="searchBox">
-  <input type="search" autocomplete="on" name="searchPosts" placeholder="To search type and hit enter">
-</div><!--searchBox-->
 
 <div class="popularPosts">
   <% popularPosts.forEach(function(post){ %>

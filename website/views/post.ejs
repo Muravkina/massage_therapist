@@ -2,20 +2,27 @@
 <html>
   <head>
     <title>Ilia Gerassimov - <%= post.title %></title>
-
+    <link rel='stylesheet' href='/stylesheets/blog.css' />
+    <% include ./partials/head %>
+    <!-- Facebook sharing content -->
+    <meta property="og:url"           content="http://87e30bfa.ngrok.io/posts/<%= post._id %>" />
+    <meta property="og:title"         content="<%= post.title %>" />
+    <meta property="og:description"   content="<%= post.body %>" />
+    <meta property="og:image"         content="<%= post.image.url %>" />
+    <meta property="og:image:type"    content="image/png">
+    <meta property="og:image:width"        content="1200" />
+    <meta property="og:image:height"        content="1200" />
   </head>
   <body>
 
-       <div class="socialShare">
-                      <p>Share It:
-                      <div class="facebook-share">
-                        <img src="/images/fol-facebook.png" width="18px">
-                      </div>
-                      <div class="twitter-share">
-                        <img src="/images/fol-twitter.png" width="18px">
-                      </div><!--
-                      <a href="https://twitter.com/share" class="twitter-share-button" data-via="Muravkina">Tweet</a> -->
-                    </div>
+    <div class="socialShare">
+      <!--Facebook share button-->
+      <div class="fb-share-button" data-href="http://16c4d911.ngrok.io/posts<%= post._id %>" data-layout="button_count"></div>
+      <!--Twitter share button-->
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="Muravkina">Tweet</a>
+    </div><!--socialShare-->
+
+
 
     <div class="post" data-id="<%= post.id %>">
       <p>
@@ -75,6 +82,9 @@
       <% }) %>
     </div><!--relatedPosts-->
 
+    <script src="/javascripts/highlight.js"></script>
+    <script src="/javascripts/functionality.js"></script>
+    <script src="/javascripts/beauty.js"></script>
     <% include ./partials/social_share.ejs %>
 
   </body>
