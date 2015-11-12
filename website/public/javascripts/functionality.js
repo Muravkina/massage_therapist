@@ -1,10 +1,19 @@
 $(document).ready(function() {
 
+    //parse posts
     $(".postBody").each(function(){
       html = $.parseHTML($(this).text());
       $(this).text('');
       $(this).append(html)
     })
+
+    //facebook sharing
+    $('.facebook-share').click(function() {
+      FB.ui({
+        method: 'share',
+        href: 'https://b59f7719.ngrok.io',
+      }, function(response){});
+    });
 
     //check if the fields are valid
     var isValid = function(field){
@@ -289,7 +298,7 @@ $("body").delegate(".editFile","change", function(){
   var deletePost = function(event){
     event.preventDefault();
     var post = $(this).parent();
-    var id = $(this).parent().attr("data-id");
+    var id = $(this).parents(".post").attr("data-id");
     var data = {
       postNumber: $(".posts div:nth-child(1)").attr("data-id")
     }
@@ -308,7 +317,7 @@ $("body").delegate(".editFile","change", function(){
   //open edit form
   var openEdit = function(){
     var editForm = $(this).next();
-    var post = $(this).parent().children(".postData");
+    var post = $(this).parents(".post").children(".postData");
     var changeImageInput = editForm.find(".changeImageInput");
     if (!editForm.is(":visible")){
       editForm.show();
@@ -316,7 +325,7 @@ $("body").delegate(".editFile","change", function(){
       post.find("#preview").clone().prependTo(editForm)
       $(this).text("Close");
     } else {
-      post.find("img").attr("src", editForm.find(".removeEditPreview").data("img_url"))
+      post.find(".postImage").attr("src", editForm.find(".removeEditPreview").data("img_url"))
       changeImageInput.hide();
       editForm.find(".openChangeImage").text("Change Image");
       $(":file").val("");
