@@ -179,7 +179,8 @@ router.delete('/posts/:id', function(req, res){
       res.render('error');
     } else {
       Blog.Post.find({_id : { "$lte" : req.body.postNumber } }).sort({"_id":-1}).limit(10).exec(function(err, posts){
-        res.send(posts)
+        if (err) {res.send(err)}
+        else {res.send(posts)}
       })
     }
   })
@@ -214,7 +215,38 @@ router.get('/posts/:id', function(req, res){
     } else {
       tags = post.tags.join(', ')
       Blog.Post.find({tags: {$in: post.tags}}).sort({"_id":-1}).limit(3).exec(function(err, relatedPosts){
-        res.render('post', {post: post, user: req.user, relatedPosts: relatedPosts})
+        if (err) {res.send(err)}
+        else {
+          Blog.Post.find({}).exec(function(err, posts){
+            Blog.Post.count({}, function(err, count){
+              Blog.Post.aggregate([
+                {$unwind: "$comments"},
+                {$group: {_id:"$_id", title: {$first :"$title"}, body: {$first :"$body"}, image: {$first: "$image"}, comments: {$push:"$comments"}, size: {$sum:1}}},
+                {$sort:{size:1}}]).exec(function(err, popularPosts){
+                popularPosts.reverse();
+                ///find all the tags
+                var tags = [];
+                var uniqueTags = [];
+                var getCategories = function(posts){
+                  posts.forEach(function(post){
+                    post.tags.forEach(function(tag){
+                      tags.push(tag);
+                    })
+                  })
+                  uniqueTags = tags.filter(function(elem, index, self){
+                  return index == self.indexOf(elem);
+                  })
+                }
+                getCategories(posts);
+                if (req.query.back) {
+                  res.send(posts)
+                } else {
+                  res.render('post', {posts: posts, user: req.user, tags:uniqueTags, totalPosts: count, popularPosts: popularPosts, post: post, relatedPosts: relatedPosts});
+                }
+              })
+            })
+          })
+        }
       })
     }
   })
@@ -239,6 +271,7 @@ router.post('/posts/:id/comments', function(req, res){
         if (err) {
           res.send(err)
         } else {
+          console.log(newComment)
           res.send({comment: newComment, user: req.user})
         }
       })
@@ -266,6 +299,7 @@ router.get('/tags/:name', function(req, res){
       Blog.Post.count({tags: { $in: [req.params.name] }}, function(err, count){
         if(err){res.send(err)}
         else{
+          console.log(posts)
           res.send({posts:posts, count:count});
         }
       })

@@ -9,9 +9,6 @@
     <meta property="og:image:type"         content="image/png">
     <meta property="og:image:width"        content="1200" />
     <meta property="og:image:height"       content="1200" />
-    <link href='http://fonts.googleapis.com/css?family=Raleway:300,400' rel='stylesheet' type='text/css'/>
-    <link href='http://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'/>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'/>
   </head>
   <body>
 
@@ -28,7 +25,7 @@
               <input type="text" id="title" placeholder="Title" name="title"><br>
               <textarea id="body" placeholder="Share your insights" name="body"></textarea><br>
               <input type="text" id="tags" name="tags">
-              <input type="file" name="image" class="editFile">
+              <input type="file" name="image" class="editFile" id="submitImageForPost">
               <img id="preview" height="100" />
               <p class="removePostPreview">X</p>
               <button class="submitPost">Submit</button>
@@ -117,14 +114,7 @@
           </div><!--content_wrapper-->
         </div><!--main_wrapper_bg-->
 
-
-        <div class="right_sidebar_wrapper four columns">
-          <div class="right_sidebar section">
-
-            <% include ./partials/side_bar %>
-          </div><!--right_sidebar section-->
-        </div><!--right_sidebar_wrapper four columns-->
-
+      <% include ./partials/side_bar %>
 
       </div><!--row-->
     </div><!--container main_wrapper-->

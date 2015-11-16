@@ -28,7 +28,7 @@ $(document).ready(function() {
       var fieldsAreValid = true;
       for (var i = 0; i < checkable.length; i++){
         if(!isValid(checkable[i])){
-          checkable[i].addClass("red");
+          checkable[i].attr("id", "red");
           fieldsAreValid = false;
         }
       }
@@ -36,10 +36,10 @@ $(document).ready(function() {
     }
 
     var removeRed = function(checkable) {
-      for(var i = 0; i < checkable.length; i++){
-        checkable[i].removeClass("red").val('');
-      }
       $(".formErrors > p").remove();
+      for(var i = 0; i < checkable.length; i++){
+        checkable[i].attr("id", "").val('');
+      }
     }
 
     var dateFormat = function(date){
@@ -127,7 +127,7 @@ $(document).ready(function() {
             if (post.body.length > maxLength) {
               var trimmedString = post.body.substr(0, maxLength);
               var trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")));
-              postBody = "<p class='postBody'>" + trimmedString + " ... </p><div class='read_more_wrap'><a href='/posts/" + post.id + "' class='readMore'>READ MORE</a></div>"
+              postBody = "<p class='postBody'>" + trimmedString + " ... </p><div class='read_more_wrap'><a href='/posts/" + post._id + "' class='readMore'>READ MORE</a></div>"
             } else {
               postBody = "<p class='postBody'>" + post.body + "</p>"
             }
@@ -256,7 +256,7 @@ $("body").delegate(".editFile","change", function(){
 
     var formData = new FormData();
     var form = $('form').serializeArray();
-    formData.append("image", $(":file")[$(":file").length-1].files[0]);
+    formData.append("image", $("#submitImageForPost")[0].files[0]);
     $.each(form,function(key,input){
         formData.append(input.name,input.value);
     });
@@ -265,6 +265,8 @@ $("body").delegate(".editFile","change", function(){
       postsNumber: $(".posts div:nth-child(10)"),
       previewImage : $(this).parents("#blogForm").find("#preview")
     }
+    console.log($(":file")[$(":file").length-1].files[0])
+
     var checkable = [$("input[name='title']"), $("textarea[name='body']")];
     var fields = [$("input[name='title']"), $("textarea[name='body']"), $("input[name='tags']")];
 
@@ -277,6 +279,8 @@ $("body").delegate(".editFile","change", function(){
         data: formData
       }).done(function(data){
         removeRed(fields);
+        $("#blogForm").hide();
+        $(".openPostForm").text("New Post")
         postsData.previewImage.attr('src', '');
         var tags = "";
         $(":file").val('')
@@ -289,16 +293,18 @@ $("body").delegate(".editFile","change", function(){
           categories.push(tag)
         })
         var uniqueCategories = [];
-        $(".categories").children().each(function(category){
+        $(".categories_wrap").children().each(function(category){
           categories.push($(this).text())
         })
         uniqueCategories = categories.filter(function(elem, index, self){
           return index == self.indexOf(elem);
         })
-        $(".categories").empty()
+        $(".categories_wrap").empty()
         uniqueCategories.forEach(function(category){
-          var categoryField = "<p class='searchTag'>" + category + "</p>"
-          $(".categories").append(categoryField)
+          if(category !== "") {
+            var categoryField = "<p class='searchTag'>" + category + "</p>"
+            $(".categories").append(categoryField)
+          }
         })
       })
     } else {
@@ -387,7 +393,7 @@ $("body").delegate(".editFile","change", function(){
         editForm.hide()
         editForm.find("#preview").remove();
         editedPost.title.text(data.title);
-        editedPost.body.text(data.body);
+        editedPost.body.html(data.body);
         editedPost.tags.html(tagsText);
         if (data.image){
           editedPost.image.attr('src', data.image.url)
@@ -427,7 +433,7 @@ $("body").delegate(".editFile","change", function(){
       website : $("input[name='commentAuthorWebsite']").val()
     }
 
-    var id = $(this).parents(".post").attr("data-id");
+    var id = $(this).parents(".posts").find(".post").attr("data-id");
     var commentForm = $(this).parents(".commentForm");
     var checkable = [$("textarea[name='commentBody']"), $("input[name='commentAuthorEmail']"), $("input[name='commentAuthorName']")];
     var fields = [$("input[name='commentTitle']"), $("textarea[name='commentBody']"), $("input[name='commentAuthorEmail']"), $("input[name='commentAuthorName']"), $("input[name='commentAuthorWebsite']")];
@@ -446,7 +452,7 @@ $("body").delegate(".editFile","change", function(){
         if(data.user){
           deleteButton = "<button class='deleteComment'>Delete</button>";
         }
-
+        console.log(data.comment)
         var comment = "<div class='comment'><p>" + dateFormat(data.comment.date) + "</p><p class='commentTitle'>" + data.comment.title + "</p><p class='commentBody'>" + data.comment.body + "</p><p class='commentAuthorName'>" + data.comment.name + "</p><p class='commentAuthorWebsite'>" + data.comment.website + "</p>" + deleteButton + "</div>";
         $(".commentsCollection").prepend(comment);
         commentForm.prev(".openComment").text('Leave a comment');
@@ -457,8 +463,8 @@ $("body").delegate(".editFile","change", function(){
     }
   }
 
-   $(".post").on("click", ".openComment", openComment);
-   $(".post").on("click", ".submitComment", submitComment);
+   $(".openComment").on("click", openComment);
+   $(".posts").on("click", ".submitComment", submitComment);
 
 // delete comment
 
@@ -623,6 +629,9 @@ $("body").delegate(".editFile","change", function(){
         contentType: 'application/json'
       }).done(function(posts){
         newPost(posts);
+        $(".searchBox > input").val('')
+        $(".widget").unhighlight({ element: 'span'});
+        $(".widget").unhighlight({ element: 'p'});
         postPages.currentPage = 1;
         $(".all_posts").hide();
         $(".newerReviews").hide();
@@ -662,7 +671,7 @@ $("body").delegate(".editFile","change", function(){
       changeImageInput.show();
       $(this).text("Nevermind, the picture is perfect");
     } else {
-      $(this).parents(".post").find("img").attr("src", editForm.find(".removeEditPreview").data("img_url"))
+      $(this).parents(".post").find(".postImage").attr("src", editForm.find(".removeEditPreview").data("img_url"))
       $(":file").val("")
       changeImageInput.hide();
       $(this).text("Change Image");
@@ -814,11 +823,13 @@ var changeImage = function(event){
   }
 
   var openPostForm = function(){
+    var fields = [$("input[name='title']"), $("textarea[name='body']"), $("input[name='tags']")];
     blogForm = $("#blogForm");
     if (!blogForm.is(":visible")){
       blogForm.show();
       $(".openPostForm").text("Close")
     } else {
+      removeRed(fields);
       blogForm.hide();
       $(".openPostForm").text("New Post")
     }

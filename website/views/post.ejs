@@ -2,8 +2,8 @@
 <html>
   <head>
     <title>Ilia Gerassimov - <%= post.title %></title>
-    <link rel='stylesheet' href='/stylesheets/blog.css' />
     <% include ./partials/head %>
+    <link rel='stylesheet' href='/stylesheets/blog.css' />
     <!-- Facebook sharing content -->
     <meta property="og:url"           content="http://87e30bfa.ngrok.io/posts/<%= post._id %>" />
     <meta property="og:title"         content="<%= post.title %>" />
@@ -15,72 +15,111 @@
   </head>
   <body>
 
-    <div class="socialShare">
-      <!--Facebook share button-->
-      <div class="fb-share-button" data-href="http://16c4d911.ngrok.io/posts<%= post._id %>" data-layout="button_count"></div>
-      <!--Twitter share button-->
-      <a href="https://twitter.com/share" class="twitter-share-button" data-via="Muravkina">Tweet</a>
-    </div><!--socialShare-->
+    <% include ./partials/blog_header.ejs %>
 
+    <div class="container main_wrapper">
+      <div class="row">
+        <div class="main_wrapper_bg eight columns">
+          <div class="content_wrapper">
+            <a href="/blog" class="link_back"><p class="all_posts back">Back to all posts</p></a>
+            <div class="posts">
+              <div class="socialShare">
+                <!--Facebook share button-->
+                <div class="fb-share-button" data-href="http://16c4d911.ngrok.io/posts<%= post._id %>" data-layout="button_count"></div>
+                <!--Twitter share button-->
+                <a href="https://twitter.com/share" class="twitter-share-button" data-via="Muravkina">Tweet</a>
+              </div><!--socialShare-->
 
-
-    <div class="post" data-id="<%= post.id %>">
-      <p>
-        <% var date = new Date(post.date); date = date.toDateString() %>
-        <%= date %>
-      </p>
-      <p><%= post.title %></p>
-      <% if (post.image.url) { %>
-        <img src="<%= post.image.url%>">
-      <% } %>
-      <p><%= post.body %></p>
-      <p>
-        <% post.tags.forEach(function(tag){ %>
-          <span><%= tag %></span>
-        <% }) %>
-      </p>
-      <p>Comments</p>
-      <button class="openComment">Leave a comment</button>
-      <div class="commentForm">
-        <div class="formErrors"></div>
-        <form id="commentForm">
-          <input type="text" name="commentTitle" placeholder="Title">
-          <textarea name="commentBody" placeholder="Leave a comment"></textarea>
-          <input type="text" name="commentAuthorName" placeholder="Name">
-          <input type="text" name="commentAuthorEmail" placeholder="Email">
-          <input type="text" name="commentAuthorWebsite" placeholder="Website">
-          <button class="submitComment">Submit comment</button>
-        </form>
-      </div>
-      <div class="commentsCollection">
-        <% post.comments.forEach(function(comment){ %>
-          <div class="comment" data-id="<%= comment.id %>">
-            <p>
-              <% var date = new Date(comment.date); date = date.toDateString() %>
-              <%= date %>
-            </p>
-            <p class="commentTitle"><%= comment.title %></p>
-            <p class="commentBody"><%= comment.body %></p>
-            <p class="commentAuthorName"><%= comment.name %></p>
-            <p class="commentAuthorWebsite"><%= comment.website %></p>
-            <% if(user) { %>
-              <button class="deleteComment">Delete</button>
-            <% } %>
+              <div class="post" data-id="<%= post.id %>">
+                <p class="postDate">
+                  <% var date = new Date(post.date); date = date.toDateString() %>
+                  <%= date %>
+                </p>
+                <p class="postTitle"><%= post.title %></p>
+                <img
+                <% if (post.image.url) { %>
+                  src="<%= post.image.url%>"
+                <% } %>
+                class="postImage" id="preview">
+                <div class="post_body_wrap">
+                  <p class="postBody"><%= post.body %></p>
+                </div><!--post_body_wrap-->
+                <p class="postTags">
+                  <% if (post.tags[0] !== "") { %>
+                    <img src="/images/tag.png" width="20px">
+                  <% } %>
+                    <% post.tags.forEach(function(tag){ %>
+                    <span class="searchTag"><%= tag %></span>
+                  <% }) %>
+                </p>
+                <div class="post_signature_wrapper">
+                  <img src="/images/example.png" alt="post signature" class="post_signature">
+                </div><!--post_signature_wrapper-->
+              </div><!--post-->
+              <div class="share_box">
+                <span>Share this post on:</span>
+                <div class="share_content">
+                  <img src="/images/facebook-ci.png">
+                  <img src="/images/twitter-ci.png">
+                  <img src="/images/linkedin-ci.png">
+                </div><!--share_content-->
+              </div><!--share_box-->
+              <div class="relatedPosts">
+                <h4>Related post:</h4>
+                <div class="related_posts_content">
+                  <% relatedPosts.forEach(function(relatedPost){ %>
+                    <% if(relatedPost.id !== post.id) { %>
+                      <div class="related_single_post">
+                        <% if (relatedPost.image.url) { %>
+                          <img src="<%=relatedPost.image.url%>" width="80" height="80">
+                        <% } %>
+                        <a href="/posts/<%=post.id%>"><%= relatedPost.title %></a>
+                        <p><%= relatedPost.body.substr(0, 200) %></p>
+                      </div><!--related_single_post-->
+                    <% } %>
+                  <% }) %>
+                </div><!--related_posts_content-->
+              </div><!--relatedPosts-->
+              <div class="comment_section">
+                <p>Comments</p>
+                <button class="openComment">Leave a comment</button>
+                <div class="commentForm">
+                  <div class="formErrors"></div>
+                  <form id="commentForm">
+                    <input type="text" name="commentTitle" placeholder="Title">
+                    <textarea name="commentBody" placeholder="Leave a comment"></textarea>
+                    <input type="text" name="commentAuthorName" placeholder="Name">
+                    <input type="text" name="commentAuthorEmail" placeholder="Email">
+                    <input type="text" name="commentAuthorWebsite" placeholder="Website">
+                    <button class="submitComment">Submit comment</button>
+                  </form>
+                </div>
+                <div class="commentsCollection">
+                  <% post.comments.forEach(function(comment){ %>
+                    <div class="comment" data-id="<%= comment.id %>">
+                      <p>
+                        <% var date = new Date(comment.date); date = date.toDateString() %>
+                        <%= date %>
+                      </p>
+                      <p class="commentTitle"><%= comment.title %></p>
+                      <p class="commentBody"><%= comment.body %></p>
+                      <p class="commentAuthorName"><%= comment.name %></p>
+                      <p class="commentAuthorWebsite"><%= comment.website %></p>
+                      <% if(user) { %>
+                        <button class="deleteComment">Delete</button>
+                      <% } %>
+                    </div>
+                  <% }) %>
+                </div><!--commentsCollection-->
+              </div><!--comment_section-->
+            </div><!--posts-->
           </div>
-        <% }) %>
-      </div><!--commentsCollection-->
-    </div><!--post-->
-    <div class="relatedPosts">
-      <% relatedPosts.forEach(function(relatedPost){ %>
-        <% if(relatedPost.id !== post.id) { %>
-          <% if (relatedPost.image.url) { %>
-            <img src="<%=relatedPost.image.url%>">
-          <% } %>
-          <a href="/posts/<%=post.id%>"><%= relatedPost.title %></a>
-          <p><%= relatedPost.body.substr(0, 200) %></p>
-        <% } %>
-      <% }) %>
-    </div><!--relatedPosts-->
+        </div><!--main_wrapper_bg-->
+
+        <% include ./partials/side_bar %>
+
+      </div><!--row-->
+    </div><!--container main_wrapper-->
 
     <script src="/javascripts/highlight.js"></script>
     <script src="/javascripts/functionality.js"></script>

@@ -99,6 +99,7 @@ a:hover {
   padding-bottom: 7px;
   border-bottom: 1px solid #aaaaaa;
   margin-bottom: 50px;
+
 }
 
 .postDate {
@@ -170,6 +171,7 @@ a:hover {
 .read_more_wrap a:hover, .follow_by_email_wrap button:hover, .categories p:hover, .openPostForm:hover, .all_posts:hover {
   cursor: pointer;
   background-color: #595959;
+  text-decoration: none;
 }
 
 .postTags {
@@ -209,6 +211,80 @@ p.openEdit, p.deletePost {
   letter-spacing: 2px;
 }
 
+/*POST*/
+
+.post_signature {
+  max-width: 100%;
+  height: auto;
+}
+
+.post_signature_wrapper {
+  margin: 3% 0;
+}
+
+.share_box {
+  margin-top: -1em;
+  margin-bottom: 3em;
+}
+
+.relatedPosts {
+  font: normal normal 12px 'Lato';
+  color: #2F2F2F;
+  color: #48464A;
+  letter-spacing: 0em;
+  margin: 2em auto 0px;
+}
+
+.relatedPosts h4 {
+  letter-spacing: 0;
+  margin: 50px 0px 5px;
+  text-transform: uppercase;
+  font-size: 100%;
+  font-weight: 300;
+}
+
+.related_posts_content div:first-child {
+  border-top: none;
+}
+
+.related_single_post {
+  padding: 1em 0;
+  margin: 1.5em 1em;
+  border-top: 1px solid #eee;
+  overflow: hidden;
+}
+
+.related_single_post img {
+  width: 70px;
+  height: 70px;
+  max-width: none;
+  max-height: none;
+  background-color: transparent;
+  border-radius: 500px;
+  -webkit-border-radius: 500px;
+  -moz-border-radius: 500px;
+  padding: 0;
+  float: left;
+  margin: 2px 16px 0 0;
+}
+
+.related_single_post a {
+  margin: 0 0 0.5em;
+  display: inline-block;
+  transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  text-decoration: none;
+}
+
+.related_single_post p {
+  display: block;
+  overflow: hidden;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
 
 
 /*SIDE BAR*/
@@ -313,7 +389,7 @@ p.openEdit, p.deletePost {
   margin: 0;
 }
 
-.about_author p {
+.about_author p, .popularPosts p {
   text-align: center;
   padding: 0;
   letter-spacing: 0.04em;
@@ -387,6 +463,7 @@ p.openEdit, p.deletePost {
   -webkit-transition: all 0.4s ease-in-out;
   -o-transition: all 0.4s ease-in-out;
   -ms-transition: all 0.4s ease-in-out;
+  font-size: 80%;
 }
 
 .categories p:hover {
@@ -396,5 +473,20 @@ p.openEdit, p.deletePost {
 .categories_wrap {
   margin-bottom: 5%;
 }
+
+.popular_posts_body {
+  margin-top: -18px;
+  margin-bottom: 40px;
+}
+
+.link_back {
+  text-decoration: none;
+}
+
+#red {
+  border-color: red;
+}
+
+
 
 
