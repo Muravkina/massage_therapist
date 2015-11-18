@@ -52,7 +52,9 @@ $(document).ready(function() {
       var preview = $(this).prev();
       preview.fadeOut(1000, function() {
         $(this).removeProp('src');
+        $(this).parents().find(".removePostPreview").remove();
         $(this).parents().find(".editFile").replaceWith(selected_photo = $(this).parents().find(".editFile"));
+        $(this).parent().find("#submitImageForPost").val('');
       });
     }
 
@@ -197,6 +199,10 @@ $(document).ready(function() {
         reader.onload = function (e) {
           if($(input).parents("#blogForm").length){
             $(input).parents("form").find("#preview").attr('src', e.target.result);
+            $(".removePostPreview").remove();
+            var preview = "<p class='removePostPreview'>X</p>";
+            $(input).parents("#blogForm").find("#preview").attr("height", "100").attr("width", "100")
+            $(input).parents("#blogForm").find("#preview").after(preview)
           } else {
             $(input).parents(".edit").find(".removeEditPreview").data("img_url", $(input).parents(".post").find("#preview").attr('src'))
             $(input).parents(".edit").find("#preview").attr('src', e.target.result);
@@ -341,6 +347,7 @@ $("body").delegate(".editFile","change", function(){
     var changeImageInput = editForm.find(".changeImageInput");
     if (!editForm.is(":visible")){
       editForm.show();
+      console.log(post)
       post.hide();
       post.find("#preview").clone().prependTo(editForm)
       $(this).text("Close");
@@ -447,13 +454,20 @@ $("body").delegate(".editFile","change", function(){
       }).done(function(data){
         removeRed(fields);
         var deleteButton = "";
+        var commentAuthorWebsiteImage = "";
+        var commentTitleImage = "";
 
         ///if admin - add delete the comment button
         if(data.user){
-          deleteButton = "<button class='deleteComment'>Delete</button>";
+          deleteButton = "<p class='deleteComment'>Delete</p>";
         }
-        console.log(data.comment)
-        var comment = "<div class='comment'><p>" + dateFormat(data.comment.date) + "</p><p class='commentTitle'>" + data.comment.title + "</p><p class='commentBody'>" + data.comment.body + "</p><p class='commentAuthorName'>" + data.comment.name + "</p><p class='commentAuthorWebsite'>" + data.comment.website + "</p>" + deleteButton + "</div>";
+        if(data.comment.website){
+          commentAuthorWebsiteImage = "<img src='/images/triangle.png' width='6'>";
+        }
+        if(data.comment.title) {
+          commentTitleImage = "<img src='/images/triangle.png' width='6'>";
+        }
+        var comment = "<div class='comment'><p class='commentTitle'>" + data.comment.title + "</p>" + commentTitleImage + "<p class='commentAuthorName'>" + data.comment.name + "</p>" + commentAuthorWebsiteImage + "<a href='http://" + data.comment.website + "' target='_blank'><p class='commentAuthorWebsite'>" + data.comment.website + "</p></a><p class='commentDate'>" + dateFormat(data.comment.date) + "</p><p class='commentBody'>" + data.comment.body + "</p>" + deleteButton + "</div>";
         $(".commentsCollection").prepend(comment);
         commentForm.prev(".openComment").text('Leave a comment');
         commentForm.hide();
@@ -471,7 +485,7 @@ $("body").delegate(".editFile","change", function(){
   var deleteComment = function(event) {
   event.preventDefault();
 
-  var postId = $(this).parents(".post").attr("data-id")
+  var postId = $(this).parents(".posts").find(".post").attr("data-id")
   var commentId = $(this).parents(".comment").attr("data-id");
   var comment = $(this).parents(".comment")
 
@@ -484,7 +498,7 @@ $("body").delegate(".editFile","change", function(){
     })
   }
 
-  $(".post").on("click", ".deleteComment", deleteComment)
+  $(".comment_section").on("click", ".deleteComment", deleteComment)
 
 // search by tags
   var searchTag = function(){

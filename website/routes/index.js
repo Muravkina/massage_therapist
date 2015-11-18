@@ -134,7 +134,7 @@ router.get('/blog', function(req, res){
             if (req.query.back) {
               res.send(posts)
             } else {
-              res.render('blog', {posts: posts, user: req.user, tags:uniqueTags, totalPosts: count, popularPosts: popularPosts});
+              res.render('blog', {url: req.path.split('/')[1], posts: posts, user: req.user, tags:uniqueTags, totalPosts: count, popularPosts: popularPosts});
             }
         })
       })
@@ -241,7 +241,7 @@ router.get('/posts/:id', function(req, res){
                 if (req.query.back) {
                   res.send(posts)
                 } else {
-                  res.render('post', {posts: posts, user: req.user, tags:uniqueTags, totalPosts: count, popularPosts: popularPosts, post: post, relatedPosts: relatedPosts});
+                  res.render('post', {url: req.path.split('/')[1], posts: posts, user: req.user, tags:uniqueTags, totalPosts: count, popularPosts: popularPosts, post: post, relatedPosts: relatedPosts});
                 }
               })
             })

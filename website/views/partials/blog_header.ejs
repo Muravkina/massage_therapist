@@ -1,9 +1,14 @@
 <div class="container">
   <div class="row navigation">
     <div class="navigation_links">
+      <% if (url === "posts") { %>
+        <a href="/blog" class="two columns">All posts</a>
+      <% } %>
       <a href="/" class="two columns">Profile</a>
-      <a href="#" class="two columns">About</a>
-      <a href="#" class="one column">Artwork</a>
+      <a href="#" class="two columns">Artwork</a>
+      <% if (user) { %>
+        <a href="/logout" class="two columns">Log out</a>
+      <% } %>
     </div><!--navigation_links-->
   </div><!--row navigation-->
 </div><!--container-->

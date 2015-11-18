@@ -55,7 +55,7 @@
           <img src="<%= post.image.url %>" width="100%">
         <% } %>
         <div class="popular_posts_body">
-          <a href="<%= post.id %>"><h2><%= post.title %></h2></a>
+          <a href="<%= post._id %>"><h2><%= post.title %></h2></a>
           <% var maxLength = 70; %>
           <% if (post.body.length > maxLength) {
             var trimmedString = post.body.substr(0, maxLength);

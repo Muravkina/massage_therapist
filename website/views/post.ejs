@@ -31,39 +31,82 @@
               </div><!--socialShare-->
 
               <div class="post" data-id="<%= post.id %>">
-                <p class="postDate">
-                  <% var date = new Date(post.date); date = date.toDateString() %>
-                  <%= date %>
-                </p>
-                <p class="postTitle"><%= post.title %></p>
-                <img
-                <% if (post.image.url) { %>
-                  src="<%= post.image.url%>"
-                <% } %>
-                class="postImage" id="preview">
-                <div class="post_body_wrap">
-                  <p class="postBody"><%= post.body %></p>
-                </div><!--post_body_wrap-->
-                <p class="postTags">
-                  <% if (post.tags[0] !== "") { %>
-                    <img src="/images/tag.png" width="20px">
+                <div class="postData">
+                  <p class="postDate">
+                    <% var date = new Date(post.date); date = date.toDateString() %>
+                    <%= date %>
+                  </p>
+                  <p class="postTitle"><%= post.title %></p>
+                  <img
+                  <% if (post.image.url) { %>
+                    src="<%= post.image.url%>"
                   <% } %>
-                    <% post.tags.forEach(function(tag){ %>
-                    <span class="searchTag"><%= tag %></span>
-                  <% }) %>
-                </p>
-                <div class="post_signature_wrapper">
-                  <img src="/images/example.png" alt="post signature" class="post_signature">
-                </div><!--post_signature_wrapper-->
+                  class="postImage" id="preview">
+                  <div class="post_body_wrap">
+                    <p class="postBody"><%= post.body %></p>
+                  </div><!--post_body_wrap-->
+                  <div class="post_signature_wrapper">
+                    <img src="/images/example.png" alt="post signature" class="post_signature">
+                  </div><!--post_signature_wrapper-->
+                  <p class="postTags">
+                    <% if (post.tags[0] !== "") { %>
+                      <img src="/images/tag.png" width="20px">
+                    <% } %>
+                      <% post.tags.forEach(function(tag){ %>
+                      <span class="searchTag"><%= tag %></span>
+                    <% }) %>
+                  </p>
+                </div><!--postData-->
+
+
+                <% if (user) { %>
+                <div class="edit_delete_wrapper">
+                  <p class="deletePost">Delete</p>
+                  <p class="openEdit">Edit</p>
+                  <div class="edit">
+                    <form id="editPostForm">
+                      <% if (post.image.url) { %>
+                        <button class="openChangeImage">Change Image</button>
+                        <div class="changeImageInput">
+                          <button class="removeEditPreview">Remove preview</button>
+                          <input type="file" name="image" class="editFile">
+                          <button class="changeImage">Submit Image</button>
+                        </div><!--changeImageInput-->
+                          <button class="deleteImage">Delete Image</button>
+                      <% } else { %>
+                        <input type="file" name="image" class="editFile">
+                        <p class="removePreview">X</p>
+                      <% } %>
+                      <input type="text" name="editPostTitle" value="<%=post.title %>" class="editPostTitle">
+                      <textarea name="editPostBody" class="editPostBody"><%= post.body %></textarea>
+                      <input type="text" name="editPostTags" class="editPostTags" value="<%= post.tags.join(', ') %>">
+                      <button class="editPost">Submit</button>
+                    </form>
+                  </div><!--edit-->
+                </div><!--edit_delete_wrapper-->
+                <% } %>
+
               </div><!--post-->
               <div class="share_box">
-                <span>Share this post on:</span>
+                <h4>Share this post on:</h4>
                 <div class="share_content">
-                  <img src="/images/facebook-ci.png">
-                  <img src="/images/twitter-ci.png">
-                  <img src="/images/linkedin-ci.png">
+                  <div class = "facebook_share">
+                    <img src="/images/facebook-ci.png">
+                    <p>Facebook</p>
+                  </div><!--facebook_share-->
+                  <div class="twitter_share">
+                    <img src="/images/twitter-ci.png">
+                    <p>Twitter</p>
+                  </div><!--twitter_share-->
+                  <div class="linkedin_share">
+                    <img src="/images/linkedin-ci.png">
+                    <p>Linkedin</p>
+                  </div><!--linkedin_share-->
                 </div><!--share_content-->
               </div><!--share_box-->
+
+              <!-- RELATED POSTS -->
+
               <div class="relatedPosts">
                 <h4>Related post:</h4>
                 <div class="related_posts_content">
@@ -73,40 +116,56 @@
                         <% if (relatedPost.image.url) { %>
                           <img src="<%=relatedPost.image.url%>" width="80" height="80">
                         <% } %>
-                        <a href="/posts/<%=post.id%>"><%= relatedPost.title %></a>
+                        <a href="/posts/<%=relatedPost.id%>"><%= relatedPost.title %></a>
                         <p><%= relatedPost.body.substr(0, 200) %></p>
                       </div><!--related_single_post-->
                     <% } %>
                   <% }) %>
                 </div><!--related_posts_content-->
               </div><!--relatedPosts-->
+
+              <!-- COMMENTS -->
+
               <div class="comment_section">
-                <p>Comments</p>
+                <h4>Comments:</h4>
                 <button class="openComment">Leave a comment</button>
-                <div class="commentForm">
+                <div class="commentForm row">
                   <div class="formErrors"></div>
                   <form id="commentForm">
-                    <input type="text" name="commentTitle" placeholder="Title">
-                    <textarea name="commentBody" placeholder="Leave a comment"></textarea>
-                    <input type="text" name="commentAuthorName" placeholder="Name">
-                    <input type="text" name="commentAuthorEmail" placeholder="Email">
-                    <input type="text" name="commentAuthorWebsite" placeholder="Website">
-                    <button class="submitComment">Submit comment</button>
+                    <label for="commentTitle" class="two columns">Title</label>
+                    <input type="text" id="commentTitle" class="five columns" name="commentTitle" placeholder="Title">
+                    <label for="commentAuthorName" class="two columns">Name&#42;</label>
+                    <input type="text" id="commentAuthorName" class="five columns" name="commentAuthorName" placeholder="Name">
+                    <label for="commentAuthorEmail" class="two columns">Email&#42; (will not be displayed) </label>
+                    <input type="text" id="commentAuthorEmail" class="five columns" name="commentAuthorEmail" placeholder="Email">
+                    <label for="commentAuthorWebsite" class="two columns">Website</label>
+                    <input type="text" id="commentAuthorWebsite" class="five columns" name="commentAuthorWebsite" placeholder="Website">
+                    <label for="commentBody" class="two columns">Comment&#42;</label>
+                    <textarea id="commentBody" name="commentBody" class="five columns" placeholder="Leave a comment"></textarea>
+                    <div class="submitComment_wrap">
+                      <p class="submitComment">Submit comment</p>
+                    </div>
                   </form>
                 </div>
                 <div class="commentsCollection">
                   <% post.comments.forEach(function(comment){ %>
                     <div class="comment" data-id="<%= comment.id %>">
-                      <p>
+                      <p class="commentTitle"><%= comment.title %></p>
+                      <% if (comment.title) { %>
+                        <img src="/images/triangle.png" width="6">
+                      <% } %>
+                      <p class="commentAuthorName"><%= comment.name %></p>
+                      <% if (comment.website) { %>
+                        <img src="/images/triangle.png" width="6">
+                      <% } %>
+                      <a href="http://<%= comment.website %>" target="_blank"><p class="commentAuthorWebsite"><%= comment.website %></p></a>
+                      <p class="commentDate">
                         <% var date = new Date(comment.date); date = date.toDateString() %>
                         <%= date %>
                       </p>
-                      <p class="commentTitle"><%= comment.title %></p>
                       <p class="commentBody"><%= comment.body %></p>
-                      <p class="commentAuthorName"><%= comment.name %></p>
-                      <p class="commentAuthorWebsite"><%= comment.website %></p>
                       <% if(user) { %>
-                        <button class="deleteComment">Delete</button>
+                        <p class="deleteComment">Delete</p>
                       <% } %>
                     </div>
                   <% }) %>
