@@ -155,6 +155,7 @@ router.post('/blog', function(req, res){
               else {
                 //send notification to subscribed users
                 // sendEmails();
+                console.log(posts)
                 res.send({posts: posts, post: post})
               }
             })

@@ -96,11 +96,11 @@ a:hover, .removePostPreview:hover {
   border-bottom: 1px solid #aaa;
 }
 
-#blogForm input, #blogForm textarea {
+#blogForm input, #blogForm textarea, #editPostForm input, #editPostForm textarea {
   width: 100%;
 }
 
-#blogForm textarea {
+#blogForm textarea, #editPostForm textarea {
   height: 15em;
 }
 
@@ -145,7 +145,7 @@ a:hover, .removePostPreview:hover {
 
 
 .postImage {
-  padding: 4% 0;
+  padding: 2% 0;
   width: 100%;
   height: auto;
 }
@@ -186,7 +186,7 @@ a:hover, .removePostPreview:hover {
   text-transform: uppercase;
 }
 
-.read_more_wrap a:hover, .follow_by_email_wrap button:hover, .categories p:hover, .openPostForm:hover, .all_posts:hover, .openComment:hover, .submitComment:hover {
+.read_more_wrap a:hover, .follow_by_email_wrap button:hover, .categories p:hover, .openPostForm:hover, .all_posts:hover, .openComment:hover, .submitComment:hover, .openChangeImage:hover, .deleteImage:hover, .editPost:hover, .changeImage:hover, .removeEditPreview:hover {
   cursor: pointer;
   background-color: #595959;
   text-decoration: none;
@@ -403,12 +403,16 @@ p.openEdit, p.deletePost, p.deleteComment {
   height: 10em;
 }
 
-.submitComment_wrap, .submitPost_wrap {
+.submitComment_wrap, .submitPost_wrap, .change_image_wrap, .edit_post_wrap  {
   text-align: center;
   margin-top: 0em;
 }
 
-.submitComment, .submitPost {
+.changeImageInput {
+  text-align: left;
+}
+
+.submitComment, .submitPost, .openChangeImage, .deleteImage, .editPost, .changeImage, .removeEditPreview {
   font: normal bold 10px 'Lato';
   color: #ffffff;
   background-color: #000000;
@@ -453,6 +457,23 @@ p.openEdit, p.deletePost, p.deleteComment {
   -webkit-transition: all 0.4s ease-in-out;
   -o-transition: all 0.4s ease-in-out;
   -ms-transition: all 0.4s ease-in-out;
+}
+
+.openChangeImage, .deleteImage {
+  width: 40%;
+  margin-top: 1em;
+}
+
+.deleteImage, .changeImage {
+  margin-right: 2em;
+}
+
+.editPostTitle {
+  margin-top: 2em;
+}
+
+.editFile {
+  margin-top: 2em;
 }
 
 

@@ -68,8 +68,7 @@ $(document).ready(function() {
       currentPage: 1
     }
 
-    var removeEditPreview = function(event){
-      event.preventDefault();
+    var removeEditPreview = function(){
       var preview = $(this).parents(".edit").find("img#preview");
       var imageUrl = $(this).data("img_url")
       preview.fadeOut(1000, function(){
@@ -106,22 +105,26 @@ $(document).ready(function() {
             var maxLength = 700;
             var postBody = '';
             var tagsImage = '';
+            var fullChangeImageForm = '';
             post.tags.forEach(function(tag){
               tags += "<span class='searchTag'>" + tag + "</span> "
             })
             if (post.tags[0] !== "") {
-              tagsImage = "<img src='/images/tag.png' width='20px'>"
+              tagsImage = "<img src='/images/tag.png' width='20px'>";
+              tagsValue = "'" + post.tags.join(', ') + "'";
+            } else {
+              tagsValue = "'Tags...' style='color: #D1D1D1'";
             }
             if (isAuthenticated) {
               if (post.image) {
                 image = "<img src='" + post.image.url + "' class='postImage' id='preview'>";
-                deleteImageButton = "<button class='deleteImage'>Delete Image</button>";
-                changeImageButton = "<button class='changeImage'>Change Image</button>";
-                changeImageForm = "<button class='openChangeImage'>Change Image</button><div class='changeImageInput'><button class='removeEditPreview'>Remove preview</button><input type='file' name='image' class='editFile'><button class='changeImage'>Submit Image</button></div>"
+                deleteImageButton = "<p class='deleteImage'>Delete Image</p>";
+                changeImageForm = "<p class='openChangeImage'>Change Image</p><div class='changeImageInput'><input type='file' name='image' class='editFile'><p class='changeImage'>Submit Image</p></div>";
+                fullChangeImageForm = "<div class='change_image_wrap'>" + deleteImageButton + changeImageForm + "</div>"
               } else {
-                fileUploadInput = "<input type='file' name='image' class='editFile'>";
+                fileUploadInput = "<input type='file' name='image' class='editFile'><p class='removePreview'>X</p>";
               }
-             editForm = " </div><div class='edit_delete_wrapper'><p class='deletePost'>Delete</p><p class='openEdit'>Edit</p><div class='edit'><form id='editPostForm'>" + changeImageForm + deleteImageButton + fileUploadInput + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value='" + post.tags.join(', ') + "'><input type='file' name='image' class='editFile'><button class='editPost'>Submit</button></form></div></div>"
+             editForm = " </div><div class='edit_delete_wrapper'><p class='deletePost'>Delete</p><p class='openEdit'>Edit</p><div class='edit'><form id='editPostForm'>" + fullChangeImageForm + fileUploadInput + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value=" + tagsValue + "><div class='edit_post_wrap'><p class='editPost'>Update</p></div></form></div></div>"
             }
             if (post.image) {
               image = "<img src='" + post.image.url +"' class='postImage' id='preview'>"
@@ -204,8 +207,13 @@ $(document).ready(function() {
             $(input).parents("#blogForm").find("#preview").attr("height", "100").attr("width", "100")
             $(input).parents("#blogForm").find("#preview").after(preview)
           } else {
-            $(input).parents(".edit").find(".removeEditPreview").data("img_url", $(input).parents(".post").find("#preview").attr('src'))
+            $(input).parents(".edit").find(".removeEditPreview").data("img_url", $(input).parents(".post").find("#preview").attr('src'));
+            $(".removeEditPreview").remove();
+            var image_url = $(input).parents(".post").find(".postImage").attr('src');
+            var preview = "<p class='removeEditPreview' data-img_url='" + image_url + "''>Remove preview</p>";
+            $(input).parents(".edit").find(".changeImage").after(preview);
             $(input).parents(".edit").find("#preview").attr('src', e.target.result);
+
           }
           $(input).parents("form").find("#preview").show();
         }
@@ -271,7 +279,6 @@ $("body").delegate(".editFile","change", function(){
       postsNumber: $(".posts div:nth-child(10)"),
       previewImage : $(this).parents("#blogForm").find("#preview")
     }
-    console.log($(":file")[$(":file").length-1].files[0])
 
     var checkable = [$("input[name='title']"), $("textarea[name='body']")];
     var fields = [$("input[name='title']"), $("textarea[name='body']"), $("input[name='tags']")];
@@ -683,7 +690,7 @@ $("body").delegate(".editFile","change", function(){
     var changeImageInput = editForm.find(".changeImageInput");
     if (!changeImageInput.is(":visible")){
       changeImageInput.show();
-      $(this).text("Nevermind, the picture is perfect");
+      $(this).text("Nevermind");
     } else {
       $(this).parents(".post").find(".postImage").attr("src", editForm.find(".removeEditPreview").data("img_url"))
       $(":file").val("")

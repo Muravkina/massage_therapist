@@ -80,21 +80,30 @@
                   <div class="edit">
                     <form id="editPostForm">
                       <% if (post.image.url) { %>
-                        <button class="openChangeImage">Change Image</button>
-                        <div class="changeImageInput">
-                          <button class="removeEditPreview">Remove preview</button>
-                          <input type="file" name="image" class="editFile">
-                          <button class="changeImage">Submit Image</button>
-                        </div><!--changeImageInput-->
-                          <button class="deleteImage">Delete Image</button>
+                        <div class="change_image_wrap">
+                          <p class="deleteImage">Delete Image</p>
+                          <p class="openChangeImage">Change Image</p>
+                          <div class="changeImageInput">
+                            <input type="file" name="image" class="editFile">
+                              <p class="changeImage">Submit Image</p>
+                          </div><!--changeImageInput-->
+                        </div><!--change_image_wrap-->
                       <% } else { %>
                         <input type="file" name="image" class="editFile">
                         <p class="removePreview">X</p>
                       <% } %>
                       <input type="text" name="editPostTitle" value="<%=post.title %>" class="editPostTitle">
                       <textarea name="editPostBody" class="editPostBody"><%= post.body %></textarea>
-                      <input type="text" name="editPostTags" class="editPostTags" value="<%= post.tags.join(', ') %>">
-                      <button class="editPost">Submit</button>
+                      <input type="text" name="editPostTags" class="editPostTags"
+                      <% if (post.tags[0] !== "") { %>
+                        value="<%= post.tags.join(', ') %>"
+                      <% } else { %>
+                        value="Tags..." style="color: #D1D1D1"
+                      <% } %>
+                      >
+                      <div class="edit_post_wrap">
+                        <p class="editPost">Update</p>
+                      </div><!--edit_post_wrap-->
                     </form>
                   </div><!--edit-->
                 </div><!--edit_delete_wrapper-->
