@@ -149,14 +149,18 @@ router.post('/blog', function(req, res){
       new Blog.Post({title: fields.title, body: fields.body, date: new Date(), tags: tagsArray}).save(function(err, post){
         if (Object.keys(files).length !== 0) {
           post.attach('image', {path: files.image.path}, function(error){
-            post.save()
-            Blog.Post.find({}).limit(10).sort({date: 'desc'}).exec(function(err, posts){
-              if (err) {res.send(err)}
+            post.save(function(err){
+              if(err){res.send(err)}
               else {
-                //send notification to subscribed users
-                // sendEmails();
-                console.log(posts)
-                res.send({posts: posts, post: post})
+                Blog.Post.find({}).limit(10).sort({date: 'desc'}).exec(function(err, posts){
+                  if (err) {res.send(err)}
+                  else {
+                    //send notification to subscribed users
+                    // sendEmails();
+                    console.log(posts)
+                    res.send({posts: posts, post: post})
+                  }
+                })
               }
             })
           })
@@ -181,7 +185,7 @@ router.delete('/posts/:id', function(req, res){
     } else {
       Blog.Post.find({_id : { "$lte" : req.body.postNumber } }).sort({"_id":-1}).limit(10).exec(function(err, posts){
         if (err) {res.send(err)}
-        else {res.send(posts)}
+        else {res.send({posts: posts, id: req.params.id})}
       })
     }
   })

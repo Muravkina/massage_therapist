@@ -108,13 +108,17 @@
               <!-- RELATED POSTS -->
 
               <div class="relatedPosts">
-                <h4>Related post:</h4>
+                <% if (relatedPosts.length !== 1) { %>
+                  <h4>Related posts: </h4>
+                <% } %>
                 <div class="related_posts_content">
                   <% relatedPosts.forEach(function(relatedPost){ %>
                     <% if(relatedPost.id !== post.id) { %>
                       <div class="related_single_post">
                         <% if (relatedPost.image.url) { %>
-                          <img src="<%=relatedPost.image.url%>" width="80" height="80">
+                          <img src="<%=relatedPost.image.url%>" width="75" height="75">
+                        <% } else { %>
+                          <img src="/images/no_image.png" width="75" height="75">
                         <% } %>
                         <a href="/posts/<%=relatedPost.id%>"><%= relatedPost.title %></a>
                         <p><%= relatedPost.body.substr(0, 200) %></p>

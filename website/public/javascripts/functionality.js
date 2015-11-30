@@ -341,7 +341,18 @@ $("body").delegate(".editFile","change", function(){
         contentType: 'application/json',
         data: JSON.stringify(data)
       }).done(function(data){
-        newPost(data)
+        newPost(data.posts)
+
+        //Remove deleted post from popular posts
+
+        var deletedPost;
+        var popularPosts = $(".popular_posts_body").children("a");
+        popularPosts.each(function(link){
+          if ($(this).attr('href').indexOf(data.id) > -1) {
+            deletedPost = $(this).parents(".popular_post_wrap")
+          }
+        })
+        deletedPost.remove();
       })
   }
   $(".posts").on("click", ".deletePost", deletePost);

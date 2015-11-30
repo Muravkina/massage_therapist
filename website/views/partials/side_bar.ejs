@@ -51,20 +51,22 @@
     <div class="popularPosts widget">
     <h2>Popular posts</h2>
       <% popularPosts.forEach(function(post){ %>
-        <% if (post.image.url) { %>
-          <img src="<%= post.image.url %>" width="100%">
-        <% } %>
-        <div class="popular_posts_body">
-          <a href="<%= post._id %>"><h2><%= post.title %></h2></a>
-          <% var maxLength = 70; %>
-          <% if (post.body.length > maxLength) {
-            var trimmedString = post.body.substr(0, maxLength);
-            var trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))) %>
-          <p class="postBody"><%= trimmedString %> ...</p>
-           <% } else { %>
-          <p class="postBody"><%= post.body %></p>
+        <div class="popular_post_wrap">
+          <% if (post.image.url) { %>
+            <img src="<%= post.image.url %>" width="100%">
           <% } %>
-        </div>
+          <div class="popular_posts_body">
+            <a href="/posts/<%= post._id %>"><h2><%= post.title %></h2></a>
+            <% var maxLength = 70; %>
+            <% if (post.body.length > maxLength) {
+              var trimmedString = post.body.substr(0, maxLength);
+              var trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))) %>
+            <p class="postBody"><%= trimmedString %> ...</p>
+             <% } else { %>
+            <p class="postBody"><%= post.body %></p>
+            <% } %>
+          </div><!--popular_posts_body-->
+        </div><!--popular_post_wrap-->
       <% }) %>
     </div><!--popularPosts-->
   </div><!--right_sidebar section-->
