@@ -1,0 +1,110 @@
+@font-face {
+    font-family: Abduco;
+    src: url(../fonts/Abduco.ttf);
+}
+
+@font-face {
+    font-family: SensoryOverload;
+    src: url(../fonts/SensoryOverload.ttf);
+}
+
+@font-face {
+    font-family: JD;
+    src: url(../fonts/jd.ttf);
+}
+
+.wrap img, .wrap p {
+  width: 100%;
+}
+
+/*MAIN HEADING*/
+
+.landing_image {
+  margin-left: 15%;
+  margin-top: 7%;
+  margin-bottom: 6%;
+  overflow: auto;
+}
+.massage_therapist_image {
+  width: 40%;
+  display: inline-block;
+  float:left;
+}
+
+.main_heading {
+  display: inline-block;
+  float:left;
+  width: 45%;
+}
+
+.main_heading h1 {
+  font-family: 'SensoryOverload', sans-serif;
+  margin-left: -17%;
+  font-size: 5em;
+}
+
+.main_heading p {
+  font-family: 'JD', sans-serif;
+  margin-left: 20%;
+  margin-top: -4.8%;
+  font-size: 2.1em;
+}
+
+/*BLACK LANDING WITH BUTTONS*/
+
+.black_landing {
+  background-color: rgb(0, 0, 0);
+  overflow: auto;
+  clear: both;
+}
+
+.landing_button {
+  width: 16%;
+  overflow: auto;
+  float: left;
+  margin-left: 2.5%;
+  margin-top: 2%;
+}
+
+.landing_button:hover {
+  cursor:pointer;
+}
+
+.landing_button_image {
+  width: 70%;
+  margin: 0 auto;
+}
+
+
+.landing_button_image.clock, .landing_button_image.bear  {
+  width: 65%;
+}
+
+.landing_button_image.kick_me {
+  width: 75%;
+}
+
+.landing_button_image.phone {
+  width: 75%;
+}
+
+.landing_button_image.blog {
+  width: 100%;
+}
+
+.landing_button_text p {
+  color: rgb(255, 255, 255);
+  font-family: 'Abduco', sans-serif;
+  text-align: center;
+  font-size: 1.5em;
+  letter-spacing: 0.1em;
+}
+
+.contact_text{
+  margin-top: 2%;
+}
+
+.blog_text{
+  margin-top: -3%;
+}
+

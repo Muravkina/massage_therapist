@@ -334,3 +334,9 @@ a:hover {
   transform: translate(0%, 0%) rotate(-45deg);
   background-color: rgb(39, 40, 34);
 }
+
+.reviews_collection_wrap {
+  padding-bottom: 60px;
+}
+
+

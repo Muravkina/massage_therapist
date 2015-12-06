@@ -2,8 +2,7 @@
 <html>
   <head>
     <% include ./partials/head %>
-
-    <link rel='stylesheet' href='/stylesheets/index.css' />
+    <link rel="stylesheet" href="/stylesheets/alternative.css">
     <link href='https://fonts.googleapis.com/css?family=Carter+One' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Krona+One' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
@@ -11,125 +10,66 @@
   </head>
 
   <body>
-    <header>
-      <div class="container">
-        <div class="row">
-            <% if (user) { %>
-              <a href="/logout">Log out</a>
-            <% } %>
-            <a href="/blog">Blog</a>
-            <a href="#">Contact</a>
-            <a href="#">Reviews</a>
-            <a href="#">Schedule</a>
-            <a href="/">About</a>
-        </div>
-      </div>
-    </header>
-    <div class="main_picture bounce_up in-view scrollable">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna.</p>
-      <div class="scroll_arrow_wrap">
-        <div class="scroll_arrow bounce_up">
-          <i class="line line-1"></i>
-          <i class="line line-2"></i>
-        </div><!--scroll_arrow-->
-      </div><!--scroll_arrow_wrap-->
-    </div>
-    <div class="menu bounce_up about in-view scrollable">
-      <div class="title">
-        <h3> About me</h3>
-      </div>
-      <div class="scroll_arrow_wrap">
-        <div class="scroll_arrow bounce_up">
-          <i class="line line-1"></i>
-          <i class="line line-2"></i>
-        </div><!--scroll_arrow-->
-      </div><!--scroll_arrow_wrap-->
-    </div>
-    <div class="menu bounce_up schedule scrollable">
-      <div class="title">
-        <h3>Schedule</h3>
-      </div>
-      <div class="scroll_arrow_wrap">
-        <div class="scroll_arrow bounce_up">
-          <i class="line line-1"></i>
-          <i class="line line-2"></i>
-        </div><!--scroll_arrow-->
-      </div><!--scroll_arrow_wrap-->
-    </div>
-    <div class="menu bounce_up reviews scrollable">
-      <div class="title">
-        <h3>Reviews</h3>
-      </div>
-      <div class = "container">
-        <div class="row">
-          <div class="form eleven columns">
-            <form method="post" action="/" id="reviewForm">
-              <legend>Please rate:</legend>
-              <div class="formErrors"></div>
-              <div class="rating_stars_wrapper">
-                <fieldset class="rating">
-                  <!-- Stars -->
-                  <input type="radio" id="star5" name="rating" value="5" /><label for="star5">5 stars</label>
-                  <input type="radio" id="star4" name="rating" value="4" /><label for="star4">4 stars</label>
-                  <input type="radio" id="star3" name="rating" value="3" /><label for="star3">3 stars</label>
-                  <input type="radio" id="star2" name="rating" value="2" /><label for="star2">2 stars</label>
-                  <input type="radio" id="star1" name="rating" value="1" /><label for="star1">1 star</label>
-                </fieldset>
-              </div><!-- rating_stars_wrapper -->
-              <fieldset>
-                <div class="review_row">
-                  <label for="author">&#42;Name:</label>
-                  <input type="text" id="author" name="author" class="reviewAuthor">
-                  <label for="email">Email:</label>
-                  <input type="text" name="email" id="email" class="reviewEmail">
-                </div>
-                <div class="review_row">
-                  <label for="body">&#42;Review:</label>
-                  <textarea id="body" name="body" class="reviewBody"></textarea>
-                </div>
-              </fieldset>
-              <div class="review_button">
-                <button class="submit">Submit</button>
-                <input type="reset" value="Clear">
-              </div><!-- review_buttons -->
-            </form>
-          </div><!-- form eight columns -->
-        </div><!-- row -->
-      </div><!-- container -->
-      <div class="container">
-          <div class="reviews_collection row" data-id="<%= totalReviews %>">
-          <% reviews.forEach(function(review){ %>
-            <div class="review six columns" data-id="<%=review.id%>">
-              <div class="star-ratings-css" title= ".<%= review.stars %>" ></div>
-              <p class="review_body"><%= review.body %></p>
-              <p class="review_author"><%= review.author %></p>
-              <% if(user) { %>
-                <button class="deleteReview">Delete</button>
-              <% } %>
-            </div><!-- review -->
-          <% }) %>
-        </div><!-- reviews_collection row -->
-        <div class="pages">
-          <p class="newerReviews">Newer reviews</p>
-          <% if (reviews.length === 10) { %>
-            <p class="olderReviews">Older reviews</p>
-          <% } %>
-        </div>
-        <div class="scroll_arrow_wrap">
-          <div class="scroll_arrow bounce_up">
-            <i class="line line-1"></i>
-            <i class="line line-2"></i>
-          </div><!--scroll_arrow-->
-        </div><!--scroll_arrow_wrap-->
-      </div><!-- container -->
-    <div class="menu bounce_up contact scrollable">
-      <div class="title">
-        <h3>Contact</h3>
-      </div>
-    </div>
-    <footer>
-    </footer>
+  <div class="main_landing">
+    <div class="landing_image">
+      <div class="massage_therapist_image wrap">
+        <img src="images/massage_therapist.svg">
+      </div><!--massage_therapist_image wrap-->
+
+      <div class="main_heading">
+        <h1>Ilia Gerassimov</h1>
+        <p>massage is my profession</p>
+      </div><!--main_heading-->
+    </div><!--landing_image-->
+  </div><!--main_landing-->
+
+  <div class="black_landing">
+    <div class="landing_button">
+      <div class="landing_button_image wrap bear">
+        <img src="images/bear.png">
+      </div><!--landing_button_image wrap-->
+      <div class="landing_button_text wrap">
+        <p>About</p>
+      </div><!--landing_button_text wrap-->
+    </div><!--landing_button-->
+
+    <div class="landing_button">
+      <div class="landing_button_image wrap clock">
+        <img src="images/clock.png">
+      </div><!--landing_button_image wrap-->
+      <div class="landing_button_text wrap">
+        <p>Schedule</p>
+      </div><!--landing_button_text wrap-->
+    </div><!--landing_button-->
+
+    <div class="landing_button">
+      <div class="landing_button_image wrap kick_me">
+        <img src="images/kick_me.png">
+      </div><!--landing_button_image wrap-->
+      <div class="landing_button_text wrap">
+        <p>Reviews</p>
+      </div><!--landing_button_text wrap-->
+    </div><!--landing_button-->
+
+    <div class="landing_button">
+      <div class="landing_button_image wrap phone">
+        <img src="images/phone.png">
+      </div><!--landing_button_image wrap-->
+      <div class="landing_button_text wrap">
+        <p class="contact_text">Contact</p>
+      </div><!--landing_button_text wrap-->
+    </div><!--landing_button-->
+
+    <div class="landing_button">
+      <div class="landing_button_image wrap blog">
+        <img src="images/blog.png">
+      </div><!--landing_button_image wrap-->
+      <div class="landing_button_text wrap">
+        <p class="blog_text">Blog</p>
+      </div><!--landing_button_text wrap-->
+    </div><!--landing_button-->
+  </div><!--black_landing-->
+
   <script src="/javascripts/functionality.js"></script>
   <script src="/javascripts/beauty.js"></script>
   </body>
