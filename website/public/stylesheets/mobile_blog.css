@@ -1,0 +1,74 @@
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2){
+    #mobile-header {
+        display: block;
+    }
+
+    .regular_side_bar {
+      display: none;
+    }
+
+    .main_wrapper_bg.eight.columns {
+      width: 100%;
+    }
+
+    .content_wrapper {
+      padding-left: 0;
+    }
+
+    .read_more_wrap a {
+      max-width: 175px;
+    }
+
+    .navigation a {
+      font-size: 10px;
+    }
+
+    .comment_link, .post_signature_wrapper, .postTags span{
+      font-size: 15px;
+    }
+
+    input[type="text"], textarea {
+      font-size: 15px;
+    }
+
+    .submitComment, .submitPost, .openChangeImage, .deleteImage, .changeImage, .removeEditPreview, input[type="file"] {
+      font-size: 13px;
+    }
+
+    .openChangeImage, .deleteImage, .editPost {
+      width: 43.5%;
+      padding: 20px;
+      float: left;
+      font-size: 25px;
+      margin-top: 2%;
+    }
+
+    .editPost {
+      float: none;
+    }
+
+    .deleteImage {
+      margin-right: 15px;
+    }
+
+    .openChangeImage {
+      margin-right: 0;
+    }
+    .change_image_wrap {
+      text-align: left;
+    }
+    .postTags img {
+      width: 50px;
+    }
+
+    .container .two.columns {
+      width: 120px;
+    }
+
+    h1 {
+      font-size: 3rem;
+    }
+}

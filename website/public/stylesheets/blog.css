@@ -39,7 +39,7 @@ a:hover, .removePostPreview:hover, .pages p:hover {
 
 .navigation a {
   font-family: 'Lato', sans-serif;
-  font-size: 10px;
+  font-size: 0.8em;
   color: #1A1A1A;
   text-transform: uppercase;
   text-decoration: none;
@@ -707,6 +707,10 @@ p.openEdit, p.deletePost, p.deleteComment {
 
 .edit, .closeEdit, .commentForm, .newerReviews, .newerPosts, .all_posts, .changeImageInput,.olderSearchPosts, .newerSearchPosts, .olderTagPosts, .newerTagPosts, #blogForm {
   display: none;
+}
+
+#mobile-header {
+    display: none;
 }
 
 

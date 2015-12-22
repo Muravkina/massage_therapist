@@ -3,17 +3,20 @@
   <head>
     <% include ./partials/head %>
     <link rel="stylesheet" href="/stylesheets/alternative.css">
+    <link rel="stylesheet" href="/stylesheets/jquery-ui.min.css">
     <link href='https://fonts.googleapis.com/css?family=Carter+One' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Krona+One' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/javascripts/libraries/jquery-ui.js"></script>
   </head>
 
   <body>
   <div class="main_landing">
     <div class="landing_image">
       <div class="massage_therapist_image wrap">
-        <img src="images/massage_therapist.svg">
+        <img src="gifs/massage_therapist.gif">
+
       </div><!--massage_therapist_image wrap-->
 
       <div class="main_heading">
@@ -61,16 +64,56 @@
     </div><!--landing_button-->
 
     <div class="landing_button">
-      <div class="landing_button_image wrap blog">
-        <img src="images/blog.png">
-      </div><!--landing_button_image wrap-->
-      <div class="landing_button_text wrap">
-        <p class="blog_text">Blog</p>
-      </div><!--landing_button_text wrap-->
+      <a href="/blog">
+        <div class="landing_button_image wrap blog">
+          <img src="images/blog.png">
+        </div><!--landing_button_image wrap-->
+        <div class="landing_button_text wrap">
+          <p class="blog_text">Blog</p>
+        </div><!--landing_button_text wrap-->
+      </a>
     </div><!--landing_button-->
   </div><!--black_landing-->
 
+  <div class="about">
+    <h1>About</h1>
+    <div class="about_pictures">
+      <div class="education section">
+        <div class="education about_image wrap">
+          <img src="images/hat_top_part.png" class="top_part">
+          <img src="images/hat_middle_part.png" class="middle_part">
+          <img src="images/hat_bottom_part.png" class="bottom_part">
+          <h2>Education</h2>
+        </div><!--education_image wrap-->
+      </div><!--education-->
+      <div class="massage section">
+        <div class="massage about_image wrap">
+          <img src="images/hand_top_part.png" class="top_part">
+          <img src="images/hand_middle_part.png" class="middle_part">
+          <img src="images/hand_bottom_part.png" class="bottom_part">
+          <h2>Massage</h2>
+        </div><!--massage_image wrap-->
+      </div><!--massage-->
+            <div class="medical section">
+        <div class="medical about_image wrap">
+          <img src="images/medical_top_part.png" class="top_part">
+          <img src="images/medical_middle_part.png" class="middle_part">
+          <img src="images/medical_bottom_part.png" class="bottom_part">
+          <h2>Medicine</h2>
+        </div><!--medical_image wrap-->
+      </div><!--medical-->
+      <div class="resume section">
+        <div class="resume about_image wrap">
+          <img src="images/resume_top_part.png" class="top_part">
+          <img src="images/resume_middle_part.png" class="middle_part">
+          <img src="images/resume_bottom_part.png" class="bottom_part">
+          <h2>Resume</h2>
+      </div>
+    </div><!--about_pictures-->
+  </div><!--about-->
+
   <script src="/javascripts/functionality.js"></script>
   <script src="/javascripts/beauty.js"></script>
+
   </body>
 </html>

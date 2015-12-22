@@ -1,73 +1,164 @@
-<div class="right_sidebar_wrapper four columns">
-  <div class="right_sidebar section">
-    <div class="social_follow widget">
-      <h2>social follow</h2>
-      <div class="box_content">
-        <div class="social_box">
-          <a href="https://www.facebook.com/ilia.gerassimov" target="_blank"><img src="/images/fol-facebook.png" alt="facebook logo"></a>
-          <a href="https://www.instagram.com/ger_ill/" target="_blank"><img src="/images/fol-instagram.png" alt="twitter logo"></a>
-          <a href="https://www.linkedin.com/in/ilia-gerassimov-67958146" target="_blank"><img src="/images/fol-linkedin.png" alt="linkedin logo"></a>
-        </div><!--social_box-->
-      </div><!--box_content-->
-    </div><!--social follow-->
+<div class="regular_side_bar">
+  <div class="right_sidebar_wrapper four columns">
+    <div class="right_sidebar section">
+      <div class="social_follow widget">
+        <h2>social follow</h2>
+        <div class="box_content">
+          <div class="social_box">
+            <a href="https://www.facebook.com/ilia.gerassimov" target="_blank"><img src="/images/fol-facebook.png" alt="facebook logo"></a>
+            <a href="https://www.instagram.com/ger_ill/" target="_blank"><img src="/images/fol-instagram.png" alt="twitter logo"></a>
+            <a href="https://www.linkedin.com/in/ilia-gerassimov-67958146" target="_blank"><img src="/images/fol-linkedin.png" alt="linkedin logo"></a>
+          </div><!--social_box-->
+        </div><!--box_content-->
+      </div><!--social follow-->
 
-    <div class="about_author widget">
-      <h2>About</h2>
-      <div class="profile_image_wrap">
-        <img src="/images/profile.jpg" alt="profile picture">
-      </div><!--profile_image_wrap-->
-      <h2>Ilia Gerassimov</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. </p>
-    </div>
-
-    <div class="subscribe widget">
-      <h2>Follow by email</h2>
-      <div class="follow_by_email_wrap">
-        <input type="email" class="subscribeEmail" name="subscribeEmail" placeholder="Email address..">
-        <button class="subscribeByEmail">Submit</button>
-      </div><!--follow_by_email_wrap-->
-    </div><!--subscribe-->
-
-    <div class="searchBox widget">
-      <h2>Search</h2>
-      <input type="search" autocomplete="on" name="searchPosts" placeholder="TYPE + ENTER">
-    </div><!--searchBox-->
-
-    <div class="categories widget">
-      <h2>Tags</h2>
-      <div class="categories_wrap">
-        <% tags.forEach(function(tag){ %>
-          <% if (tag !== "") { %>
-            <p class="searchTag"><%= tag %></p>
-          <% } %>
-        <% }) %>
+      <div class="about_author widget">
+        <h2>About</h2>
+        <div class="profile_image_wrap">
+          <img src="/images/profile.jpg" alt="profile picture">
+        </div><!--profile_image_wrap-->
+        <h2>Ilia Gerassimov</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. </p>
       </div>
-    </div><!--categories-->
 
+      <div class="subscribe widget">
+        <h2>Follow by email</h2>
+        <div class="follow_by_email_wrap">
+          <input type="email" class="subscribeEmail" name="subscribeEmail" placeholder="Email address..">
+          <button class="subscribeByEmail">Submit</button>
+        </div><!--follow_by_email_wrap-->
+      </div><!--subscribe-->
 
-    <div class="popularPosts widget">
-    <h2>Popular posts</h2>
-      <% popularPosts.forEach(function(post){ %>
-        <div class="popular_post_wrap">
-          <% if (post.image.url) { %>
-            <img src="<%= post.image.url %>" width="100%">
-          <% } %>
-          <div class="popular_posts_body">
-            <a href="/posts/<%= post._id %>"><h2><%= post.title %></h2></a>
-            <% var maxLength = 70; %>
-            <% if (post.body.length > maxLength) {
-              var trimmedString = post.body.substr(0, maxLength);
-              var trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))) %>
-            <p class="postBody"><%= trimmedString %> ...</p>
-             <% } else { %>
-            <p class="postBody"><%= post.body %></p>
+      <div class="searchBox widget">
+        <h2>Search</h2>
+        <input type="search" autocomplete="on" name="searchPosts" placeholder="TYPE + ENTER">
+      </div><!--searchBox-->
+
+      <div class="categories widget">
+        <h2>Tags</h2>
+        <div class="categories_wrap">
+          <% tags.forEach(function(tag){ %>
+            <% if (tag !== "") { %>
+              <p class="searchTag"><%= tag %></p>
             <% } %>
-          </div><!--popular_posts_body-->
-        </div><!--popular_post_wrap-->
-      <% }) %>
-    </div><!--popularPosts-->
-  </div><!--right_sidebar section-->
-</div><!--right_sidebar_wrapper four columns-->
+          <% }) %>
+        </div>
+      </div><!--categories-->
+
+
+      <div class="popularPosts widget">
+      <h2>Popular posts</h2>
+        <% popularPosts.forEach(function(post){ %>
+          <div class="popular_post_wrap">
+            <% if (post.image.url) { %>
+              <img src="<%= post.image.url %>" width="100%">
+            <% } %>
+            <div class="popular_posts_body">
+              <a href="/posts/<%= post._id %>"><h2><%= post.title %></h2></a>
+              <% var maxLength = 70; %>
+              <% if (post.body.length > maxLength) {
+                var trimmedString = post.body.substr(0, maxLength);
+                var trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))) %>
+              <p class="postBody"><%= trimmedString %> ...</p>
+               <% } else { %>
+              <p class="postBody"><%= post.body %></p>
+              <% } %>
+            </div><!--popular_posts_body-->
+          </div><!--popular_post_wrap-->
+        <% }) %>
+      </div><!--popularPosts-->
+    </div><!--right_sidebar section-->
+  </div><!--right_sidebar_wrapper four columns-->
+</div><!--regular_side_bar-->
+
+
+<div id="mobile-header">
+    <a id="responsive-menu-button" href="#sidr-main">Menu</a>
+</div>
+
+<div class="sidr">
+    <div class="right_sidebar_wrapper four columns">
+    <div class="right_sidebar section">
+      <div class="social_follow widget">
+        <h2>social follow</h2>
+        <div class="box_content">
+          <div class="social_box">
+            <a href="https://www.facebook.com/ilia.gerassimov" target="_blank"><img src="/images/fol-facebook.png" alt="facebook logo"></a>
+            <a href="https://www.instagram.com/ger_ill/" target="_blank"><img src="/images/fol-instagram.png" alt="twitter logo"></a>
+            <a href="https://www.linkedin.com/in/ilia-gerassimov-67958146" target="_blank"><img src="/images/fol-linkedin.png" alt="linkedin logo"></a>
+          </div><!--social_box-->
+        </div><!--box_content-->
+      </div><!--social follow-->
+
+      <div class="about_author widget">
+        <h2>About</h2>
+        <div class="profile_image_wrap">
+          <img src="/images/profile.jpg" alt="profile picture">
+        </div><!--profile_image_wrap-->
+        <h2>Ilia Gerassimov</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. </p>
+      </div>
+
+      <div class="subscribe widget">
+        <h2>Follow by email</h2>
+        <div class="follow_by_email_wrap">
+          <input type="email" class="subscribeEmail" name="subscribeEmail" placeholder="Email address..">
+          <button class="subscribeByEmail">Submit</button>
+        </div><!--follow_by_email_wrap-->
+      </div><!--subscribe-->
+
+      <div class="searchBox widget">
+        <h2>Search</h2>
+        <input type="search" autocomplete="on" name="searchPosts" placeholder="TYPE + ENTER">
+      </div><!--searchBox-->
+
+      <div class="categories widget">
+        <h2>Tags</h2>
+        <div class="categories_wrap">
+          <% tags.forEach(function(tag){ %>
+            <% if (tag !== "") { %>
+              <p class="searchTag"><%= tag %></p>
+            <% } %>
+          <% }) %>
+        </div>
+      </div><!--categories-->
+
+
+      <div class="popularPosts widget">
+      <h2>Popular posts</h2>
+        <% popularPosts.forEach(function(post){ %>
+          <div class="popular_post_wrap">
+            <% if (post.image.url) { %>
+              <img src="<%= post.image.url %>" width="100%">
+            <% } %>
+            <div class="popular_posts_body">
+              <a href="/posts/<%= post._id %>"><h2><%= post.title %></h2></a>
+              <% var maxLength = 70; %>
+              <% if (post.body.length > maxLength) {
+                var trimmedString = post.body.substr(0, maxLength);
+                var trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))) %>
+              <p class="postBody"><%= trimmedString %> ...</p>
+               <% } else { %>
+              <p class="postBody"><%= post.body %></p>
+              <% } %>
+            </div><!--popular_posts_body-->
+          </div><!--popular_post_wrap-->
+        <% }) %>
+      </div><!--popularPosts-->
+    </div><!--right_sidebar section-->
+  </div><!--right_sidebar_wrapper four columns-->
+</div>
+
+<script>
+$(document).ready(function() {
+  $('#responsive-menu-button').sidr({
+    side: 'right'
+  })
+})
+</script>

@@ -17,6 +17,9 @@
   width: 100%;
 }
 
+a {
+  text-decoration: none;
+}
 /*MAIN HEADING*/
 
 .landing_image {
@@ -108,3 +111,64 @@
   margin-top: -3%;
 }
 
+/*ABOUT ME*/
+
+.about .section {
+  position:relative;
+  display: inline-block;
+  overflow: auto;
+  width: 300px;
+  height: 300px;
+}
+
+.about.section div {
+  position: absolute;
+}
+
+
+.about_pictures {
+  margin: 0 auto;
+  overflow: auto;
+  margin-top: 10%;
+  margin-bottom: 18%;
+}
+
+.about_image:hover {
+  cursor: pointer;
+}
+
+.about_image img {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display:flex;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.about_image.education img {
+  width:90%;
+}
+
+.section.education{
+  margin-left: 4%;
+  margin-right: 2%;
+}
+
+.about h1 {
+  font-family: 'Abduco', sans-serif;
+  text-align: center;
+  font-size: 7.5rem;
+  margin-top: 2%;
+}
+
+
+.about_image h2{
+  position:absolute;
+  width: 300px;
+  height: 100px;
+  top:100px;
+  left: 60px;
+  display:none;
+}
