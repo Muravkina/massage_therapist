@@ -22,20 +22,16 @@
       max-width: 175px;
     }
 
-    .navigation a {
-      font-size: 10px;
-    }
-
     .comment_link, .post_signature_wrapper, .postTags span{
-      font-size: 15px;
+      font-size: 3rem;
     }
 
-    input[type="text"], textarea {
-      font-size: 15px;
+    input[type="text"], textarea, .postBody {
+      font-size: 3rem;
     }
 
-    .submitComment, .submitPost, .openChangeImage, .deleteImage, .changeImage, .removeEditPreview, input[type="file"] {
-      font-size: 13px;
+    .submitComment, .submitPost, .openChangeImage, .deleteImage, .changeImage, .removeEditPreview, input[type="file"], .postDate, p.deletePost, p.openEdit {
+      font-size: 2.5rem;
     }
 
     .openChangeImage, .deleteImage, .editPost {
@@ -65,10 +61,18 @@
     }
 
     .container .two.columns {
-      width: 120px;
+      width: 130px;
     }
 
     h1 {
-      font-size: 3rem;
+      font-size: 7rem;
+    }
+
+    .postTitle {
+      font-size: 5rem;
+    }
+
+    .postBody, .relatedPosts h4, .comment_section h4, .share_box h4  {
+      font-size: 4rem;
     }
 }

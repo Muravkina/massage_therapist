@@ -25,7 +25,7 @@ a {
 .landing_image {
   margin-left: 15%;
   margin-top: 7%;
-  margin-bottom: 6%;
+  margin-bottom: 4.5%;
   overflow: auto;
 }
 .massage_therapist_image {
@@ -53,6 +53,7 @@ a {
   font-size: 2.1em;
 }
 
+
 /*BLACK LANDING WITH BUTTONS*/
 
 .black_landing {
@@ -61,12 +62,15 @@ a {
   clear: both;
 }
 
+.landing_button_pictures {
+  overflow: auto;
+}
+
 .landing_button {
-  width: 16%;
+  width: 13.5%;
   overflow: auto;
   float: left;
   margin-left: 2.5%;
-  margin-top: 2%;
 }
 
 .landing_button:hover {
@@ -76,31 +80,101 @@ a {
 .landing_button_image {
   width: 70%;
   margin: 0 auto;
+  overflow: auto;
 }
 
 
-.landing_button_image.clock, .landing_button_image.bear  {
+.landing_button_image.about {
+  width: 58%;
+  padding-top: 30px;
+}
+
+.landing_button_image.clock {
   width: 65%;
+  padding-top: 30px;
 }
 
-.landing_button_image.kick_me {
-  width: 75%;
+.landing_button_image.kick {
+  width: 70%;
+  padding-top: 22px;
 }
 
 .landing_button_image.phone {
   width: 75%;
 }
 
-.landing_button_image.blog {
+.landing_button_image.pencil {
+  width: 62%;
+  padding-top: 16px;
+}
+
+.landing_button_image.rates {
+  width: 55%;
+  padding-top: 17px;
+}
+
+.header {
+  background-color: black;
   width: 100%;
 }
 
-.landing_button_text p {
+.header p {
   color: rgb(255, 255, 255);
   font-family: 'Abduco', sans-serif;
   text-align: center;
   font-size: 1.5em;
   letter-spacing: 0.1em;
+}
+
+.landing_text {
+  margin-left: 6%;
+}
+
+.landing_text p:hover {
+  border-bottom: 2px solid white;
+}
+
+.landing_text p {
+  border-bottom: 2px solid black;
+}
+
+.landing_text:hover {
+  cursor: pointer;
+}
+
+.landing_text.schedule {
+  margin-left: 7.5%;
+}
+
+.landing_text.rates {
+  margin-left: 8%;
+}
+
+.landing_text.reviews {
+  margin-left: 7.8%;
+}
+
+.landing_text.contact {
+  margin-left: 6.5%;
+}
+
+.landing_text.blog {
+  margin-left: 9%;
+}
+
+
+
+
+.sticky {
+  top:0;
+  position: fixed;
+  right: 0;
+  z-index: 1000;
+}
+
+.sticky p {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem
 }
 
 .contact_text{
@@ -110,6 +184,12 @@ a {
 .blog_text{
   margin-top: -3%;
 }
+
+.header div {
+  display: inline-block;
+}
+
+
 
 /*ABOUT ME*/
 
@@ -130,7 +210,7 @@ a {
   margin: 0 auto;
   overflow: auto;
   margin-top: 10%;
-  margin-bottom: 18%;
+  margin-bottom: 15%;
 }
 
 .about_image:hover {
@@ -156,7 +236,7 @@ a {
   margin-right: 2%;
 }
 
-.about h1 {
+.about h1, .reviews h1, .schedule h1, .contact h1 {
   font-family: 'Abduco', sans-serif;
   text-align: center;
   font-size: 7.5rem;
@@ -171,4 +251,226 @@ a {
   top:100px;
   left: 60px;
   display:none;
+}
+
+/*REVIEWS*/
+
+.rating {
+  float:left;
+}
+
+.rating:not(:checked) > input {
+  clip: rect(0px, 0px, 0px, 0px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.rating:not(:checked) > label {
+  float: right;
+  width: 1em;
+  padding: 0 .1em;
+  overflow:hidden;
+  white-space:nowrap;
+  cursor:pointer;
+  font-size: 200%;
+  line-height: 1.2;
+  color: #ddd;
+}
+
+.rating:not(:checked) > label:before {
+  content: '★ ';
+}
+
+.rating > input:checked ~ label {
+  color: #CD0A0A;;
+}
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+  color: #CD0A0A;
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+  color: #CD0A0A;
+}
+
+.rating > label:active {
+  position: relative;
+  top: 2px;
+  left: 2px;
+}
+
+.star-ratings-css {
+  unicode-bidi: bidi-override;
+  color: #c5c5c5;
+  font-size: 25px;
+  height: 25px;
+  width: 100px;
+  margin-bottom: 0.8em;
+  position: relative;
+  text-shadow: 0 1px 0 #a2a2a2;
+}
+.star-ratings-css::before {
+  content: '★★★★★';
+  opacity: .3;
+}
+.star-ratings-css::after {
+  color: #CD0A0A;
+  content: '★★★★★';
+  text-shadow: 0 1px 0 #ab5414;
+  position: absolute;
+  z-index: 1;
+  display: block;
+  left: 0;
+  top:0;
+  width: attr(rating);
+  overflow: hidden;
+}
+[title=".0"]::after {
+  width: 0%;
+}
+
+[title=".1"]::after {
+  width: 25%;
+}
+[title=".2"]::after {
+  width: 50%;
+}
+[title=".3"]::after {
+  width: 75%;
+}
+[title=".4"]::after {
+  width: 100%;
+}
+.red {
+  border-color: red;
+}
+input[type="text"].red {
+  border-color: red;
+}
+.rating_stars_wrapper {
+  overflow:auto;
+}
+label {
+  display: inline-block;
+}
+input[type="text"], input[type="password"]{
+  width: 23.5em;
+  margin-left: 0.5em;
+}
+textarea {
+  width: 52em;
+  vertical-align: top;
+  margin-left: 0.5em;
+}
+label[for="body"] {
+  margin-top: -2em;
+}
+input[type="reset"]{
+  margin-left: 1em;
+}
+.review_button input[type="reset"], .review_button button{
+  width: 16em;
+  background-color: black;
+  color: white;
+  font-family: 'SensoryOverload', sans-serif;
+  letter-spacing: 0.2em;
+}
+.review_button input[type="reset"]:hover, .review_button button:hover {
+  background-color: rgb(45, 45, 45);
+}
+
+label[for="email"]{
+  margin-left: 1em;
+}
+label[for="author"]{
+  margin-right: 0.7em;
+}
+legend {
+  font-family: 'JD';
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+.formErrors {
+  color: red;
+  margin-bottom: -0.5em;
+}
+.review_button{
+  float: right;
+}
+.form.eleven.columns {
+  margin-left: 13%;
+  margin-top: 3%;
+}
+.review_author {
+  float: right;
+  margin-right: 2em;
+  font-style: italic;
+}
+.review_body {
+  margin-bottom: 1rem;
+  overflow: auto;
+}
+.six.columns{
+  margin-left: 3em;
+}
+.reviews_collection .review.six.columns {
+  margin-bottom: -1em;
+}
+.reviews_collection.row {
+  margin: 3% auto;
+  width: 86%;
+}
+
+.newerReviews {
+  display: inline-block;
+  margin-left: 35%;
+  font-family: 'SensoryOverload', sans-serif;
+}
+
+.olderReviews {
+  display: inline-block;
+  margin-left: 9%;
+  font-family: 'SensoryOverload', sans-serif;
+}
+
+.newerReviews:hover, .olderReviews:hover {
+  cursor: pointer;
+  color: rgb(100, 100, 100);
+}
+
+/*BOUNCING*/
+
+.bounce_up.scrollable {
+  opacity: 0;
+  margin-top: 10%;
+  -moz-transition: all 700ms ease-out;
+  -webkit-transition: all 700ms ease-out;
+  -o-transition: all 700ms ease-out;
+  transition: all 700ms ease-out;
+  -moz-transform: translate3d(0px, 200px, 0px);
+  -webkit-transform: translate3d(0px, 200px, 0px);
+  -o-transform: translate(0px, 200px);
+  -ms-transform: translate(0px, 200px);
+  transform: translate3d(0px, 200, 0px);
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.bounce_up.in-view.scrollable {
+  opacity: 1;
+  -moz-transform: translate3d(0px, 0px, 0px);
+  -webkit-transform: translate3d(0px, 0px, 0px);
+  -o-transform: translate(0px, 0px);
+  -ms-transform: translate(0px, 0px);
+  transform: translate3d(0px, 0px, 0px);
 }
