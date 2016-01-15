@@ -52,16 +52,36 @@ $(document).ready(function() {
   }
 
   var displayContent = function(){
+    var infoBox = $(this).parent().attr('class').replace(" about_image wrap", "_info");
     var topPart = $(".section").find("img.top_part");
     var middlePart = $(".section").find("img.middle_part");
     var bottomPart = $(".section").find("img.bottom_part");
+    var word = $(this)
 
     topPart.hide("slide", { direction: "left" }, 200);
     middlePart.hide("slide", { direction: "right" }, 200);
     bottomPart.hide("slide", { direction: "left" }, 200);
 
+    word.hide("slide", {direction: "right"}, 200, function(){
+      $(".about_pictures").hide();
+        $("."+infoBox).show("blind", 200)
+      });
     $(".section").off("mouseover").off("mouseleave")
+  }
 
+  var hideContent = function(){
+    var infoBox = $(this).parents(".container");
+    var topPart = $(".section").find("img.top_part");
+    var middlePart = $(".section").find("img.middle_part");
+    var bottomPart = $(".section").find("img.bottom_part");
+
+    infoBox.hide();
+    $(".about_pictures").show()
+    topPart.show("slide", { direction: "left" }, 200);
+    middlePart.show("slide", { direction: "right" }, 200);
+    bottomPart.show("slide", { direction: "left" }, 200);
+
+      $(".section").on("mouseover", displayWord).on("mouseleave", hideWord);
   }
 
   $(window).scroll(function() {
@@ -76,7 +96,7 @@ $(document).ready(function() {
 
   $(".landing_button_image").hover(function(){
     var button = $(this).children("img");
-    var buttonName = $(this).children("img").attr('id');
+    var buttonName = $(this).attr('id');
     $(".landing_text").children().each(function(){
       if ($(this).attr('id') === buttonName) {
         $(this).css("border-bottom-color", 'white')
@@ -85,7 +105,7 @@ $(document).ready(function() {
     button.attr('src', 'gifs/' + buttonName + '.gif')
   }, function(){
     var button = $(this).children("img");
-    var buttonName = $(this).children("img").attr('id');
+    var buttonName = $(this).attr('id');
         $(".landing_text").children().each(function(){
       if ($(this).attr('id') === buttonName) {
         $(this).css("border-bottom-color", 'black')
@@ -94,13 +114,52 @@ $(document).ready(function() {
     button.attr('src', 'images/' + buttonName + '.png');
   })
 
+  $(".landing_text").hover(function(){
+    $(this).children("p").css("border-bottom-color", 'white');
+  }, function(){
+    $(this).children("p").css("border-bottom-color", 'black');
+  })
+
+  var scrollToContact = function(){
+    $('html, body').animate({
+        scrollTop: $(".contact.scrollable").offset().top - 260
+    }, 1000);
+  };
+
+  var scrollToRates = function(){
+    $('html, body').animate({
+        scrollTop: $(".rates.scrollable").offset().top - 260
+    }, 1000);
+  }
+
+  var scrollToSectionFromTop = function(){
+    var buttonName = $(this).attr("id");
+    $('html, body').animate({
+        scrollTop: $("." + buttonName + ".scrollable" ).offset().top - $(".header").outerHeight() - 200
+    }, 1000);
+  }
+
+  var scrollToSection = function(){
+    var buttonName = $(this).attr("id");
+    var offsetWithoutView = 150;
+    if($(this).attr('class').indexOf('in-view') >= 0){
+    }
+    $('html, body').animate({
+        scrollTop: $("." + buttonName + ".scrollable" ).position().top - $(".header").outerHeight() - 150
+    }, 1000);
+  }
 
 
 
 
+  $(".contact_directly").click(scrollToContact);
+  $(".check_rates").click(scrollToRates)
   $(".section").on("mouseover", displayWord);
   $(".section").on("mouseleave", hideWord);
   $(".about_image").on("click", "h2", displayContent);
+  $(".close_icon_wrap").on("click", hideContent);
+  $(".landing_button_image").on("click", scrollToSectionFromTop);
+  $(".landing_text").on("click", scrollToSection);
 
 
 })
