@@ -263,6 +263,41 @@ $("body").delegate(".editFile","change", function(){
       }
   })
 
+
+// submit request for documents
+  var submitDocuments = function(event){
+    event.preventDefault();
+    var checkable = [$("input[name='email']"), $("textarea[name='comment']")];
+    var data = {
+      phone: $("#phone").val(),
+      email: $(".email").val(),
+      comment: $(".comment").val(),
+      documents: {
+        resume: $("#resume").is(":checked"),
+        registration: $("#registration").is(":checked"),
+        insurance: $("#insurance").is(":checked"),
+        medical: $("#medical").is(":checked"),
+        certificates: $("#certificates").is(":checked"),
+        cpr: $("#cpr").is(":checked")
+      }
+    }
+
+    if (fieldsAreValid(checkable)) {
+      $.ajax({
+        type: 'POST',
+        url:'/documentRequest',
+        contentType: 'application/json',
+        data: JSON.stringify(data)
+      }).done(function(data){
+        console.log("yes")
+      })
+    } else {
+      errorForm();
+    }
+  }
+
+  $(".submit_documents").on("click", submitDocuments)
+
 //submit post
 
   var submitPost = function(event){

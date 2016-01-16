@@ -265,7 +265,36 @@
         <img src="images/close_icon.png" class="close_icon">
       </div><!--close_icon_wrap-->
       <h1>Documents</h1>
+      <h2>Request</h2>
       <div class="row">
+        <div class="six columns offset-by-one">
+          <div class="formErrors"></div>
+          <form method="post" action="/documentRequest" id="document_request_form">
+            <label for="phone">Phone</label>
+            <input type="text" id="phone" name="phone"><br>
+            <label for="email">Email*</label>
+            <input type="email" id="email" class="email" name="email"><br>
+            <label for="comment">Comment*</label>
+            <textarea id="comment" class="comment" name="comment" placeholder="Please, include name and the reson for requesting documents"></textarea>
+          </form>
+        </div><!--five columns-->
+        <div class="five columns">
+          <input type="checkbox" id="resume" value="resume">
+          <label for="resume">Resume</label><br>
+          <input type="checkbox" id="registration" value="registration">
+          <label>NYC Registration</label><br>
+          <input type="checkbox" id="insurance" value="insurance">
+          <label>AMTA insurance</label><br>
+          <input type="checkbox" id="medical" value="medical">
+          <label>Medical exam/shots</label><br>
+          <input type="checkbox" id="certificates" value="certificates">
+          <label>Continue education certificates</label><br>
+          <input type="checkbox" id="cpr" value="cpr">
+          <label>CPR instructor card</label>
+        </div><!--five columns-->
+        <div class="submit_documents wrap">
+          <button class="submit_documents">Submit request</button>
+        </div>
       </div><!--row-->
     </div><!--container-->
 
@@ -285,6 +314,9 @@
 
   <div class="reviews section bounce_up scrollable">
     <h1>Reviews</h1>
+    <div class="wrap kick_me_man">
+      <img src="images/kick_me.jpg">
+    </div><!--kick_me_man-->
     <div class = "container">
       <div class="row">
         <div class="form eleven columns">

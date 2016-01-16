@@ -466,7 +466,6 @@ router.get('/olderTagPosts', function(req, res, next){
 
 router.get('/newerTagPosts', function(req, res, next){
   Blog.Post.find({ tags: { $in: [req.query.searchTag] }, _id : { "$gt" : req.query.id } } ).sort({"_id":1}).limit(10).exec(function(err,posts){
-    console.log(posts)
     if (err) {
       console.log("db error in GET /olderPosts: " + err);
       res.render('error');
@@ -475,6 +474,10 @@ router.get('/newerTagPosts', function(req, res, next){
       res.send(posts)
     }
   });
+})
+
+router.post('/documentRequest', function(req, res, next){
+  console.log(req.body)
 })
 
 module.exports = router;

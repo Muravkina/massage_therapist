@@ -286,7 +286,7 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
   clear: both;
 }
 
-.massage_info p, .education_info p, .resume_info p {
+.massage_info p, .education_info p, .resume_info p, .resume_info h2 {
   font-size: 1.7rem;
   font-family: 'Karla', sans-serif;
 }
@@ -361,6 +361,12 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
 
 .education_info h3 {
   font-size: 140%;
+  padding-top: 1.2em;
+}
+
+.education_info p {
+  margin-bottom: 1.5rem;
+  margin-top: 2%;
 }
 
 .education_info .logo {
@@ -377,11 +383,66 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
   font-size: 120%;
 }
 
+.resume_info label {
+  font-family: 'Karla', sans-serif;
+  margin-bottom: 5%;
+  font-size: 1.2em;
+}
 
+.resume_info label[for="comment"] {
+  margin-bottom: 2%;
+}
+
+.resume_info label[for="email"] {
+  margin-left: 0;
+}
+
+.resume_info textarea {
+  width: 27em;
+  height: 8em;
+  margin-left: 0;
+}
+
+.resume_info .five.columns {
+  margin-top: -1.3%;
+}
+
+.resume_info h2 {
+  text-align: center;
+  font-size: 1.7em;
+  margin-top: -2%;
+  letter-spacing: 0.3em;
+  margin-bottom: 5%;
+}
+
+.submit_documents.wrap{
+  clear: both;
+
+}
+
+.submit_documents button {
+  margin: 0 auto;
+  display:block;
+  margin-bottom: 2%;
+  background-color: black;
+  color: white;
+  font-family: 'SensoryOverload', sans-serif;
+  width: 30%;
+  font-size: 1em;
+  letter-spacing: 0.2em;
+
+}
 /*REVIEWS*/
 
 .rating {
   float:left;
+}
+
+.kick_me_man {
+  width: 10%;
+  position: absolute;
+  top: 10%;
+  left: 76%;
 }
 
 .rating:not(:checked) > input {
@@ -487,7 +548,7 @@ input[type="text"].red {
 label {
   display: inline-block;
 }
-input[type="text"], input[type="password"]{
+input[type="text"], input[type="password"], input[type="email"]{
   width: 23.5em;
   margin-left: 0.5em;
 }
@@ -598,4 +659,8 @@ legend {
   -o-transform: translate(0px, 50px);
   -ms-transform: translate(0px, 50px);
   transform: translate3d(0px, 50px, 0px);
+}
+
+#red {
+  border-color: red;
 }
