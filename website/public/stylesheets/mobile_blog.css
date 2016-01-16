@@ -26,7 +26,7 @@
       font-size: 3rem;
     }
 
-    input[type="text"], textarea, .postBody {
+    input[type="text"], textarea {
       font-size: 3rem;
     }
 
@@ -73,6 +73,12 @@
     }
 
     .postBody, .relatedPosts h4, .comment_section h4, .share_box h4  {
-      font-size: 4rem;
+      font-size: 2rem;
+    }
+
+    .postBody {
+      margin-top: 2%;
+      font-family: 'Lato', sans-serif;
+      line-height: 2.5rem;
     }
 }
