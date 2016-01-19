@@ -58,9 +58,11 @@ $(document).ready(function() {
     var bottomPart = $(".section").find("img.bottom_part");
     var word = $(this)
 
-    topPart.hide("slide", { direction: "left" }, 200);
-    middlePart.hide("slide", { direction: "right" }, 200);
-    bottomPart.hide("slide", { direction: "left" }, 200);
+    if (screen.width >= 480) {
+      topPart.hide("slide", { direction: "left" }, 200);
+      middlePart.hide("slide", { direction: "right" }, 200);
+      bottomPart.hide("slide", { direction: "left" }, 200);
+    }
 
     word.hide("slide", {direction: "right"}, 200, function(){
       $(".about_pictures").hide();
@@ -71,15 +73,22 @@ $(document).ready(function() {
 
   var hideContent = function(){
     var infoBox = $(this).parents(".container");
+    var section = infoBox.attr("class").replace("container ", "").replace("_info", "");
+    var word = $(".section." + section).find("h2")
     var topPart = $(".section").find("img.top_part");
     var middlePart = $(".section").find("img.middle_part");
     var bottomPart = $(".section").find("img.bottom_part");
 
     infoBox.hide();
     $(".about_pictures").show()
-    topPart.show("slide", { direction: "left" }, 200);
-    middlePart.show("slide", { direction: "right" }, 200);
-    bottomPart.show("slide", { direction: "left" }, 200);
+
+    if (screen.width >= 480) {
+      topPart.show("slide", { direction: "left" }, 200);
+      middlePart.show("slide", { direction: "right" }, 200);
+      bottomPart.show("slide", { direction: "left" }, 200);
+    } else {
+      word.show("slide", { direction: "left" }, 200);
+    }
 
       $(".section").on("mouseover", displayWord).on("mouseleave", hideWord);
   }

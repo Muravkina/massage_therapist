@@ -1,0 +1,197 @@
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2){
+
+/*LANDING PAGE*/
+.main {
+  margin: 23% 0;
+}
+.massage_therapist_image {
+  width: 100%;
+  margin-top: 4%;
+}
+
+.header {
+  width: 103%;
+  padding-top: 3%;
+}
+
+.landing_button_pictures {
+   display: none;
+}
+
+.landing_text.wrap {
+  margin-left: 2.3%;
+}
+
+.header p {
+  font-size: 2em;
+}
+
+.landing_image {
+  margin-left: 10%;
+}
+
+.main_heading {
+  width: 100%;
+  margin-top: 15%;
+  margin-left: 0%
+}
+
+.main_heading p {
+  margin-top: -2.8%;
+  margin-left: 9%;
+  font-size: 4em;
+}
+
+.main_heading h1 {
+  width: 100%;
+  font-size: 7em;
+  margin-left: 0;
+}
+
+/*ABOUT */
+
+.about_image .top_part,.about_image .middle_part,.about_image .bottom_part {
+  display: none;
+}
+
+.about_image.wrap {
+  overflow: auto;
+}
+
+.about_image h2 {
+  display: block;
+  font-size: 4em;
+  left: 57px;
+  color: white;
+}
+
+.about .section {
+  width: 350px;
+  border: 2px solid black;
+  background-color: black;
+}
+
+
+.section.education, .section.medical {
+  margin-right: 3%;
+  margin-left: 12%;
+}
+
+.section.education h2{
+  left: 50px;
+}
+
+/*EDUCATION SECTION*/
+
+.logo.three.columns {
+  width: 90%;
+  margin: 2% auto;
+}
+
+
+.logo.three.columns img {
+ display: none;
+}
+
+
+
+.container.education_info .one.column {
+  width: 90px;
+  margin-left: 5%;
+}
+
+.education_info h3 {
+  font-size: 2em;
+}
+
+.education_info li {
+  font-size: 1.2em;
+}
+
+.education_info .seven.columns {
+  width: 625px;
+}
+
+.education_info p {
+  font-size: 2.5em;
+  line-height: 1em;
+}
+
+.continuing_education.three.columns {
+  width: 75%;
+}
+
+.continuing_education p:first-child {
+  font-size: 2.8em;
+  margin-top: 12%;
+  font-weight: bold;
+  margin-bottom: 10%;
+}
+
+ .row.continue_education .one.column.offset-by-one, .row.continue_education .one.column.offset-by-five {
+  font-size: 1em;
+  margin-left: -1%;
+}
+
+.row.continue_education .one.column.offset-by-five, .education_info .row:last-child .one.column {
+  margin-left: -30%;
+}
+
+.continue_education .seven.columns {
+  font-size: 0.8em
+}
+
+
+/*MASSAGE*/
+
+.direct_hire.eleven.columns {
+  width: 680px;
+  line-height: 2em;
+  padding: 3%;
+}
+
+.direct_hire p {
+  font-size: 0.8em;
+}
+
+.direct_hire span {
+  font-size: 1em;
+}
+
+.companies .three.columns {
+  width: 350px;
+}
+
+.company p {
+  font-size: 1.9em;
+  height: 30rem;
+}
+
+.company img {
+  width: 75%;
+  display: block;
+  margin: 0 auto;
+}
+
+.company {
+  margin-bottom: 5%;
+}
+
+.companies {
+  margin-bottom: 2%;
+}
+
+.companies .company:last-child img {
+  width: 90%;
+}
+
+
+/*RESUME*/
+
+.resume_info .six.columns {
+  width:;
+}
+}
