@@ -149,9 +149,59 @@ $(document).ready(function() {
     }, 1000);
   }
 
+  var car = document.getElementById("car");
+  car.style.left = car.width + "px";
+  var dx = 1;
+  var timer;
+
+  var changeDirection = function(){
+    dx *= -1;
+    car.classList.toggle('drive-left');
+  }
+
+  var drive = function(){
+    var newPos = ( parseInt(car.style.left) + dx).toString() + 'px';
+    car.style.left = newPos;
+  };
+
+  var driveLeft = setInterval(function(){
+    var distFromLeft = parseInt(car.style.left);
+    var windowWidth = document.body.clientWidth;
+
+    if( distFromLeft >= (windowWidth) ||
+        (distFromLeft + car.width + 50) <= 0){
+      changeDirection();
+    }
+  }, 45);
+
+  var ifScrolledOver = function(){
+    var roadSign = $(".road_sign");
+    var windowScroll = $(this).scrollTop();
+    var signTopPosition = roadSign.offset().top;
+    var signHeight = roadSign.outerHeight();
+    var windowHeight = $(window).height()
+
+    if (windowScroll > (signTopPosition + signHeight - windowHeight)){
+      return true
+    } else {
+      return false
+    }
+
+  }
+
+  var startAnimation = function(){
+  if(ifScrolledOver()) {
+    clearTimeout(timer)
+    timer = setInterval(drive, 8);
+  } else {
+    clearTimeout(timer);
+  }
+}
+
+changeDirection();
 
 
-
+  $(window).on("scroll", startAnimation)
   $(".contact_directly").click(scrollToContact);
   $(".check_rates").click(scrollToRates)
   $(".section").on("mouseover", displayWord);

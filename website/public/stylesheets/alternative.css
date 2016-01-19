@@ -14,8 +14,8 @@
 }
 
 @font-face {
-    font-family: Truth;
-    src: url(../fonts/truth.ttf);
+    font-family: Modeka;
+    src: url(../fonts/Modeka.otf);
 }
 
 .wrap img, .wrap p {
@@ -598,7 +598,7 @@ label[for="body"] {
 input[type="reset"]{
   margin-left: 1em;
 }
-.review_button input[type="reset"], .review_button button{
+.review_button input[type="reset"], .review_button button, .contact button, .contact input[type='reset']{
   width: 16em;
   background-color: black;
   color: white;
@@ -698,4 +698,113 @@ legend {
 
 #red {
   border-color: red;
+}
+
+
+/*CONTACT*/
+
+.contact .three.columns {
+  margin-right: 10%;
+}
+
+.contact.scrollable p.contact_info {
+  width: 65%;
+  margin: 0 auto;
+  background-color: black;
+  color: white;
+  padding: 2%;
+  font-family: 'Karla', sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 4%;
+  margin-top: 2%;
+}
+
+.contact.scrollable p {
+  font-family: 'Modeka', sans-serif;
+  font-size: 2.3rem;
+  margin-left: 15%;
+}
+
+.social_media.wrap {
+  overflow: auto;
+  clear: both;
+  margin-left: 15%;
+}
+
+.social_media.wrap img {
+  float:left;
+  display: inline-block;
+  width: 21%;
+  margin-left: 5%;
+}
+
+.social_media.wrap img:first-child {
+  width: 19%;
+}
+
+.contact h2 {
+  font-family: 'JD', sans-serif;
+  font-size: 3.2rem;
+  margin-bottom: 1rem;
+}
+
+.contact.scrollable input[type='text'], .contact.scrollable textarea, .contact.scrollable input[type='email'] {
+  width: 115%;
+  margin-bottom: 5%;
+}
+
+.contact.scrollable textarea {
+  height: 200px;
+}
+
+.contact.scrollable button {
+  margin-left: 2%;
+}
+
+.road_sign {
+  width: 10%;
+  float: right;
+  margin-right: 15%;
+}
+
+.road_sign img {
+  position: relative;
+  top: 20px;
+  z-index: -600;
+}
+
+.road {
+  width: 105%;
+  margin-left: -2%;
+  margin-top: -5%;
+  overflow: auto;
+}
+
+.road img {
+  height: 155px;
+}
+
+.car {
+  width: 100%;
+  overflow: auto;
+  display: inline-block;
+  position:absolute;
+  bottom: 6em;
+}
+
+.car img {
+  width: 25%;
+  position: relative;
+}
+
+.handset {
+  width: 15%;
+  position: absolute;
+  left: -30px;
+  top: 30px;
+}
+
+.drive-left {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
