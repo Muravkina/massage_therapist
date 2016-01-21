@@ -190,8 +190,58 @@
 
 
 /*RESUME*/
+.resume_info {
+  margin-bottom: 5%;
+  margin-top: 4%;
+}
 
 .resume_info .six.columns {
-  width:;
+  width: 450px;
+}
+
+.resume_info input[type="text"], .resume_info textarea, .resume_info input[type="email"]{
+  width: 40em;
+}
+
+.resume_info label {
+  font-size: 2.1em;
+  width: 43%;
+}
+
+.resume_info input[type="checkbox"] {
+  margin-right: 3%;
+   -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  padding: 10px;
+}
+
+.resume_info br {
+  display: none;
+}
+
+.resume_info .five.columns {
+  width: 88%;
+  margin-left: 10%;
+  margin-bottom: 2%;
+  margin-top: 2%;
+}
+
+.submit_documents button {
+  width: 50%;
+  font-size: 2em;
+  margin-bottom: 5%;
+}
+
+.resume_info textarea {
+  font-size: 2em;
+  width: 20em;
+}
+
+.close_icon_wrap {
+  width: 8%;
+  margin-top: 2.5%;
+  margin-right: 3.5%;
 }
 }
