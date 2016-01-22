@@ -85,38 +85,38 @@
 }
 
 /*EDUCATION SECTION*/
+.education_info, .massage_info, .resume_info {
+  width: 100%;
+}
 
 .logo.three.columns {
   width: 90%;
   margin: 2% auto;
 }
 
-
 .logo.three.columns img {
  display: none;
 }
 
-
-
 .container.education_info .one.column {
-  width: 90px;
-  margin-left: 5%;
+  width: 12%;
+  margin-left: 4%;
 }
 
 .education_info h3 {
-  font-size: 2em;
+  font-size: 3em;
 }
 
 .education_info li {
-  font-size: 1.2em;
+  font-size: 1.8em;
 }
 
 .education_info .seven.columns {
-  width: 625px;
+  width: 79.5%;
 }
 
 .education_info p {
-  font-size: 2.5em;
+  font-size: 3em;
   line-height: 1em;
 }
 
@@ -125,7 +125,7 @@
 }
 
 .continuing_education p:first-child {
-  font-size: 2.8em;
+  font-size: 4em;
   margin-top: 12%;
   font-weight: bold;
   margin-bottom: 10%;
@@ -137,24 +137,29 @@
 }
 
 .row.continue_education .one.column.offset-by-five, .education_info .row:last-child .one.column {
-  margin-left: -30%;
+  margin-left: -26%;
 }
 
 .continue_education .seven.columns {
   font-size: 0.8em
 }
 
+.education_info {
+  padding-bottom: 5%;
+}
+
 
 /*MASSAGE*/
 
 .direct_hire.eleven.columns {
-  width: 680px;
+  width: 80%;
   line-height: 2em;
   padding: 3%;
 }
 
 .direct_hire p {
-  font-size: 0.8em;
+  font-size: 1.5em;
+  line-height: 50px;
 }
 
 .direct_hire span {
@@ -162,12 +167,20 @@
 }
 
 .companies .three.columns {
-  width: 350px;
+  width: 46%;
 }
 
 .company p {
-  font-size: 1.9em;
-  height: 30rem;
+  font-size: 2.8em;
+  height: 50rem;
+}
+
+.company.zeel p, .company.stressbusters p {
+  height: 60rem;
+}
+
+.company.zeel, .company.greenpoint {
+  margin-right: 3%;
 }
 
 .company img {
@@ -182,6 +195,8 @@
 
 .companies {
   margin-bottom: 2%;
+  margin-left:7%;
+  width: 92%;
 }
 
 .companies .company:last-child img {
@@ -203,8 +218,17 @@
   width: 40em;
 }
 
+.resume_info form {
+  width: 100%;
+}
+
+.resume_info input[type="text"], .resume_info input[type="email"] {
+  width: 50em;
+  height: 4em;
+}
+
 .resume_info label {
-  font-size: 2.1em;
+  font-size: 2.7em;
   width: 43%;
 }
 
@@ -228,15 +252,22 @@
   margin-top: 2%;
 }
 
+.submit_documents.wrap {
+  overflow: auto;
+}
+
 .submit_documents button {
   width: 50%;
-  font-size: 2em;
+  font-size: 2.4em;
   margin-bottom: 5%;
+  height: initial;
+  padding: 2%;
 }
 
 .resume_info textarea {
   font-size: 2em;
-  width: 20em;
+  width: 25em;
+  height: 10em;
 }
 
 .close_icon_wrap {
@@ -245,3 +276,89 @@
   margin-right: 3.5%;
 }
 }
+
+/*REVIEWS*/
+
+.reviews.section legend {
+  font-size: 3.5em;
+}
+
+.reviews.section label {
+  font-size: 2.5em;
+  font-family: 'Karla', sans-serif;
+}
+
+.reviews.section label[for="email"] {
+  margin-left: 2%;
+  margin-right: 3%;
+}
+
+.reviews.section input[type="text"], .reviews.section input[type="email"] {
+  width: 70%;
+  height: 4em;
+}
+
+.reviews.section label[for="body"] {
+  margin-top: 0;
+}
+
+.reviews.section textarea {
+  width: 70%;
+  margin-left: 2%;
+  height: 15em;
+  margin-top: 2%;
+}
+
+.reviews.section .eleven.columns {
+  width: 90%;
+  margin-left: 5%;
+}
+
+.review_button button, .review_button input[type="reset"] {
+  height: 1.5em;
+  font-size: 2.4em;
+  width: 35%;
+
+}
+
+.review_button {
+  margin-right: -5%;
+  width: 70%;
+}
+
+.kick_me_man {
+  width: 20%;
+  top: 5%;
+  left: 77%;
+}
+
+.reviews_collection_wrap .six.columns {
+  width: 90%;
+}
+
+.reviews_collection.row {
+  width: 95%;
+}
+
+.star-ratings-css {
+  font-size: 2.5em;
+  margin-bottom: 5%;
+}
+
+.review_body {
+  font-size: 2.28em;
+}
+
+.review_author {
+  font-size: 2em;
+}
+
+.olderReviews, .newerReviews {
+  font-size: 2em;
+}
+
+.olderReviews {
+  margin-right:25%;
+}
+
+
