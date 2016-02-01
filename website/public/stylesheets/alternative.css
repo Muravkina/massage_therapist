@@ -821,7 +821,7 @@ legend {
 }
 
 .rates.scrollable p {
-  font-size: 1.2em;
+  font-size: 2rem;
 }
 
 .head {
@@ -946,10 +946,10 @@ legend {
 
 .discount_wrap .sales {
   position: absolute;
-  width: 30%;
-  bottom: 2%;
-  left: 0%;
+  width: 20%;
+  bottom: 20%;
+  left: 10%;
   -webkit-transform: rotate(40deg);
-  transform: rotate(40deg);
+  transform: rotate(225deg);
 
 }

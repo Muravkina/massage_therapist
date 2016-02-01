@@ -378,4 +378,91 @@
   font-size: 4em;
 }
 
+/*RATES*/
+
+.rates.scrollable .menu {
+  width: 20%;
+  right: 6%;
+  top: 0%;
+}
+
+.rates .container {
+  width: 95%;
+}
+
+.rates.scrollable p {
+  font-size: 14px;
+}
+
+.rates.scrollable .head p {
+  font-size: 4rem;
+}
+
+.rates.scrollable .table p {
+  font-size: 2.5em;
+}
+
+.head .three.columns {
+  display: none;
+}
+
+.head .seven.columns {
+  border: none;
+  width: 100%;
+  padding: 0;
+  font-size: 1.8em;
+}
+
+.rates .three.columns {
+  width: 100%;
+}
+
+.rates .ten.columns {
+  width: 100%;
+  border: 0;
+}
+
+.rates .ten.columns.offset-by-four {
+  margin-left: 0;
+}
+
+.rates .four.columns {
+  width: 50%;
+}
+
+.rates .two.columns {
+  width: 20%;
+}
+
+.rates .three.columns.description:first-child {
+  margin-top: 5%;
+  border-top: 2px solid black;
+  padding-top: 5%;
+}
+
+.rates.scrollable .blank, .rates .sales {
+  display: none;
+}
+
+.rates .head {
+  width: 100%;
+}
+
+.ten.columns.offset-by-four .four.columns p:nth-child(2) {
+    font-size: 2em;
+}
+
+.rates .discounts .three.columns {
+  margin: 2%;
+}
+
+.rates .discounts .three.columns:last-child {
+  margin-bottom: 20%;
+}
+
+.rates .discounts .three.columns p {
+  font-size: 2.5em;
+}
+
+
 }
