@@ -365,6 +365,9 @@
 
 
 /*CONTACT*/
+.contact.scrollable {
+  margin-top: 10%;
+}
 
 .contact.scrollable p.contact_info {
   width: 85%;
@@ -376,6 +379,39 @@
 
 .contact.scrollable p {
   font-size: 4em;
+}
+
+.contact.scrollable p.contact_info {
+  background-color: white;
+  color: black;
+  width: 90%;
+}
+
+.contact.scrollable .five.columns {
+  display: none;
+}
+
+.contact.scrollable .three.columns.offset-by-three {
+  width: 70%;
+  padding: 0;
+  margin-left: 20%;
+}
+
+.contact.scrollable .three.columns.offset-by-three h2 {
+  text-align: left;
+}
+
+.contact.scrollable .three.columns.offset-by-three p {
+  margin-left: 20%;
+  text-align: left;
+}
+
+.social_media.wrap img:first-child {
+  width: 15%;
+}
+.social_media.wrap img {
+  width: 16%;
+  margin-bottom: 20%;
 }
 
 /*RATES*/
@@ -444,12 +480,16 @@
   display: none;
 }
 
+.handset {
+  width: 20%;
+}
+
 .rates .head {
   width: 100%;
 }
 
 .ten.columns.offset-by-four .four.columns p:nth-child(2) {
-    font-size: 2em;
+  font-size: 2em;
 }
 
 .rates .discounts .three.columns {
@@ -462,6 +502,14 @@
 
 .rates .discounts .three.columns p {
   font-size: 2.5em;
+}
+
+.car, .road_sign, .road {
+  display:none;
+}
+
+.discounts .three.columns p:first-child {
+  margin: 0;
 }
 
 
