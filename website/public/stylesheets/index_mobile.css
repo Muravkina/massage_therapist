@@ -275,7 +275,7 @@
   margin-top: 2.5%;
   margin-right: 3.5%;
 }
-}
+
 
 /*REVIEWS*/
 
@@ -295,7 +295,8 @@
 
 .reviews.section input[type="text"], .reviews.section input[type="email"] {
   width: 70%;
-  height: 4em;
+  height: 2em;
+  font-size: 2em;
 }
 
 .reviews.section label[for="body"] {
@@ -305,7 +306,8 @@
 .reviews.section textarea {
   width: 70%;
   margin-left: 2%;
-  height: 15em;
+  height: 10em;
+  font-size: 2em;
   margin-top: 2%;
 }
 
@@ -362,3 +364,18 @@
 }
 
 
+/*CONTACT*/
+
+.contact.scrollable p.contact_info {
+  width: 85%;
+}
+
+.contact h2 {
+  font-size: 5em;
+}
+
+.contact.scrollable p {
+  font-size: 4em;
+}
+
+}
