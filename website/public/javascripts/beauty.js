@@ -199,17 +199,23 @@ $(document).ready(function() {
   }
 
   var startAnimation = function(){
-  if(ifScrolledOver()) {
-    clearTimeout(timer)
-    timer = setInterval(drive, 8);
-  } else {
-    clearTimeout(timer);
+    if(ifScrolledOver()) {
+      clearTimeout(timer)
+      timer = setInterval(drive, 8);
+    } else {
+      clearTimeout(timer);
+    }
   }
-}
 
-changeDirection();
+  $('#calendar').fullCalendar({
+    googleCalendarApiKey: 'AIzaSyCvJ-mAmNnVcETeC8P256wKBmiuJGXfaPU',
+    events: {
+      googleCalendarId: 'massagebygerill@gmail.com'
+    }
+  })
 
 
+  changeDirection();
   $(window).on("scroll", startAnimation)
   $(".contact_directly").click(scrollToContact);
   $(".check_rates").click(scrollToRates)

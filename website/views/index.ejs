@@ -5,10 +5,14 @@
     <link rel="stylesheet" href="/stylesheets/alternative.css">
     <link rel="stylesheet" href="/stylesheets/jquery-ui.min.css">
     <link rel="stylesheet" href="/stylesheets/index_mobile.css">
+    <link rel='stylesheet' href='stylesheets/libraries/fullcalendar.css' />
     <link href='https://fonts.googleapis.com/css?family=Carter+One' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Krona+One' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src='javascripts/libraries/moment.min.js'></script>
+    <script src='javascripts/libraries/fullcalendar.js'></script>
+    <script src='javascripts/libraries/gcal.js'></script>
     <script src="/javascripts/libraries/jquery-ui.js"></script>
   </head>
 
@@ -305,8 +309,8 @@
 
   <div class="schedule bounce_up scrollable" >
     <h1>Schedule</h1>
-    <div class="schedule_calendar">
-    </div><!--schedule_calendar-->
+    <div id="calendar">
+    </div><!--calendar-->
   </div><!--schedule-->
 
   <div class="rates bounce_up scrollable">

@@ -236,7 +236,7 @@ a {
 }
 
 .about_image.education img {
-  width:90%;
+  width:89%;
 }
 
 .section.education{
@@ -257,7 +257,7 @@ a {
 
 .about_image h2{
   position:absolute;
-  width: 300px;
+  width: 200px;
   height: 100px;
   top:100px;
   left: 60px;
@@ -859,7 +859,7 @@ legend {
 }
 
 .blank {
-  height: 3.6em;
+  height: 3.8em;
 }
 
 .ten.columns .two.columns.offset-by-one {
@@ -947,9 +947,10 @@ legend {
 .discount_wrap .sales {
   position: absolute;
   width: 20%;
-  bottom: 20%;
-  left: 10%;
+  bottom: 18%;
+  left: 2%;
   -webkit-transform: rotate(40deg);
   transform: rotate(225deg);
-
 }
+
+
