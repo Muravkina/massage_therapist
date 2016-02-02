@@ -1,20 +1,29 @@
 @media only screen
   and (min-device-width: 320px)
-  and (max-device-width: 568px)
+  and (max-device-width: 667px)
+  and (orientation : portrait)
   and (-webkit-min-device-pixel-ratio: 2){
 
 /*LANDING PAGE*/
 .main {
-  margin: 23% 0;
+  margin: 0;
 }
 .massage_therapist_image {
-  width: 100%;
-  margin-top: 4%;
+  width: 85%;
+  margin: 0 auto;
+  margin-top: 10%;
+  float: none;
+  display: block;
 }
 
 .header {
-  width: 103%;
   padding-top: 3%;
+  padding-left: 0;
+  width: 100%;
+}
+
+.sticky {
+  width: inherit;
 }
 
 .landing_button_pictures {
@@ -22,33 +31,49 @@
 }
 
 .landing_text.wrap {
-  margin-left: 2.3%;
+  margin-right: 2.3%;
+  width: 30%;
+  margin-left: 0;
+}
+
+.sticky .landing_text:first-child {
+  margin-left: 0;
 }
 
 .header p {
-  font-size: 2em;
+  font-size: 1em;
+  margin-bottom: 1em;
 }
 
 .landing_image {
-  margin-left: 10%;
+  margin-left: 2%;
+  margin-top: 0;
 }
 
 .main_heading {
-  width: 100%;
-  margin-top: 15%;
-  margin-left: 0%
+  width: 85%;
+  margin: 0 auto;
+  float: none;
+  display: block;
+  margin-top: 20%;
+  margin-bottom: 20%
 }
 
 .main_heading p {
   margin-top: -2.8%;
   margin-left: 9%;
-  font-size: 4em;
+  font-size: 1.29em;
 }
 
 .main_heading h1 {
   width: 100%;
-  font-size: 7em;
+  font-size: 2.45em;
   margin-left: 0;
+}
+
+.scrollable h1 {
+  font-size: 3em;
+  margin-top: 0;
 }
 
 /*ABOUT */
@@ -57,27 +82,42 @@
   display: none;
 }
 
+.about_pictures{
+  width: 95%;
+  padding-left: 2%;
+}
+
 .about_image.wrap {
   overflow: auto;
 }
 
 .about_image h2 {
+  position: static;
   display: block;
-  font-size: 4em;
-  left: 57px;
+  font-size: 2em;
   color: white;
+  text-align: center;
+  width: auto;
+  height: auto;
+  margin-top: 28%;
 }
 
 .about .section {
-  width: 350px;
+  width: 47%;
+  height: 135px;
   border: 2px solid black;
   background-color: black;
+  float: left;
+  position: static;
+  margin-bottom: 2%;
 }
 
+.about .section:first-child, .about .section:nth-child(3) {
+  margin-right: 2%;
+}
 
-.section.education, .section.medical {
-  margin-right: 3%;
-  margin-left: 12%;
+.section.education {
+  margin: 0;
 }
 
 .section.education h2{
@@ -89,59 +129,65 @@
   width: 100%;
 }
 
-.logo.three.columns {
-  width: 90%;
-  margin: 2% auto;
-}
-
-.logo.three.columns img {
+.logo.three.columns img, .logo.three.columns  {
  display: none;
 }
 
 .container.education_info .one.column {
-  width: 12%;
-  margin-left: 4%;
+  width: 15%;
+  margin-left: 7%;
+}
+
+.education_info h1 {
+  font-size: 2.2em;
+  margin: 5% auto;
 }
 
 .education_info h3 {
-  font-size: 3em;
+  font-size: 1.2em;
+  padding-top: 16%;
 }
 
 .education_info li {
-  font-size: 1.8em;
+  font-size: 1em;
 }
 
 .education_info .seven.columns {
-  width: 79.5%;
+  width: 75.5%;
 }
 
 .education_info p {
-  font-size: 3em;
+  font-size: 1.8rem;
   line-height: 1em;
+}
+
+.one.column.bronx, .seven.columns.bronx {
+  margin-top: 0;
 }
 
 .continuing_education.three.columns {
   width: 75%;
+  float: none;
+  margin-top: 0 auto;
 }
 
 .continuing_education p:first-child {
-  font-size: 4em;
-  margin-top: 12%;
+  font-size: 1.4em;
+  margin-top: 7%;
   font-weight: bold;
   margin-bottom: 10%;
+  text-align: center;
 }
 
  .row.continue_education .one.column.offset-by-one, .row.continue_education .one.column.offset-by-five {
   font-size: 1em;
-  margin-left: -1%;
-}
-
-.row.continue_education .one.column.offset-by-five, .education_info .row:last-child .one.column {
-  margin-left: -26%;
 }
 
 .continue_education .seven.columns {
-  font-size: 0.8em
+  font-size: 0.8em;
+  float: none;
+  margin: 0 auto;
+  width: 95%;
 }
 
 .education_info {
@@ -157,9 +203,13 @@
   padding: 3%;
 }
 
+.massage_info h1 {
+  font-size: 2.5em;
+}
+
 .direct_hire p {
-  font-size: 1.5em;
-  line-height: 50px;
+  font-size: 1em;
+  line-height: 25px;
 }
 
 .direct_hire span {
@@ -171,15 +221,21 @@
 }
 
 .company p {
-  font-size: 2.8em;
-  height: 50rem;
+  font-size: 1em;
+  height: 16rem;
+}
+
+.company.three.columns {
+  margin: 0;
+  text-align: left;
+  margin-bottom: 10%;
 }
 
 .company.zeel p, .company.stressbusters p {
-  height: 60rem;
+  height: 17rem;
 }
 
-.company.zeel, .company.greenpoint {
+.company.zeel.three.columns, .company.greenpoint.three.columns {
   margin-right: 3%;
 }
 
@@ -195,13 +251,14 @@
 
 .companies {
   margin-bottom: 2%;
-  margin-left:7%;
   width: 92%;
+  padding-left: 8%;
 }
 
 .companies .company:last-child img {
   width: 90%;
 }
+
 
 
 /*RESUME*/
@@ -214,30 +271,31 @@
   width: 450px;
 }
 
-.resume_info input[type="text"], .resume_info textarea, .resume_info input[type="email"]{
-  width: 40em;
-}
-
 .resume_info form {
   width: 100%;
 }
 
 .resume_info input[type="text"], .resume_info input[type="email"] {
-  width: 50em;
-  height: 4em;
+  width: 19em;
+  height: 1.8em;
 }
 
 .resume_info label {
-  font-size: 2.7em;
-  width: 43%;
+  font-size: 1.1em;
+  width: 85%;
+  margin-bottom: 0;
+}
+
+.resume_info label[for="comment"] {
+  margin-bottom: 0;
 }
 
 .resume_info input[type="checkbox"] {
   margin-right: 3%;
-   -ms-transform: scale(2); /* IE */
-  -moz-transform: scale(2); /* FF */
-  -webkit-transform: scale(2); /* Safari and Chrome */
-  -o-transform: scale(2); /* Opera */
+   -ms-transform: scale(1); /* IE */
+  -moz-transform: scale(1); /* FF */
+  -webkit-transform: scale(1); /* Safari and Chrome */
+  -o-transform: scale(1); /* Opera */
   padding: 10px;
 }
 
@@ -258,16 +316,16 @@
 
 .submit_documents button {
   width: 50%;
-  font-size: 2.4em;
+  font-size: 0.8em;
   margin-bottom: 5%;
-  height: initial;
-  padding: 2%;
+  height: auto;
 }
 
 .resume_info textarea {
-  font-size: 2em;
-  width: 25em;
-  height: 10em;
+  font-size: 1em;
+  width: 19.5em;
+  height: 6em;
+  margin-left: 0.5em;
 }
 
 .close_icon_wrap {
@@ -438,46 +496,50 @@
   font-size: 2.5em;
 }
 
-.head .three.columns {
+.table .head .three.columns {
   display: none;
 }
 
-.head .seven.columns {
+.table .head .seven.columns {
   border: none;
   width: 100%;
   padding: 0;
   font-size: 1.8em;
 }
 
-.rates .three.columns {
+.rates .table .three.columns {
   width: 100%;
 }
 
-.rates .ten.columns {
+.rates .table .ten.columns {
   width: 100%;
   border: 0;
 }
 
-.rates .ten.columns.offset-by-four {
+.rates .table .ten.columns.offset-by-four {
   margin-left: 0;
 }
 
-.rates .four.columns {
+.rates .table .four.columns {
   width: 50%;
 }
 
-.rates .two.columns {
+.rates .table .two.columns {
   width: 20%;
 }
 
-.rates .three.columns.description:first-child {
+.rates .table .three.columns.description:first-child {
   margin-top: 5%;
   border-top: 2px solid black;
   padding-top: 5%;
 }
 
-.rates.scrollable .blank, .rates .sales {
+.rates.scrollable .table .blank, .rates .sales {
   display: none;
+}
+
+.rates .table .ten.columns .two.columns:first-child {
+  padding-left: 0;
 }
 
 .handset {
@@ -493,7 +555,11 @@
 }
 
 .rates .discounts .three.columns {
-  margin: 2%;
+  margin: 2% auto;
+  float: none;
+  display: block;
+  padding: 1%;
+  width: 90%;
 }
 
 .rates .discounts .three.columns:last-child {
@@ -501,7 +567,7 @@
 }
 
 .rates .discounts .three.columns p {
-  font-size: 2.5em;
+  font-size: 1em;
 }
 
 .car, .road_sign, .road {
@@ -511,6 +577,97 @@
 .discounts .three.columns p:first-child {
   margin: 0;
 }
+
+
+}
+
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 736px)
+and (orientation : landscape) {
+html {
+  width: 100%;
+}
+
+.black_landing {
+  width: 106%;
+}
+
+.landing_text.rates {
+  margin-left: 8.5%;
+}
+
+.main_heading {
+  width: 60%;
+}
+
+.header {
+  padding-top: 1%;
+  width: inherit;
+}
+
+.header p {
+  margin-bottom: 0;
+}
+
+.about_image .top_part,.about_image .middle_part,.about_image .bottom_part {
+  display: none;
+}
+
+.about_image.wrap {
+  overflow: auto;
+}
+
+.about_image h2 {
+  display: block;
+  font-size: 2.5em;
+  left: 57px;
+  color: white;
+  top: 75px;
+  left: 15%;
+}
+
+.about_pictures {
+  padding-left: 2%;
+}
+
+.section.education {
+  margin-right: 0;
+}
+
+.education.section h2 {
+  left: 13%;
+}
+
+.about .section {
+  width: 21%;
+  height: 200px;
+  border: 2px solid black;
+  background-color: black;
+  float: left;
+  margin-right: 2.3%;
+}
+
+.education_info p {
+  font-size: 2.2rem;
+}
+
+.education_info li {
+  font-size: 2rem;
+}
+
+.massage_info {
+  width: 98%;
+  float: none;
+  display: block;
+  margin: 0 auto;
+}
+
+.main {
+  width: 100%;
+}
+
+
 
 
 }

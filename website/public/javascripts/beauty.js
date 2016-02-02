@@ -58,7 +58,7 @@ $(document).ready(function() {
     var bottomPart = $(".section").find("img.bottom_part");
     var word = $(this)
 
-    if (screen.width >= 480) {
+    if (screen.width >= 736 ) {
       topPart.hide("slide", { direction: "left" }, 200);
       middlePart.hide("slide", { direction: "right" }, 200);
       bottomPart.hide("slide", { direction: "left" }, 200);
@@ -82,7 +82,8 @@ $(document).ready(function() {
     infoBox.hide();
     $(".about_pictures").show()
 
-    if (screen.width >= 480) {
+    if (screen.width > 736) {
+      console.log(screen.width)
       topPart.show("slide", { direction: "left" }, 200);
       middlePart.show("slide", { direction: "right" }, 200);
       bottomPart.show("slide", { direction: "left" }, 200);
@@ -214,6 +215,8 @@ $(document).ready(function() {
     }
   })
 
+  $('#calendar').off('click', 'div')
+
 
   changeDirection();
   $(window).on("scroll", startAnimation)
@@ -225,7 +228,7 @@ $(document).ready(function() {
   $(".close_icon_wrap").on("click", hideContent);
   $(".landing_button_image").on("click", scrollToSectionFromTop);
   $(".landing_text").on("click", scrollToSection);
-
+  console.log(screen.width)
 
 })
 
