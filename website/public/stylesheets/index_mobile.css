@@ -338,11 +338,11 @@
 /*REVIEWS*/
 
 .reviews.section legend {
-  font-size: 3.5em;
+  font-size: 1.5em;
 }
 
 .reviews.section label {
-  font-size: 2.5em;
+  font-size: 1.5em;
   font-family: 'Karla', sans-serif;
 }
 
@@ -485,7 +485,7 @@
 }
 
 .rates.scrollable p {
-  font-size: 14px;
+  font-size: 1.2em;
 }
 
 .rates.scrollable .head p {
@@ -493,7 +493,14 @@
 }
 
 .rates.scrollable .table p {
-  font-size: 2.5em;
+  font-size: 1em;
+  margin-bottom: 0.5em;
+}
+
+.rates.scrollable h3 {
+  font-size: 2em;
+  margin-bottom: 0;
+  margin-top: 5%;
 }
 
 .table .head .three.columns {
@@ -551,7 +558,7 @@
 }
 
 .ten.columns.offset-by-four .four.columns p:nth-child(2) {
-  font-size: 2em;
+  font-size: 1em;
 }
 
 .rates .discounts .three.columns {
@@ -567,7 +574,8 @@
 }
 
 .rates .discounts .three.columns p {
-  font-size: 1em;
+  font-size: 0.9em;
+  margin-bottom: 0;
 }
 
 .car, .road_sign, .road {
