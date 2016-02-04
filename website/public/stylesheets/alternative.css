@@ -203,6 +203,12 @@ a {
   display: inline-block;
 }
 
+.header .landing_text_wrap {
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
 
 
 /*ABOUT ME*/
@@ -224,7 +230,7 @@ a {
   margin: 0 auto;
   overflow: auto;
   margin-top: 10%;
-  margin-bottom: 15%;
+  margin-bottom: 10%;
 }
 
 .about_image:hover {
@@ -284,7 +290,8 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
 }
 
 .massage_info h1, .education_info h1, .resume_info h1{
-  margin-top: 4%;
+  margin-top: 2%;
+  margin-bottom: 0;
   font-size: 5.6rem;
   font-family: 'Karla', sans-serif;
   font-weight: bold;
@@ -318,8 +325,10 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
   width:5.5%;
 }
 
-.company.three.columns {
+.companies .company.three.columns {
   margin-left: 14px;
+  width: 22%;
+  text-align: left;
 }
 
 .company p {
@@ -329,19 +338,20 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
 .company img {
   width: 100%;
   clear: both;
+  display: block;
+  margin: 0 auto;
 }
 
 .direct_hire.eleven.columns {
-  margin: 5% auto;
+  margin: 3% auto;
   text-align: center;
   float: none;
   display: block;
-  width: 800px;
-  margin-top: 3%;
+  width: 72%;
   background-color: black;
   color: white;
   padding: 1%;
-
+  margin-top: 2%;
 }
 
 .direct_hire p {
@@ -352,7 +362,7 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
   width: 90%;
   margin: 0 auto;
   overflow: auto;
-  margin-bottom: 7%;
+  margin-bottom: 2%;
 }
 
 .contact_directly, .check_rates {
@@ -451,7 +461,6 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
 .resume_info h2 {
   text-align: center;
   font-size: 1.7em;
-  margin-top: -2%;
   letter-spacing: 0.3em;
   margin-bottom: 5%;
 }
@@ -590,11 +599,14 @@ label {
   display: inline-block;
 }
 input[type="text"], input[type="password"], input[type="email"]{
-  width: 23.5em;
+  width: 75%;
   margin-left: 0.5em;
 }
+input[type="email"] {
+  margin-left: 0.3%;
+}
 textarea {
-  width: 52em;
+  width: 90%;
   vertical-align: top;
   margin-left: 0.5em;
 }
@@ -769,6 +781,10 @@ legend {
   margin-left: 2%;
 }
 
+.contact button, .contact input[type='reset'] {
+  width: 38%;
+}
+
 .road_sign {
   width: 10%;
   float: right;
@@ -817,6 +833,9 @@ legend {
   transform: scaleX(-1);
 }
 
+.contact.scrollable button:hover, .contact.scrollable input[type="reset"]:hover {
+  background-color: rgb(45, 45, 45);
+}
 
 
 /*RATES*/
@@ -904,6 +923,10 @@ legend {
   height: 3.8em;
 }
 
+.discounts p {
+  margin-bottom: 0;
+}
+
 .ten.columns .two.columns.offset-by-one {
   margin-left: 13%;
 }
@@ -966,9 +989,11 @@ legend {
 .discounts .three.columns {
   background-color: black;
   color: white;
-  padding-top: 3%;
+  padding-top: 2%;
+  padding-bottom: 1%;
   font-size: 1.3em;
   margin-bottom: 10%;
+  width: 30%;
 }
 
 .rates.scrollable h5 {
@@ -986,7 +1011,7 @@ legend {
 .discount_wrap .sales {
   position: absolute;
   width: 20%;
-  bottom: 11%;
+  bottom: 9%;
   left: 2%;
   -webkit-transform: rotate(40deg);
   transform: rotate(225deg);
@@ -1047,6 +1072,10 @@ legend {
 
 #calendar .fc-center button:nth-child(2) {
   margin-left: 2%
+}
+
+#calendar .fc-head {
+  background-color: white;
 }
 
 .schedule_instructions {
