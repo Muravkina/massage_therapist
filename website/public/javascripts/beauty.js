@@ -212,7 +212,13 @@ $(document).ready(function() {
     googleCalendarApiKey: 'AIzaSyCvJ-mAmNnVcETeC8P256wKBmiuJGXfaPU',
     events: {
       googleCalendarId: 'massagebygerill@gmail.com'
-    }
+    },
+    header: {
+      left: 'title',
+      center: 'basicDay, month',
+      right: 'today prev,next'
+    },
+    height: 600
   })
 
   $('#calendar').off('click', 'div')
