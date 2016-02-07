@@ -2,8 +2,24 @@
   and (min-device-width: 320px)
   and (max-device-width: 568px)
   and (-webkit-min-device-pixel-ratio: 2){
+    body {
+      font-size: 15px;
+    }
+
+    .navigation {
+      width: 100%
+    }
+
     #mobile-header {
-        display: block;
+      display: block;
+    }
+
+    .navigation_links {
+      min-width: 240px;
+    }
+
+    .container .two.columns {
+      width: 50%;
     }
 
     .regular_side_bar {
@@ -11,7 +27,8 @@
     }
 
     .main_wrapper_bg.eight.columns {
-      width: 100%;
+      width: 98%;
+      padding-left: 1%;
     }
 
     .content_wrapper {
@@ -22,23 +39,10 @@
       max-width: 175px;
     }
 
-    .comment_link, .post_signature_wrapper, .postTags span{
-      font-size: 3rem;
-    }
-
-    input[type="text"], textarea {
-      font-size: 3rem;
-    }
-
-    .submitComment, .submitPost, .openChangeImage, .deleteImage, .changeImage, .removeEditPreview, input[type="file"], .postDate, p.deletePost, p.openEdit {
-      font-size: 2.5rem;
-    }
-
     .openChangeImage, .deleteImage, .editPost {
       width: 43.5%;
       padding: 20px;
       float: left;
-      font-size: 25px;
       margin-top: 2%;
     }
 
@@ -53,32 +57,44 @@
     .openChangeImage {
       margin-right: 0;
     }
+
     .change_image_wrap {
       text-align: left;
     }
+
     .postTags img {
-      width: 50px;
+      width: 10%;
     }
 
-    .container .two.columns {
-      width: 130px;
-    }
-
-    h1 {
-      font-size: 7rem;
-    }
-
-    .postTitle {
-      font-size: 5rem;
-    }
-
-    .postBody, .relatedPosts h4, .comment_section h4, .share_box h4  {
-      font-size: 2rem;
+    .title {
+      font-size:1.5em;
     }
 
     .postBody {
       margin-top: 2%;
       font-family: 'Lato', sans-serif;
       line-height: 2.5rem;
+    }
+
+    .widget {
+      background-color: white;
+    }
+
+    .right_sidebar {
+      padding: 0 5%;
+    }
+
+    .follow_by_email_wrap button {
+      line-height: 0.5em;
+      height: 25px;
+    }
+
+    .right_sidebar h2 {
+      font-size: 1em;
+      margin-bottom: 1.2em;
+    }
+
+    .right_sidebar_wrapper.four.columns {
+      width: 100%;
     }
 }

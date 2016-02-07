@@ -50,7 +50,6 @@ a {
   font-family: 'SensoryOverload', sans-serif;
   margin-left: -17%;
   font-size: 4.5em;
-  font-size: 8vh;
 }
 
 .main_heading p {
@@ -58,7 +57,6 @@ a {
   margin-left: 20%;
   margin-top: -4.8%;
   font-size: 1.7em;
-  font-size: 4vh
 }
 
 
@@ -134,7 +132,6 @@ a {
   text-align: center;
   font-size: 1.5em;
   letter-spacing: 0.1em;
-  font-size: 3vh;
 }
 
 .landing_text {
@@ -266,9 +263,8 @@ a {
 .about h1, .reviews h1, .schedule h1, .contact h1, .rates h1 {
   font-family: 'Abduco', sans-serif;
   text-align: center;
-  font-size: 7.5rem;
+  font-size: 4.5em;
   margin-top: 2%;
-  font-size: 8vh;
 }
 
 .about_image.wrap {
@@ -286,7 +282,7 @@ a {
   top:25%;
   left: 25%;
   display:none;
-  font-size: 5vh;
+  font-size: 2.5em
 }
 
 /*MASSAGE BOX*/
@@ -305,17 +301,15 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
 .massage_info h1, .education_info h1, .resume_info h1{
   margin-top: 2%;
   margin-bottom: 0;
-  font-size: 5.6rem;
+  font-size: 3em;
   font-family: 'Karla', sans-serif;
   font-weight: bold;
   letter-spacing: 0.4rem;
   clear: both;
-  font-size: 6vh;
 }
 
 .massage_info p, .education_info p, .resume_info p, .resume_info h2 {
-  font-size: 1.7rem;
-  font-size: 2vh;
+  font-size: 1.15em;
   font-family: 'Karla', sans-serif;
 }
 
@@ -347,8 +341,7 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
 }
 
 .company p {
-  height: 19vh;
-  font-size: 2.2vh;
+  height: 16rem;
 }
 
 .company img {
@@ -372,7 +365,6 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
 
 .direct_hire p {
   margin-bottom: 0;
-  font-size: 2.2vh;
 }
 
 .companies {
@@ -385,7 +377,7 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
 .contact_directly, .check_rates {
   font-weight: bold;
   border-bottom: 2px solid white;
-  font-size: 1.8rem;
+  font-size: 1em;
 }
 
 .contact_directly:hover, .check_rates:hover {
@@ -396,13 +388,11 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
 
 .education_info h3 {
   font-size: 1.2em;
-  font-size: 2.5vh;
   padding-top: 1em;
 }
 
 .education_info p {
   margin-bottom: 0.5rem;
-  font-size: 2.5vh;
   margin-top: 2%;
 }
 
@@ -411,7 +401,6 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
 }
 
 .education_info li {
-  font-size: 2vh;
 }
 
 .education_info .row {
@@ -465,7 +454,6 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
   font-family: 'Karla', sans-serif;
   margin-bottom: 5%;
   font-size: 1.2em;
-  font-size: 2.2vh;
 }
 
 .resume_info label[for="comment"] {
@@ -508,7 +496,6 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
   width: 30%;
   font-size: 1em;
   letter-spacing: 0.2em;
-  font-size: 2vh;
 
 }
 /*REVIEWS*/
@@ -666,7 +653,6 @@ legend {
   font-family: 'JD';
   font-size: 1.5em;
   margin-bottom: 0.5em;
-  font-size: 3vh;
 }
 
 .reviewBody {
@@ -766,18 +752,16 @@ legend {
   color: white;
   padding: 2%;
   font-family: 'Karla', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1em;
   margin-bottom: 4%;
   margin-top: 2%;
-  font-size: 2.5vh;
 }
 
 .contact.scrollable p {
   font-family: 'Modeka', sans-serif;
-  font-size: 2.3rem;
+  font-size: 1.5em;
   margin-left: 15%;
   text-align: left;
-  font-size: 3.5vh;
 }
 
 .social_media.wrap {
@@ -799,10 +783,9 @@ legend {
 
 .contact h2 {
   font-family: 'JD', sans-serif;
-  font-size: 3.2rem;
+  font-size: 2em;
   margin-bottom: 1rem;
   text-align: left;
-  font-size: 4.5vh;
 
 }
 
@@ -820,7 +803,7 @@ legend {
 }
 
 .contact button, .contact input[type='reset'] {
-  width: 38%;
+  width: 45%;
 }
 
 .road_sign {
@@ -917,8 +900,7 @@ legend {
 }
 
 .rates.scrollable p {
-  font-size: 2rem;
-  font-size: 2.2vh;
+  font-size: 1.2em;
 }
 
 .three.columns.blank {
@@ -936,7 +918,6 @@ legend {
   text-align: center;
   margin-bottom: 3%;
   font-weight: bold;
-  font-size: 3vh;
 }
 
 .container.table .seven.columns, .table .four.columns.offset-by-four {
@@ -955,6 +936,10 @@ legend {
   width: 60%;
 }
 
+.rates .container.discounts p {
+  font-size: 1em;
+}
+
 .rates .ten.columns.offset-by-four {
   margin-left: 24.9%;
 }
@@ -967,7 +952,6 @@ legend {
 
 .blank {
   height: 3.8em;
-  height: 5vh;
 }
 
 .discounts p {
@@ -989,7 +973,6 @@ legend {
 
 .ten.columns.offset-by-four .four.columns p:nth-child(2) {
   font-size: 0.8em;
-  font-size: 1.5vh;
 }
 
 .ten.columns .description:first-child, .ten.columns .description:nth-child(3) {
@@ -1031,8 +1014,7 @@ legend {
   text-align: center;
   margin-top: 10px;
   font-weight: bold;
-  font-size: 3em;
-  font-size: 5vh;
+  font-size: 2.5em;
 }
 
 
@@ -1049,7 +1031,6 @@ legend {
 .rates.scrollable h5 {
   text-align: center;
   margin-bottom: 2%;
-  font-size: 3vh;
 }
 
 .rates.scrollable .menu {
@@ -1133,7 +1114,6 @@ legend {
   width: 80%;
   margin: 4% auto;
   font-size: 1.1em;
-  font-size: 2vh;
 }
 
 .wheel1 {

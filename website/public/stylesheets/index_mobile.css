@@ -1,6 +1,6 @@
 @media only screen
-and (min-device-width : 320px)
-and (max-device-width : 736px){
+and (min-width : 320px)
+and (max-width : 649px){
 
 /*LANDING PAGE*/
 .main {
@@ -48,6 +48,7 @@ and (max-device-width : 736px){
 }
 
 .landing_image {
+  width: 100%;
   margin-left: 2%;
   margin-top: 0;
 }
@@ -214,7 +215,7 @@ and (max-device-width : 736px){
 
 .direct_hire p {
   font-size: 1em;
-  line-height: 25px;
+  line-height: 20px;
 }
 
 .direct_hire span {
@@ -227,7 +228,7 @@ and (max-device-width : 736px){
 
 .company p {
   font-size: 1em;
-  height: 16rem;
+  height: 21rem;
 }
 
 .company.three.columns {
@@ -237,7 +238,7 @@ and (max-device-width : 736px){
 }
 
 .company.zeel p, .company.stressbusters p {
-  height: 17rem;
+  height: 21rem;
 }
 
 .company.zeel.three.columns, .company.greenpoint.three.columns {
@@ -256,15 +257,17 @@ and (max-device-width : 736px){
 
 .companies {
   margin-bottom: 2%;
-  width: 92%;
-  padding-left: 8%;
+  width: 94%;
+  padding-left: 0%;
 }
 
 .companies .company:last-child img {
   width: 90%;
 }
 
-
+.companies .company.three.columns {
+  width: 43%;
+}
 
 /*RESUME*/
 .resume_info {
@@ -282,7 +285,7 @@ and (max-device-width : 736px){
 }
 
 .resume_info input[type="text"], .resume_info input[type="email"] {
-  width: 19em;
+  width: 55%;
   height: 1.8em;
 }
 
@@ -329,7 +332,7 @@ and (max-device-width : 736px){
 }
 
 .submit_documents button {
-  width: 50%;
+  width: 55%;
   font-size: 0.8em;
   margin-bottom: 5%;
   height: auto;
@@ -337,7 +340,7 @@ and (max-device-width : 736px){
 
 .resume_info textarea {
   font-size: 1em;
-  width: 19.5em;
+  width: 55%;
   height: 6em;
   margin-left: 0.5em;
 }
@@ -348,6 +351,9 @@ and (max-device-width : 736px){
   margin-right: 3.5%;
 }
 
+.resume_info input[type="email"] {
+  margin-left: 1%;
+}
 
 /*REVIEWS*/
 
@@ -699,9 +705,6 @@ and (max-device-width : 736px){
   margin-right: 2%;
 }
 
-
-
-
 }
 
 @media only screen
@@ -944,4 +947,236 @@ and (max-device-width : 1024px) {
   }
 
 
+}
+
+@media only screen and (max-width: 1100px) and (min-width: 960px) {
+  body {
+    font-size: 15px;
+  }
+}
+
+@media only screen and (max-width: 959px) and (min-width: 768px) {
+  body {
+    font-size: 12px;
+  }
+
+  .header {
+    padding-left: 5%;
+  }
+
+  .landing_text.reviews {
+    margin-left: 7.5%;
+  }
+
+  .about_image h2 {
+    font-size: 2em;
+    top: 20%;
+  }
+
+  .rates.scrollable .menu {
+    top: 1%;
+    right: 5%;
+  }
+
+  .container.table {
+    width: 99%;
+  }
+
+  .landing_button_image.contact {
+    padding-top: 7%;
+  }
+
+  .companies .company.three.columns  {
+    width: 20%;
+  }
+
+  .company p {
+    height: 19rem;
+  }
+
+  .resume_info .five.columns {
+    width: 230px;
+  }
+
+  .about .section {
+    height: 170px;
+  }
+
+  .rates .table .head .three.columns {
+    width: 20%;
+    margin-right: 3.4%;
+  }
+
+  .rates .table .three.columns {
+    width: 20%;
+    margin-right: 2%;
+  }
+
+}
+
+
+@media only screen and (max-width: 767px) and (min-width: 650px) {
+  body {
+    min-width: 650px;
+    width: 100%;
+    font-size: 10px
+  }
+
+  .header {
+    padding-left: 5%;
+  }
+
+  .landing_text.reviews {
+    margin-left: 7.5%;
+  }
+
+  .landing_button_image.reviews {
+    padding-top: 29%;
+  }
+
+  .landing_button_image.rates {
+    padding-top: 25%;
+  }
+
+  .landing_button_image.contact {
+    padding-top: 17%;
+  }
+
+  .landing_button_image.blog {
+    padding-top: 26%;
+  }
+
+  .about .section {
+    height: 150px;
+  }
+
+  #calendar .fc-center button {
+    width: 40%;
+  }
+
+  .rates.scrollable .menu {
+    right: 4%;
+  }
+
+  .rates .table .offset-by-one {
+    padding-left: 2%;
+  }
+
+  .discounts .three.columns {
+    margin-right: 1%;
+  }
+
+  .form.eleven.columns {
+    margin-left: 0;
+  }
+
+  .review_button input[type="reset"], .review_button button, .contact button, .contact input[type='reset'] {
+    width: 10em;
+    line-height: 1em;
+  }
+
+  .review_button {
+    float: left;
+    margin-left: 1.5%;
+  }
+
+  .reviews input[type="text"], .reviews input[type="password"], .reviews input[type="email"] {
+    width: 100%;
+    height: 25px;
+  }
+
+  .reviewBody {
+    width: 100%;
+  }
+
+  .contact .container {
+    width: 70%;
+  }
+
+  .handset {
+    left: -100px;
+  }
+
+  .social_media.wrap img:first-child {
+    margin-left: 13%;
+  }
+
+  .social_media.wrap {
+    margin-left: 0;
+  }
+
+  .contact.scrollable p {
+    margin-left: 15%;
+    margin-bottom: 15%;
+  }
+
+  .contact h2 {
+    margin-bottom: 0;
+  }
+
+  .contact .three.columns {
+    width: 30%;
+  }
+
+  .contact .five.columns {
+    width: 50%;
+  }
+
+  .contact input[type="email"] {
+    margin-left: 2%;
+  }
+
+  .contact button, .contact input[type='reset'] {
+    width: 45%;
+  }
+
+  .road img {
+    height: 100px;
+  }
+
+  .sticky .landing_text:first-child {
+    margin-left: 4%;
+  }
+
+  .sticky.header {
+    min-width: 650px;
+  }
+}
+
+@media only screen
+and (min-width : 414px)
+and (max-width : 649px) {
+  .main_heading h1 {
+    font-size: 2em;
+  }
+
+  .main_heading p {
+    font-size: 1.2em;
+  }
+
+  .landing_text.wrap {
+    width: 13%;
+  }
+
+  .header {
+    padding-top: 1%;
+  }
+
+  .massage_therapist_image {
+    width: 55%;
+    margin-left: 5%;
+    float: left;
+    margin-top: 5%;
+  }
+
+  .main_heading {
+    width: 66%;
+    float: right;
+    margin-bottom: 0%;
+    margin-top: 4%;
+  }
+
+  .header p {
+    font-size: 0.7em;
+  }
 }

@@ -1,3 +1,5 @@
+
+
 .blog_centerpiece {
   text-align: center;
   margin-top: 3em;
@@ -35,11 +37,21 @@ a:hover, .removePostPreview:hover, .pages p:hover {
   display: inline-block;
   margin: 1% auto;
   overflow: auto;
+  min-width: 74%;
 }
+
+.navigation_links .two.columns {
+  width: 29%;
+}
+
+.navigation_links .two.columns:nth-child(2) {
+  float: right;
+}
+
 
 .navigation a {
   font-family: 'Lato', sans-serif;
-  font-size: 120%;
+  font-size: 0.7em;
   color: #1A1A1A;
   text-transform: uppercase;
   text-decoration: none;
@@ -55,6 +67,7 @@ a:hover, .removePostPreview:hover, .pages p:hover {
   text-align: center;
   color: #000000;
   font-weight: 200;
+  font-size: 1.6em;
 }
 
 /*MAIN CONTAINER*/
@@ -104,7 +117,7 @@ a:hover, .removePostPreview:hover, .pages p:hover {
 /*MAIN POST CONTAINER*/
 
 .content_wrapper {
-  padding: 60px 5px 0 75px;
+  padding: 4% 0 0 7%;
 }
 
 /*POST*/
@@ -713,6 +726,47 @@ p.openEdit, p.deletePost, p.deleteComment {
     display: none;
 }
 
+@media only screen and (min-width: 768px) {
+  .container .eight.columns {
+    width: 64%;
+  }
+
+  .container .four.columns {
+    width: 30%;
+  }
+}
+
+@media only screen and (max-width: 959px) and (min-width: 768px) {
+  .main_wrapper {
+    width: 96%;
+  }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 480px) {
+  .container.main_wrapper {
+    width: 100%;
+  }
+
+  .container {
+    width: 85%;
+  }
+
+  .container .eight.columns {
+    width: 70%;
+  }
+
+  .container .four.columns {
+    width: 30%;
+  }
+
+}
+
+@media only screen and (max-width: 650px) and (min-width: 569px) {
+  body {
+    min-width: 650px;
+    width: 100%;
+  }
+}
 
 
 

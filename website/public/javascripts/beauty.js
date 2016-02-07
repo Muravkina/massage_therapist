@@ -221,7 +221,19 @@ $(document).ready(function() {
     height: 600
   })
 
-  $('#calendar').off('click', 'div')
+  $('#calendar').off('click', 'div');
+
+  $('body').swipe( {
+        //Single swipe handler for left swipes
+        swipeLeft: function () {
+            $.sidr('open', 'sidr-main');
+        },
+        swipeRight: function () {
+            $.sidr('close', 'sidr-main');
+        },
+        //Default is 75px, set to 0 for demo so any distance triggers swipe
+        threshold: 45
+  });
 
 
   changeDirection();
