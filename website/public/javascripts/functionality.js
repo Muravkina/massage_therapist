@@ -227,8 +227,8 @@ $("body").delegate(".editFile","change", function(){
 
 // submit review
     $(".submit").on("click", function(event){
-
       event.preventDefault();
+
       var data = {
         author: $(".reviewAuthor").val(),
         body: $(".reviewBody").val(),
@@ -423,7 +423,7 @@ $("body").delegate(".editFile","change", function(){
 
     var formData = new FormData();
     if ($(this).parents(".edit").find(".editFile").length !== 0) {
-      formData.append('image', $(this).parent().find('.editFile')[0].files[0]);
+      formData.append('image', $(this).parents().find('.editFile')[0].files[0]);
     }
     formData.append('title', $(this).parent().children(".editPostTitle").val());
     formData.append('body', $(this).parent().children(".editPostBody").val());

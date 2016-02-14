@@ -27,73 +27,6 @@ $(document).ready(function() {
 
   $(window).on('scroll resize', check_if_in_view);
 
-  var displayWord = function(event){
-    var topPart = $(this).find("img.top_part");
-    var middlePart = $(this).find("img.middle_part");
-    var bottomPart = $(this).find("img.bottom_part");
-    var word = $(this).find("h2");
-
-    topPart.hide("slide", { direction: "left" }, 200);
-    middlePart.hide("slide", { direction: "right" }, 200);
-    word.show("slide", {direction: "left"}, 200);
-    bottomPart.hide("slide", { direction: "left" }, 200);
-  }
-
-  var hideWord = function(){
-    var topPart = $(this).find("img.top_part");
-    var middlePart = $(this).find("img.middle_part");
-    var bottomPart = $(this).find("img.bottom_part");
-    var word = $(this).find("h2");
-
-    topPart.show("slide", { direction: "left" }, 200);
-    middlePart.show("slide", { direction: "right" }, 200);
-    word.hide("slide", {direction: "left"}, 200);
-    bottomPart.show("slide", { direction: "left" }, 200);
-  }
-
-  var displayContent = function(){
-    var infoBox = $(this).parent().attr('class').replace(" about_image wrap", "_info");
-    var topPart = $(".section").find("img.top_part");
-    var middlePart = $(".section").find("img.middle_part");
-    var bottomPart = $(".section").find("img.bottom_part");
-    var word = $(this)
-
-    if (screen.width >= 736 ) {
-      topPart.hide("slide", { direction: "left" }, 200);
-      middlePart.hide("slide", { direction: "right" }, 200);
-      bottomPart.hide("slide", { direction: "left" }, 200);
-    }
-
-    word.hide("slide", {direction: "right"}, 200, function(){
-      $(".about_pictures").hide();
-        $("."+infoBox).show("blind", 200)
-      });
-    $(".section").off("mouseover").off("mouseleave")
-  }
-
-  var hideContent = function(){
-    var infoBox = $(this).parents(".container");
-    var section = infoBox.attr("class").replace("container ", "").replace("_info", "");
-    var word = $(".section." + section).find("h2")
-    var topPart = $(".section").find("img.top_part");
-    var middlePart = $(".section").find("img.middle_part");
-    var bottomPart = $(".section").find("img.bottom_part");
-
-    infoBox.hide();
-    $(".about_pictures").show()
-
-    if (screen.width > 736) {
-      console.log(screen.width)
-      topPart.show("slide", { direction: "left" }, 200);
-      middlePart.show("slide", { direction: "right" }, 200);
-      bottomPart.show("slide", { direction: "left" }, 200);
-    } else {
-      word.show("slide", { direction: "left" }, 200);
-    }
-
-      $(".section").on("mouseover", displayWord).on("mouseleave", hideWord);
-  }
-
   $(window).scroll(function() {
     if ($(this).scrollTop() > $(".bottom_div").offset().top ){
       $('.header').addClass("sticky");
@@ -240,13 +173,9 @@ $(document).ready(function() {
   $(window).on("scroll", startAnimation)
   $(".contact_directly").click(scrollToContact);
   $(".check_rates").click(scrollToRates)
-  $(".section").on("mouseover", displayWord);
-  $(".section").on("mouseleave", hideWord);
-  $(".about_image").on("click", "h2", displayContent);
-  $(".close_icon_wrap").on("click", hideContent);
   $(".landing_button_image").on("click", scrollToSectionFromTop);
   $(".landing_text").on("click", scrollToSection);
-  console.log(screen.width)
+  // $(".close_icon_wrap").on("click", hideContent);
 
 })
 

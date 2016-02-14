@@ -73,18 +73,22 @@ router.get('/', function(req, res, next) {
     };
   });
 });
+
 router.post('/', function(req, res, next){
   new Review({author: req.body.author, body: req.body.body, stars: parseFloat(req.body.stars), email: req.body.email})
   .save(function(err, review){
     res.send(review)
   })
 })
+
 router.get('/login', function(req, res, next){
   res.render('login', {user: req.user})
 })
+
 router.post('/login', passport.authenticate('local'), function(req, res) {
     res.redirect('/');
 });
+
 router.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');
@@ -120,6 +124,7 @@ router.get('/blog', function(req, res){
             ///find all the tags
             var tags = [];
             var uniqueTags = [];
+
             var getCategories = function(posts){
               posts.forEach(function(post){
                 post.tags.forEach(function(tag){
@@ -131,6 +136,7 @@ router.get('/blog', function(req, res){
               })
             }
             getCategories(posts);
+
             if (req.query.back) {
               res.send(posts)
             } else {

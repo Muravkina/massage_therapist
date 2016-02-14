@@ -132,7 +132,7 @@ and (max-width : 649px){
 }
 
 /*EDUCATION SECTION*/
-.education_info, .massage_info, .resume_info {
+#education.info, #massage.info, #resume.info {
   width: 100%;
 }
 
@@ -140,30 +140,30 @@ and (max-width : 649px){
  display: none;
 }
 
-.container.education_info .one.column {
+#education.info .one.column {
   width: 15%;
   margin-left: 7%;
 }
 
-.education_info h1 {
+#education.info h1 {
   font-size: 2.2em;
   margin: 5% auto;
 }
 
-.education_info h3 {
+#education.info h3 {
   font-size: 1.2em;
   padding-top: 16%;
 }
 
-.education_info li {
+#education.info li {
   font-size: 1em;
 }
 
-.education_info .seven.columns {
+#education.info .seven.columns {
   width: 75.5%;
 }
 
-.education_info p {
+#education.info p {
   font-size: 1.8rem;
   line-height: 1em;
 }
@@ -196,7 +196,7 @@ and (max-width : 649px){
   width: 95%;
 }
 
-.education_info {
+#education.info {
   padding-bottom: 5%;
 }
 
@@ -209,7 +209,7 @@ and (max-width : 649px){
   padding: 3%;
 }
 
-.massage_info h1 {
+#massage.info h1 {
   font-size: 2.5em;
 }
 
@@ -270,44 +270,43 @@ and (max-width : 649px){
 }
 
 /*RESUME*/
-.resume_info {
+#resume.info {
   margin-bottom: 5%;
   margin-top: 4%;
 }
 
-.resume_info .six.columns {
+#resume.info .six.columns {
   width: 450px;
   margin-left: 2em;
 }
-
-.resume_info form {
+#resume.info form {
   width: 100%;
 }
 
-.resume_info input[type="text"], .resume_info input[type="email"] {
+#resume.info input[type="text"], .resume_info input[type="email"] {
   width: 55%;
   height: 1.8em;
 }
 
-.resume_info label {
+#resume.info label {
   font-size: 1em;
   width: 85%;
   margin-bottom: 0;
 }
 
-.resume_info h1 {
+#resume.info h1 {
   font-size: 2.2em;
 }
 
-.resume_info h2 {
+#resume.info h2 {
   font-size: 1.2em;
 }
 
-.resume_info label[for="comment"] {
+#resume.info label[for="comment"] {
   margin-bottom: 0;
 }
 
-.resume_info input[type="checkbox"] {
+#resume.info input[type="checkbox"] {
   margin-right: 3%;
    -ms-transform: scale(1); /* IE */
   -moz-transform: scale(1); /* FF */
@@ -316,11 +315,11 @@ and (max-width : 649px){
   padding: 10px;
 }
 
-.resume_info br {
+#resume.info br {
   display: none;
 }
 
-.resume_info .five.columns {
+#resume.info .five.columns {
   width: 88%;
   margin-left: 10%;
   margin-bottom: 2%;
@@ -338,7 +337,7 @@ and (max-width : 649px){
   height: auto;
 }
 
-.resume_info textarea {
+#resume.info textarea {
   font-size: 1em;
   width: 55%;
   height: 6em;
@@ -351,7 +350,7 @@ and (max-width : 649px){
   margin-right: 3.5%;
 }
 
-.resume_info input[type="email"] {
+#resume.info input[type="email"] {
   margin-left: 1%;
 }
 
@@ -760,23 +759,23 @@ and (orientation : landscape) {
     width: 60%;
   }
 
-  .resume_info .six.columns {
+#resume.info .six.columns {
     width: 90%;
     margin: 0 auto;
     float: none;
     display: block;
   }
 
-  .resume_info form {
+#resume.info form {
     float: left;
     width: 50%;
   }
 
-  .resume_info input[type="text"], .resume_info input[type="email"], .resume_info textarea {
+  #resume.info input[type="text"], #resume.info input[type="email"], #resume.info textarea {
     width: 90%;
   }
 
-  .resume_info .five.columns {
+  #resume.info .five.columns {
     width: 49%;
     margin-left: 0%;
   }
@@ -862,11 +861,11 @@ and (max-device-width : 1024px) {
     height: 12rem;
   }
 
-  .resume_info .six.columns {
+  #resume.info .six.columns {
     padding-left: 0;
   }
 
-  .resume_info textarea {
+  #resume.info textarea {
     width: 99%;
   }
 
@@ -994,7 +993,7 @@ and (max-device-width : 1024px) {
     height: 19rem;
   }
 
-  .resume_info .five.columns {
+#resume.info .five.columns {
     width: 230px;
   }
 
