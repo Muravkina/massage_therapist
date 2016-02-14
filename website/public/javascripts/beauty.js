@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-
   $(window).trigger('scroll');
   var animation_elements = $(".scrollable");
 
@@ -175,7 +174,6 @@ $(document).ready(function() {
   $(".check_rates").click(scrollToRates)
   $(".landing_button_image").on("click", scrollToSectionFromTop);
   $(".landing_text").on("click", scrollToSection);
-  // $(".close_icon_wrap").on("click", hideContent);
 
 })
 

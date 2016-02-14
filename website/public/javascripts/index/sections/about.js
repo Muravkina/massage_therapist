@@ -11,18 +11,12 @@ Section.prototype.findInfoBox = function(e){
   return $("#"+name).addClass('info');
 }
 
-Section.prototype.displayTitle = function(e){
-  this.topPart.hide("slide", { direction: "left" }, 200);
-  this.middlePart.hide("slide", { direction: "right" }, 200);
+Section.prototype.showWord = function(){
   this.word.show("slide", {direction: "left"}, 200);
-  this.bottomPart.hide("slide", { direction: "left" }, 200);
 }
 
-Section.prototype.hideTitle = function(e) {
-  this.topPart.show("slide", { direction: "left" }, 200);
-  this.middlePart.show("slide", { direction: "right" }, 200);
+Section.prototype.hideWord = function(){
   this.word.hide("slide", {direction: "left"}, 200);
-  this.bottomPart.show("slide", { direction: "left" }, 200);
 }
 
 Section.prototype.showImage = function(e){
@@ -36,6 +30,16 @@ Section.prototype.hideImage = function(e){
   this.topPart.hide("slide", { direction: "left" }, 200);
   this.middlePart.hide("slide", { direction: "right" }, 200);
   this.bottomPart.hide("slide", { direction: "left" }, 200);
+}
+
+Section.prototype.displayTitle = function(e){
+  this.hideImage();
+  this.showWord();
+}
+
+Section.prototype.hideTitle = function(e) {
+  this.hideWord();
+  this.showImage();
 }
 
 Section.prototype.iterateThoughImages = function(callback){
@@ -52,6 +56,7 @@ Section.prototype.iterateThoughImages = function(callback){
 Section.prototype.hideAllImages = function(selector){
   this.iterateThoughImages(this.hideImage)
   this.hideWord();
+  this.wait(selector, this.displayContent.bind(this))
 }
 
 Section.prototype.showAllImages = function(selector){
@@ -65,11 +70,6 @@ Section.prototype.wait = function(selector, callback){
       callback()
     }
   })
-}
-
-Section.prototype.hideWord = function(selector){
-  this.word.hide("slide", {direction: "right"}, 200);
-  this.wait(selector, this.displayContent.bind(this))
 }
 
 Section.prototype.displayContent = function(e){
@@ -90,7 +90,6 @@ Section.prototype.hideContent = function(e){
   });
 }
 
-
 $(".section").on("mouseover", function(){
   var section = new Section($(this));
   section.displayTitle();
@@ -110,7 +109,7 @@ $(".close_icon_wrap").on("click", function(){
   var infoBoxId = $(this).parents(".container").attr('id');
   var sectionSelector = $(".section."+infoBoxId);
   var section = new Section(sectionSelector);
-  section.hideContent()
+  section.hideContent();
 })
 
 
