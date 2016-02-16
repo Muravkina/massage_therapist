@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ./partials/head %>
+    <link rel='stylesheet' href='/stylesheets/jquery.sidr.dark.css'/>
+    <link rel='stylesheet' href='/stylesheets/blog.css' />
+    <link rel='stylesheet' href='/stylesheets/mobile_blog.css' />
+    <meta property="og:title"/>
+    <meta property="og:description"/>
+    <meta property="og:image"/>
+    <meta property="og:image:type"         content="image/png">
+    <meta property="og:image:width"        content="1200" />
+    <meta property="og:image:height"       content="1200" />
+  </head>
+  <body>
+
+
+    <% include ./partials/blog_header.ejs %>
+      <div class="container main_wrapper">
+        <div class="row">
+          <div class="main_wrapper_bg eight columns">
+            <div class="content_wrapper">
+            <% if (user) { %>
+              <p class="openPostForm">New post</p>
+              <div class="formErrors"></div>
+              <form method="post" action="/blog" id="blogForm">
+                <input type="text" id="title" placeholder="Title..." name="title"><br>
+                <textarea id="body" placeholder="Share your insights..." name="body"></textarea><br>
+                <input type="text" id="tags" name="tags" placeholder="Tags (example: tag1, tag2)">
+                <input type="file" name="image" class="editFile" id="submitImageForPost" size="500">
+                <img id="preview"/>
+                <div class="submitPost_wrap">
+                  <p class="submitPost">Submit</p>
+                </div><!--submitPost_wrap-->
+              </form>
+              <% } %>
+              <p class="all_posts back">Back to all posts</p>
+              <div class="posts">
+                <% posts.forEach(function(post){ %>
+                <div class="post" data-id= <%= post.id %>>
+                  <div class="postData">
+                    <p class="postDate">
+                      <% var date = new Date(post.date); date = date.toDateString() %>
+                      <%= date %>
+                    </p>
+                    <a  href="/posts/<%= post.id %>" class="postTitle"><%= post.title %></a>
+                    <img
+                    <% if (post.image.url) { %>
+                      src="<%= post.image.url%>"
+                    <% } %>
+                    class="postImage" id="preview">
+                    <div class="post_body_wrap">
+                      <% var maxLength = 700; %>
+                      <% if (post.body.length > maxLength) {
+                        var trimmedString = post.body.substr(0, maxLength);
+                        var trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))) %>
+                      <p class="postBody"><%= trimmedString %> ...</p>
+                      <div class="read_more_wrap">
+                        <a href="/posts/<%= post.id %>" class="readMore">READ MORE</a>
+                      </div>
+                       <% } else { %>
+                      <p class="postBody"><%= post.body %></p>
+                      <% } %>
+                    </div><!--post_body_wrap-->
+                      <p class="postTags">
+                        <% if (post.tags[0] !== "") { %>
+                          <img src="/images/tag.png" width="20px">
+                        <% } %>
+                        <% post.tags.forEach(function(tag){ %>
+                          <span class="searchTag"><%= tag %></span>
+                        <% }) %>
+                      </p>
+                  </div><!--postData-->
+                  <a href="/posts/<%=post.id%>" class="comment_link">Comments (<%= post.comments.length %>)</a>
+
+                  <!-- EDIT DELETE -->
+
+                  <% if (user) { %>
+                  <div class="edit_delete_wrapper">
+                    <p class="deletePost">Delete</p>
+                    <p class="openEdit">Edit</p>
+                    <div class="edit">
+                      <form id="editPostForm">
+                        <% if (post.image.url) { %>
+                          <div class="change_image_wrap">
+                            <p class="deleteImage">Delete Image</p>
+                            <p class="openChangeImage">Change Image</p>
+                            <div class="changeImageInput">
+                              <input type="file" name="image" class="editFile">
+                                <p class="changeImage">Submit Image</p>
+                            </div><!--changeImageInput-->
+                          </div><!--change_image_wrap-->
+                        <% } else { %>
+                          <input type="file" name="image" class="editFile">
+                          <p class="removePreview">X</p>
+                        <% } %>
+                        <input type="text" name="editPostTitle" value="<%=post.title %>" class="editPostTitle">
+                        <textarea name="editPostBody" class="editPostBody"><%= post.body %></textarea>
+                        <input type="text" name="editPostTags" class="editPostTags"
+                        <% if (post.tags[0] !== "") { %>
+                          value="<%= post.tags.join(', ') %>"
+                        <% } else { %>
+                          value="Tags..." style="color: #D1D1D1"
+                        <% } %>
+                        >
+                        <div class="edit_post_wrap">
+                          <p class="editPost">Update</p>
+                        </div><!--edit_post_wrap-->
+                      </form>
+                    </div><!--edit-->
+                  </div><!--edit_delete_wrapper-->
+                  <% } %>
+
+
+                </div><!--post-->
+              <% }) %>
+              </div><!--posts-->
+              <div class="pages" data-id="<%= totalPosts %>">
+                <p class="newerPosts">Newer posts</p>
+                <% if (posts.length === 10) { %>
+                  <p class="olderPosts">Older posts</p>
+                <% } %>
+                <p class="newerSearchPosts">Newer Posts</p>
+                <p class="olderSearchPosts">Older Posts</p>
+                <div class="tagPagination">
+                  <p class="newerTagPosts">Newer Posts</p>
+                  <p class="olderTagPosts">Older Posts</p>
+                </div><!--tagPagination-->
+              </div><!--pages-->
+
+            </div><!--content_wrapper-->
+          </div><!--main_wrapper_bg-->
+      <% include ./partials/side_bar %>
+
+      </div><!--row-->
+    </div><!--container main_wrapper-->
+
+    <script src="javascripts/libraries/jquery.sidr.min.js"></script>
+    <script src="/javascripts/libraries/highlight.js"></script>
+    <script src="/javascripts/functionality.js"></script>
+    <script src="/javascripts/libraries/jquery.sidr.min.js"></script>
+
+
+  </body>
+</html>
