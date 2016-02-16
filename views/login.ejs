@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ./partials/head %>
+    <link rel='stylesheet' href='/stylesheets/blog.css' />
+  </head>
+  <body>
+    <div class="login">
+      <h1> Log In </h1>
+      <form method="post" action="/login" id="loginForm">
+        <input type="text" id="username" placeholder="Username" name="username"><br>
+        <input type="password" id="password" placeholder="Password" name="password"><br>
+        <input type="Submit" value="Log In">
+      </form>
+    </div>
+  </body>
+</html>

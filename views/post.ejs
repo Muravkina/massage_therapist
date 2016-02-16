@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ilia Gerassimov - <%= post.title %></title>
+    <% include ./partials/head %>
+    <link rel='stylesheet' href='/stylesheets/blog.css' />
+    <link rel='stylesheet' href='/stylesheets/mobile_blog.css' />
+    <!-- Facebook sharing content -->
+    <meta property="og:url"           content="http://87e30bfa.ngrok.io/posts/<%= post._id %>" />
+    <meta property="og:title"         content="<%= post.title %>" />
+    <meta property="og:description"   content="<%= post.body %>" />
+    <meta property="og:image"         content="<%= post.image.url %>" />
+    <meta property="og:image:type"    content="image/png">
+    <meta property="og:image:width"        content="1200" />
+    <meta property="og:image:height"        content="1200" />
+  </head>
+  <body>
+
+    <% include ./partials/blog_header.ejs %>
+
+    <div class="container main_wrapper">
+      <div class="row">
+        <div class="main_wrapper_bg eight columns">
+          <div class="content_wrapper">
+            <a href="/blog" class="link_back"><p class="all_posts back">Back to all posts</p></a>
+            <div class="posts">
+              <div class="socialShare">
+                <!--Facebook share button-->
+                <div class="fb-share-button" data-href="http://16c4d911.ngrok.io/posts<%= post._id %>" data-layout="button_count"></div>
+                <!--Twitter share button-->
+                <a href="https://twitter.com/share" class="twitter-share-button" data-via="Muravkina">Tweet</a>
+              </div><!--socialShare-->
+
+              <div class="post" data-id="<%= post.id %>">
+                <div class="postData">
+                  <p class="postDate">
+                    <% var date = new Date(post.date); date = date.toDateString() %>
+                    <%= date %>
+                  </p>
+                  <p class="postTitle"><%= post.title %></p>
+                  <img
+                  <% if (post.image.url) { %>
+                    src="<%= post.image.url%>"
+                  <% } %>
+                  class="postImage" id="preview">
+                  <div class="post_body_wrap">
+                    <p class="postBody"><%= post.body %></p>
+                  </div><!--post_body_wrap-->
+                  <div class="post_signature_wrapper">
+                    <img src="/images/example.png" alt="post signature" class="post_signature">
+                  </div><!--post_signature_wrapper-->
+                  <p class="postTags">
+                    <% if (post.tags[0] !== "") { %>
+                      <img src="/images/tag.png" width="20px">
+                    <% } %>
+                      <% post.tags.forEach(function(tag){ %>
+                      <span class="searchTag"><%= tag %></span>
+                    <% }) %>
+                  </p>
+                </div><!--postData-->
+
+
+                <% if (user) { %>
+                <div class="edit_delete_wrapper">
+                  <p class="deletePost">Delete</p>
+                  <p class="openEdit">Edit</p>
+                  <div class="edit">
+                    <form id="editPostForm">
+                      <% if (post.image.url) { %>
+                        <button class="openChangeImage">Change Image</button>
+                        <div class="changeImageInput">
+                          <button class="removeEditPreview">Remove preview</button>
+                          <input type="file" name="image" class="editFile">
+                          <button class="changeImage">Submit Image</button>
+                        </div><!--changeImageInput-->
+                          <button class="deleteImage">Delete Image</button>
+                      <% } else { %>
+                        <input type="file" name="image" class="editFile">
+                        <p class="removePreview">X</p>
+                      <% } %>
+                      <input type="text" name="editPostTitle" value="<%=post.title %>" class="editPostTitle">
+                      <textarea name="editPostBody" class="editPostBody"><%= post.body %></textarea>
+                      <input type="text" name="editPostTags" class="editPostTags" value="<%= post.tags.join(', ') %>">
+                      <button class="editPost">Submit</button>
+                    </form>
+                  </div><!--edit-->
+                </div><!--edit_delete_wrapper-->
+                <% } %>
+
+              </div><!--post-->
+              <div class="share_box">
+                <h4>Share this post on:</h4>
+                <div class="share_content">
+                  <div class = "facebook_share">
+                    <img src="/images/facebook-ci.png">
+                    <p>Facebook</p>
+                  </div><!--facebook_share-->
+                  <div class="twitter_share">
+                    <img src="/images/twitter-ci.png">
+                    <p>Twitter</p>
+                  </div><!--twitter_share-->
+                  <div class="linkedin_share">
+                    <img src="/images/linkedin-ci.png">
+                    <p>Linkedin</p>
+                  </div><!--linkedin_share-->
+                </div><!--share_content-->
+              </div><!--share_box-->
+
+              <!-- RELATED POSTS -->
+
+              <div class="relatedPosts">
+                <% if (relatedPosts.length !== 1) { %>
+                  <h4>Related posts: </h4>
+                <% } %>
+                <div class="related_posts_content">
+                  <% relatedPosts.forEach(function(relatedPost){ %>
+                    <% if(relatedPost.id !== post.id) { %>
+                      <div class="related_single_post">
+                        <% if (relatedPost.image.url) { %>
+                          <img src="<%=relatedPost.image.url%>" width="75" height="75">
+                        <% } else { %>
+                          <img src="/images/no_image.png" width="75" height="75">
+                        <% } %>
+                        <a href="/posts/<%=relatedPost.id%>"><%= relatedPost.title %></a>
+                        <p><%= relatedPost.body.substr(0, 200) %></p>
+                      </div><!--related_single_post-->
+                    <% } %>
+                  <% }) %>
+                </div><!--related_posts_content-->
+              </div><!--relatedPosts-->
+
+              <!-- COMMENTS -->
+
+              <div class="comment_section">
+                <h4>Comments:</h4>
+                <button class="openComment">Leave a comment</button>
+                <div class="commentForm row">
+                  <div class="formErrors"></div>
+                  <form id="commentForm">
+                    <label for="commentTitle" class="two columns">Title</label>
+                    <input type="text" id="commentTitle" class="five columns" name="commentTitle" placeholder="Title">
+                    <label for="commentAuthorName" class="two columns">Name&#42;</label>
+                    <input type="text" id="commentAuthorName" class="five columns" name="commentAuthorName" placeholder="Name">
+                    <label for="commentAuthorEmail" class="two columns">Email&#42; (will not be displayed) </label>
+                    <input type="text" id="commentAuthorEmail" class="five columns" name="commentAuthorEmail" placeholder="Email">
+                    <label for="commentAuthorWebsite" class="two columns">Website</label>
+                    <input type="text" id="commentAuthorWebsite" class="five columns" name="commentAuthorWebsite" placeholder="Website">
+                    <label for="commentBody" class="two columns">Comment&#42;</label>
+                    <textarea id="commentBody" name="commentBody" class="five columns" placeholder="Leave a comment"></textarea>
+                    <div class="submitComment_wrap">
+                      <p class="submitComment">Submit comment</p>
+                    </div>
+                  </form>
+                </div>
+                <div class="commentsCollection">
+                  <% post.comments.forEach(function(comment){ %>
+                    <div class="comment" data-id="<%= comment.id %>">
+                      <p class="commentTitle"><%= comment.title %></p>
+                      <% if (comment.title) { %>
+                        <img src="/images/triangle.png" width="6">
+                      <% } %>
+                      <p class="commentAuthorName"><%= comment.name %></p>
+                      <% if (comment.website) { %>
+                        <img src="/images/triangle.png" width="6">
+                      <% } %>
+                      <a href="http://<%= comment.website %>" target="_blank"><p class="commentAuthorWebsite"><%= comment.website %></p></a>
+                      <p class="commentDate">
+                        <% var date = new Date(comment.date); date = date.toDateString() %>
+                        <%= date %>
+                      </p>
+                      <p class="commentBody"><%= comment.body %></p>
+                      <% if(user) { %>
+                        <p class="deleteComment">Delete</p>
+                      <% } %>
+                    </div>
+                  <% }) %>
+                </div><!--commentsCollection-->
+              </div><!--comment_section-->
+            </div><!--posts-->
+          </div>
+        </div><!--main_wrapper_bg-->
+
+        <% include ./partials/side_bar %>
+
+      </div><!--row-->
+    </div><!--container main_wrapper-->
+
+    <script src="/javascripts/libraries/highlight.js"></script>
+    <script src="/javascripts/functionality.js"></script>
+    <script src="/javascripts/libraries/jquery.sidr.min.js"></script>
+    <% include ./partials/social_share.ejs %>
+
+  </body>
