@@ -18,6 +18,7 @@ var app = express();
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://localhost/ilia')
 
+
 var Blog     = require('./models/blog');
 var Reviews     = require('./models/reviews');
 var User     = require('./models/user');
