@@ -8,11 +8,12 @@ $(document).ready(function() {
     })
 
     //facebook sharing
-    $('.facebook-share').click(function() {
+    $('.fb-share').click(function() {
       FB.ui({
-        method: 'share',
-        href: 'https://b59f7719.ngrok.io',
-      }, function(response){});
+  method: 'feed',
+  link: window.location.href,
+  caption: 'An example caption',
+}, function(response){});
     });
 
     //check if the fields are valid

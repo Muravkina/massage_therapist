@@ -77,7 +77,7 @@ Section.prototype.displayContent = function(e){
   $(".about_pictures").hide();
   this.hideWord();
   //firefox margin width fix
-  var x = $(window).width() - infoBox.width();
+  var x = $("body").width() - infoBox.width();
   infoBox.css("margin-left", x/2);
   infoBox.css("margin-right", x/2);
 
