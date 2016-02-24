@@ -56,8 +56,7 @@ Section.prototype.iterateThoughImages = function(callback){
 Section.prototype.hideAllImages = function(selector){
   this.iterateThoughImages(this.hideImage)
   this.hideWord();
-  this.displayContent()
-  // this.wait(selector, this.displayContent.bind(this))
+  this.wait(selector, this.displayContent.bind(this))
 }
 
 Section.prototype.showAllImages = function(selector){
@@ -66,17 +65,17 @@ Section.prototype.showAllImages = function(selector){
 
 Section.prototype.wait = function(selector, callback){
   var intervalID = setInterval(function(){
-    console.log(!$(".top_part, .middle_part, .bottom_part, h2").is(":animated"))
-    if(!$(".top_part, .middle_part, .bottom_part, h2").is(":animated")){
+    if(!$(".top_part, .middle_part, .bottom_part").is(":animated")){
       clearInterval(intervalID)
       callback()
     }
-  }, 0.01)
+  }, 0.001)
 }
 
 Section.prototype.displayContent = function(e){
   var infoBox = this.findInfoBox();
   $(".about_pictures").hide();
+  this.hideWord();
   //firefox margin width fix
   var x = $(window).width() - infoBox.width();
   infoBox.css("margin-left", x/2);

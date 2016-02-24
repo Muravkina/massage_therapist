@@ -616,6 +616,7 @@ input[type="text"].red {
 }
 label {
   display: inline-block;
+  font-weight: 300;
 }
 input[type="text"], input[type="password"], input[type="email"]{
   width: 92%;
@@ -656,6 +657,7 @@ legend {
   font-family: 'JD';
   font-size: 1.5em;
   margin-bottom: 0.5em;
+  font-weight: 0;
 }
 
 .reviewBody {
@@ -768,7 +770,7 @@ legend {
 }
 
 .social_media.wrap {
-  overflow: auto;
+  overflow: hidden;
   clear: both;
   margin-left: 15%;
 }
@@ -778,10 +780,15 @@ legend {
   display: inline-block;
   width: 21%;
   margin-left: 5%;
+  transition: all .1s ease-in-out;
 }
 
-.social_media.wrap img:first-child {
+.social_media.wrap .facebook.logo {
   width: 19%;
+}
+
+.social_media.wrap img:hover {
+  transform: scale(1.1)
 }
 
 .contact h2 {
