@@ -8,7 +8,7 @@ var Section = function(selector){
 }
 Section.prototype.findInfoBox = function(e){
   var name = this.selector.attr('class').replace("section", "");
-  return $("#"+name).addClass('info');
+  return $(".container#"+name).addClass('info');
 }
 
 Section.prototype.showWord = function(){
@@ -56,7 +56,8 @@ Section.prototype.iterateThoughImages = function(callback){
 Section.prototype.hideAllImages = function(selector){
   this.iterateThoughImages(this.hideImage)
   this.hideWord();
-  this.wait(selector, this.displayContent.bind(this))
+  this.displayContent()
+  // this.wait(selector, this.displayContent.bind(this))
 }
 
 Section.prototype.showAllImages = function(selector){
@@ -65,17 +66,23 @@ Section.prototype.showAllImages = function(selector){
 
 Section.prototype.wait = function(selector, callback){
   var intervalID = setInterval(function(){
+    console.log(!$(".top_part, .middle_part, .bottom_part, h2").is(":animated"))
     if(!$(".top_part, .middle_part, .bottom_part, h2").is(":animated")){
       clearInterval(intervalID)
       callback()
     }
-  })
+  }, 0.01)
 }
 
 Section.prototype.displayContent = function(e){
-  var infoBox = this.findInfoBox()
+  var infoBox = this.findInfoBox();
   $(".about_pictures").hide();
-  infoBox.show("blind", 200)
+  //firefox margin width fix
+  var x = $(window).width() - infoBox.width();
+  infoBox.css("margin-left", x/2);
+  infoBox.css("margin-right", x/2);
+
+  infoBox.show("blind", {}, 200)
   this.anchor.off('mouseleave')
 }
 
