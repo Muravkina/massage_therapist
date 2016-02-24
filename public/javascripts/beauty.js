@@ -64,13 +64,13 @@ $(document).ready(function() {
 
   var scrollToContact = function(){
     $('html, body').animate({
-        scrollTop: $(".contact.scrollable").offset().top - 260
+        scrollTop: $(".contact.scrollable").offset().top - 200
     }, 1000);
   };
 
   var scrollToRates = function(){
     $('html, body').animate({
-        scrollTop: $(".rates.scrollable").offset().top - 260
+        scrollTop: $(".rates.scrollable").offset().top - 200
     }, 1000);
   }
 

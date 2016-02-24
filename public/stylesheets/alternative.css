@@ -469,8 +469,9 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
 }
 
 #resume.info label[for="email"] {
-  margin-left: 0;
+  margin-left: 2em;
 }
+
 
 #resume.info textarea {
   width: 92%;
@@ -652,8 +653,12 @@ input[type="reset"]{
   background-color: rgb(45, 45, 45);
 }
 
+.reviews.section label[for="email"]{
+  display: block;
+}
+
 label[for="email"]{
-  margin-left: 1em;
+  margin-right: 1em;
 }
 label[for="author"]{
   margin-right: 0.7em;
