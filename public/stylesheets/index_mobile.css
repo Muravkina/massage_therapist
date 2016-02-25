@@ -106,26 +106,18 @@ and (max-width : 649px){
   text-align: center;
   width: auto;
   height: auto;
-  line-height: 4em;
+  line-height: 2em;
   margin-bottom: 0;
 }
 
 .about .section {
-  width: 47%;
-  height: 135px;
+  width: 60%;
+  height: 60px;
   border: 2px solid black;
   background-color: black;
-  float: left;
-  position: static;
-  margin-bottom: 2%;
-}
-
-.about .section:first-child, .about .section:nth-child(3) {
-  margin-right: 2%;
-}
-
-.section.education {
-  margin: 0;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 4%;
 }
 
 .section.education h2{
