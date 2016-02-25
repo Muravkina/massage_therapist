@@ -74,8 +74,12 @@ and (max-width : 649px){
   margin-left: 0;
 }
 
+.wrap.menu img {
+  display: none;
+}
+
 .scrollable h1 {
-  font-size: 3em;
+  font-size: 2.5em;
   margin-top: 0;
 }
 
@@ -91,7 +95,7 @@ and (max-width : 649px){
 }
 
 .about_image.wrap {
-  overflow: auto;
+  overflow: hidden;
 }
 
 .about_image h2 {
@@ -103,6 +107,7 @@ and (max-width : 649px){
   width: auto;
   height: auto;
   line-height: 4em;
+  margin-bottom: 0;
 }
 
 .about .section {
@@ -352,6 +357,7 @@ and (max-width : 649px){
 
 #resume.info input[type="email"] {
   margin-left: 1%;
+  width: 55%;
 }
 
 /*REVIEWS*/
@@ -519,6 +525,10 @@ and (max-width : 649px){
 
 .social_media.wrap img:first-child {
   width: 15%;
+}
+
+.social_media.wrap .facebook.logo {
+  width: 14%;
 }
 .social_media.wrap img {
   width: 16%;
@@ -998,7 +1008,7 @@ and (max-device-width : 1024px) {
   }
 
   .about .section {
-    height: 170px;
+    height: 180px;
   }
 
   .rates .table .head .three.columns {

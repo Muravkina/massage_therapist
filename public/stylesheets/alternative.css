@@ -28,6 +28,7 @@ a {
 
 body {
   max-width: 1600px;
+  min-width: 320px;
   margin: 0 auto;
 }
 /*MAIN HEADING*/
@@ -247,7 +248,7 @@ body {
 
 .about_image img {
   display: -webkit-box;
-  display: -moz-box;
+  display: -moz-box-flex;
   display: -ms-flexbox;
   display: -webkit-flex;
   display:flex;
@@ -274,6 +275,7 @@ body {
 
 .about_image.wrap {
   width: 100%;
+  overflow: hidden;
 }
 
 .about h1 {
@@ -468,9 +470,9 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
   margin-bottom: 2%;
 }
 
-#resume.info label[for="email"] {
+/*#resume.info label[for="email"] {
   margin-left: 2em;
-}
+}*/
 
 
 #resume.info textarea {
@@ -653,8 +655,12 @@ input[type="reset"]{
   background-color: rgb(45, 45, 45);
 }
 
-.reviews.section label[for="email"]{
+.reviews.section label[for="email"], .review_row label[for="body"]{
   display: block;
+}
+
+.review_row label[for="body"] {
+  margin-top: 0.5em;
 }
 
 label[for="email"]{
@@ -662,6 +668,7 @@ label[for="email"]{
 }
 label[for="author"]{
   margin-right: 0.7em;
+  display: block;
 }
 legend {
   font-family: 'JD';
@@ -953,7 +960,7 @@ legend {
 }
 
 .rates .container.discounts {
-  width: 60%;
+  width: 65%;
 }
 
 .rates .container.discounts p {

@@ -6,6 +6,13 @@ var Section = function(selector){
   this.bottomPart = selector.find("img.bottom_part");
   this.word = selector.find("h2");
 }
+
+var MobileSection = function(selector){
+  this.selector = selector;
+}
+
+MobileSection.prototype = Section.prototype;
+
 Section.prototype.findInfoBox = function(e){
   var name = this.selector.attr('class').replace("section", "");
   return $(".container#"+name).addClass('info');
@@ -46,9 +53,7 @@ Section.prototype.iterateThoughImages = function(callback){
   $.each(this.anchor, function(i, imageWrap){
     $('div', imageWrap).each(function(b){
       var section = new Section($(imageWrap))
-      if (screen.width >= 736 ) {
-        callback.bind(section)();
-      }
+      callback.bind(section)();
     })
   })
 }
@@ -96,26 +101,61 @@ Section.prototype.hideContent = function(e){
   });
 }
 
+MobileSection.prototype.hideAllMobileImages = function(){
+  $(".about_pictures").hide();
+  this.displayMobileContent();
+}
+
+MobileSection.prototype.displayMobileContent = function(){
+  var infoBox = this.findInfoBox();
+  infoBox.show();
+}
+
+MobileSection.prototype.hideMobileContent = function(){
+  var infoBox = this.findInfoBox();
+  infoBox.hide();
+  $(".about_pictures").show();
+  $(".about_pictures img").hide();
+  $(".about_pictures h2").show();
+}
+
+
+
 $(".section").on("mouseover", function(){
-  var section = new Section($(this));
-  section.displayTitle();
+  console.log($(window).width())
+  if ($(window).width() >= 736 ) {
+    var section = new Section($(this));
+    section.displayTitle();
+  }
 });
 
 $(".section").on("mouseleave", function(){
-  var section = new Section($(this));
-  section.hideTitle();
+  if ($(window).width() >= 736 ) {
+    var section = new Section($(this));
+    section.hideTitle();
+  }
 });
 
 $(".section").on("click", function(){
-  var section = new Section($(this))
-  section.hideAllImages($(this));
+  if ($(window).width() >= 736 ) {
+    var section = new Section($(this))
+    section.hideAllImages($(this));
+  } else {
+    var section = new MobileSection($(this));
+    section.hideAllMobileImages($(this));
+  }
 });
 
 $(".close_icon_wrap").on("click", function(){
   var infoBoxId = $(this).parents(".container").attr('id');
   var sectionSelector = $(".section."+infoBoxId);
-  var section = new Section(sectionSelector);
-  section.hideContent();
+  if ($(window).width() >= 736 ) {
+    var section = new Section(sectionSelector)
+    section.hideContent();
+  } else {
+    var section = new MobileSection(sectionSelector);
+    section.hideMobileContent();
+  }
 })
 
 
