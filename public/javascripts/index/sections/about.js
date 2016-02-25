@@ -136,7 +136,7 @@ $(".section").on("mouseleave", function(){
   }
 });
 
-$(".section").on("click", function(){
+$(".section").on("click touchstart", function(){
   if ($(window).width() >= 736 ) {
     var section = new Section($(this))
     section.hideAllImages($(this));
@@ -146,7 +146,7 @@ $(".section").on("click", function(){
   }
 });
 
-$(".close_icon_wrap").on("click", function(){
+$(".close_icon_wrap").on("click touchstart", function(){
   var infoBoxId = $(this).parents(".container").attr('id');
   var sectionSelector = $(".section."+infoBoxId);
   if ($(window).width() >= 736 ) {

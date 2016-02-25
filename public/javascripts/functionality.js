@@ -79,8 +79,8 @@ $(document).ready(function() {
       })
     }
 
-    $("body").on("click", ".removePostPreview", removePostPreview)
-    $("body").on("click", ".removeEditPreview", removeEditPreview)
+    $("body").on("click touchstart", ".removePostPreview", removePostPreview)
+    $("body").on("click touchstart", ".removeEditPreview", removeEditPreview)
 
 
     var newPost = function(posts, searchArray, totalPosts){
@@ -227,7 +227,7 @@ $("body").delegate(".editFile","change", function(){
 });
 
 // submit review
-    $(".submit").on("click", function(event){
+    $(".submit").on("click touchstart", function(event){
       event.preventDefault();
 
       var data = {
@@ -297,7 +297,7 @@ $("body").delegate(".editFile","change", function(){
     }
   }
 
-  $(".submit_documents").on("click", submitDocuments)
+  $(".submit_documents").on("click touchstart", submitDocuments)
 
 //submit post
 
@@ -361,7 +361,7 @@ $("body").delegate(".editFile","change", function(){
     }
   }
 
-  $(".submitPost").on("click", submitPost)
+  $(".submitPost").on("click touchstart", submitPost)
 
   //delete post
   var deletePost = function(event){
@@ -391,7 +391,7 @@ $("body").delegate(".editFile","change", function(){
         deletedPost.remove();
       })
   }
-  $(".posts").on("click", ".deletePost", deletePost);
+  $(".posts").on("click touchstart", ".deletePost", deletePost);
 
 
   //open edit form
@@ -465,8 +465,8 @@ $("body").delegate(".editFile","change", function(){
       })
   }
 
-  $(".posts").on("click", ".openEdit", openEdit);
-  $(".posts").on("click", ".editPost", updatePost);
+  $(".posts").on("click touchstart", ".openEdit", openEdit);
+  $(".posts").on("click touchstart", ".editPost", updatePost);
 
 
 // open comment form
@@ -531,8 +531,8 @@ $("body").delegate(".editFile","change", function(){
     }
   }
 
-   $(".openComment").on("click", openComment);
-   $(".posts").on("click", ".submitComment", submitComment);
+   $(".openComment").on("click touchstart", openComment);
+   $(".posts").on("click touchstart", ".submitComment", submitComment);
 
 // delete comment
 
@@ -568,7 +568,7 @@ $("body").delegate(".editFile","change", function(){
     });
   }
 
-  $("body").on("click", ".searchTag", searchTag)
+  $("body").on("click touchstart", ".searchTag", searchTag)
 
   //search
 
@@ -591,7 +591,7 @@ $("body").delegate(".editFile","change", function(){
   //pagination
 
   //older posts
-  $(".pages").on("click", ".olderPosts", function(){
+  $(".pages").on("click touchstart", ".olderPosts", function(){
     var id = {id: $(".posts div:nth-child(10)").attr("data-id")};
     $.ajax({
       url: '/olderPosts',
@@ -610,7 +610,7 @@ $("body").delegate(".editFile","change", function(){
   })
 
   //newer posts
-  $(".pages").on("click", ".newerPosts", function(){
+  $(".pages").on("click touchstart", ".newerPosts", function(){
     var id = {id: $(".posts div:nth-child(1)").attr("data-id")};
     $.ajax({
       url: '/newerPosts',
@@ -632,7 +632,7 @@ $("body").delegate(".editFile","change", function(){
   })
 
    //older reviews
-  $(".pages").on("click", ".olderReviews", function(){
+  $(".pages").on("click touchstart", ".olderReviews", function(){
     var id = {id: $(".reviews_collection div:nth-child(10)").attr("data-id")};
     $.ajax({
       url: '/olderReviews',
@@ -650,7 +650,7 @@ $("body").delegate(".editFile","change", function(){
   })
 
    //newer reviews
-  $(".pages").on("click", ".newerReviews", function(){
+  $(".pages").on("click touchstart", ".newerReviews", function(){
     var id = {id: $(".reviews_collection div:nth-child(1)").attr("data-id")};
     $.ajax({
       url: '/newerReviews',
@@ -683,7 +683,7 @@ $("body").delegate(".editFile","change", function(){
         review.empty();
       })
   }
-  $(".reviews_collection").on("click", ".deleteReview", deleteReview);
+  $(".reviews_collection").on("click touchstart", ".deleteReview", deleteReview);
 
 //back to all posts
 
@@ -706,10 +706,10 @@ $("body").delegate(".editFile","change", function(){
       })
   }
 
-  $(".all_posts").on("click", backToPosts)
+  $(".all_posts").on("click touchstart", backToPosts)
 
 // delete image
-  $(".posts").on("click", ".deleteImage", function(event){
+  $(".posts").on("click touchstart", ".deleteImage", function(event){
     event.preventDefault()
     var id = $(this).parents(".post").attr("data-id");
     var postImage = $(this).parents(".post").find(".postImage");
@@ -770,8 +770,8 @@ var changeImage = function(event){
 }
 
 
- $(".posts").on("click", ".openChangeImage", openChange)
- $(".posts").on("click", ".changeImage", changeImage)
+ $(".posts").on("click touchstart", ".openChangeImage", openChange)
+ $(".posts").on("click touchstart", ".changeImage", changeImage)
 
 // subscribe by email
 
@@ -790,7 +790,7 @@ var changeImage = function(event){
     });
   }
 
-  $(".subscribeByEmail").on("click", addEmailToSubscribeList)
+  $(".subscribeByEmail").on("click touchstart", addEmailToSubscribeList)
 
 
   //pagination on serach by word
@@ -840,8 +840,8 @@ var changeImage = function(event){
     })
   }
 
-  $(".pages").on("click", ".olderSearchPosts", getOlderSearchPosts)
-  $(".pages").on("click", ".newerSearchPosts", getNewerSearchPosts)
+  $(".pages").on("click touchstart", ".olderSearchPosts", getOlderSearchPosts)
+  $(".pages").on("click touchstart", ".newerSearchPosts", getNewerSearchPosts)
 
 
   //pagination on search by tag
@@ -903,7 +903,7 @@ var changeImage = function(event){
     }
 
   }
-  $(".openPostForm").on("click", openPostForm)
-  $(".pages").on("click", ".olderTagPosts", getOlderTagPosts);
-  $(".pages").on("click", ".newerTagPosts", getNewerTagPosts)
+  $(".openPostForm").on("click touchstart", openPostForm)
+  $(".pages").on("click touchstart", ".olderTagPosts", getOlderTagPosts);
+  $(".pages").on("click touchstart", ".newerTagPosts", getNewerTagPosts)
 });

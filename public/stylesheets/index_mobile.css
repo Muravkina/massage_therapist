@@ -511,7 +511,7 @@ and (max-width : 649px){
 .contact.scrollable .three.columns.offset-by-three {
   width: 70%;
   padding: 0;
-  margin-left: 35%;
+  margin-left: 5%;
 }
 
 .contact.scrollable .three.columns.offset-by-three h2 {
@@ -617,8 +617,9 @@ and (max-width : 649px){
 }
 
 .handset {
-  width: 35%;
+  display: none;
 }
+
 
 .rates .head {
   width: 100%;
@@ -1155,6 +1156,7 @@ and (max-device-width : 1024px) {
 @media only screen
 and (min-width : 414px)
 and (max-width : 649px) {
+
   .main_heading h1 {
     font-size: 2em;
   }

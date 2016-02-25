@@ -628,15 +628,10 @@ label {
 }
 input[type="text"], input[type="password"], input[type="email"]{
   width: 92%;
-  margin-left: 0.5em;
-}
-input[type="email"] {
-  margin-left: 0.3%;
 }
 textarea {
   width: 90%;
   vertical-align: top;
-  margin-left: 0.5em;
 }
 label[for="body"] {
   margin-top: -2em;

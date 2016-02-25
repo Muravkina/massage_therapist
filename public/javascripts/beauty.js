@@ -154,7 +154,7 @@ $(document).ready(function() {
     height: 600
   })
 
-  $('#calendar').off('click', 'div');
+  $('#calendar').off('click touchstart', 'div');
 
   $('body').swipe( {
         //Single swipe handler for left swipes
@@ -171,10 +171,10 @@ $(document).ready(function() {
 
   changeDirection();
   $(window).on("scroll", startAnimation)
-  $(".contact_directly").click(scrollToContact);
-  $(".check_rates").click(scrollToRates)
-  $(".landing_button_image").on("click", scrollToSectionFromTop);
-  $(".landing_text").on("click", scrollToSection);
+  $(".contact_directly").on("click touchstart", scrollToContact);
+  $(".check_rates").on("click touchstart", scrollToRates)
+  $(".landing_button_image").on("click touchstart", scrollToSectionFromTop);
+  $(".landing_text").on("click touchstart", scrollToSection);
 
 })
 
