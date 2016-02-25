@@ -108,6 +108,7 @@ MobileSection.prototype.hideAllMobileImages = function(){
 
 MobileSection.prototype.displayMobileContent = function(){
   var infoBox = this.findInfoBox();
+  console.log("gjhg")
   infoBox.show();
 }
 
@@ -146,7 +147,9 @@ $(".section").on("click touchstart", function(){
   }
 });
 
-$(".close_icon_wrap").on("click touchstart", function(){
+$(".close_icon_wrap").on("click touchstart", function(e){
+  e.stopImmediatePropagation();
+  e.preventDefault();
   var infoBoxId = $(this).parents(".container").attr('id');
   var sectionSelector = $(".section."+infoBoxId);
   if ($(window).width() >= 736 ) {
