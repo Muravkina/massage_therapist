@@ -10,7 +10,11 @@
     }
 
     #mobile-header {
-      display: block;
+      display: inline-block;
+    }
+
+    .navigation_links .two.columns:nth-child(2) {
+      float: left;
     }
 
     .navigation_links {
@@ -41,11 +45,25 @@
         0 0.5em 0 0 black;
     }
 
-    .navigation_links .two.columns {
-      margin-top: 2%;
+    #commentForm label, #commentForm input {
+      margin-bottom: 0.8em;
     }
-    .container .two.columns {
-      width: 50%;
+
+    #commentForm {
+      width: 100%;
+    }
+
+    .container .five.columns {
+      width: 275px;
+    }
+
+   .navigation_links .two.columns {
+      margin-top: 2%;
+      width: 45%;
+    }
+
+    .share_content div {
+      margin-right: 0;
     }
 
     .regular_side_bar {
