@@ -53,7 +53,7 @@
       <h2>Popular posts</h2>
         <% popularPosts.forEach(function(post){ %>
           <div class="popular_post_wrap">
-            <% if (post.image.url) { %>
+            <% if (post.image) { %>
               <img src="<%= post.image.url %>" width="100%">
             <% } %>
             <div class="popular_posts_body">
@@ -130,7 +130,7 @@
       <h2>Popular posts</h2>
         <% popularPosts.forEach(function(post){ %>
           <div class="popular_post_wrap">
-            <% if (post.image.url) { %>
+            <% if (post.image) { %>
               <img src="<%= post.image.url %>" width="100%">
             <% } %>
             <div class="popular_posts_body">

@@ -190,7 +190,8 @@ router.delete('/posts/:id', function(req, res){
       console.log("db error in DELETE /posts: " + err);
       res.render('error');
     } else {
-      Blog.Post.find({_id : { "$lte" : req.body.postNumber } }).sort({"_id":-1}).limit(10).exec(function(err, posts){
+      console.log(req.body)
+      Blog.Post.find({_id : { "$lte" : req.body.firstPostId } }).sort({"_id":-1}).limit(10).exec(function(err, posts){
         if (err) {res.send(err)}
         else {res.send({posts: posts, id: req.params.id})}
       })

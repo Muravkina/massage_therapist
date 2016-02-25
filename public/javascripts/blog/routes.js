@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+
 //submit post
 
 var submitPost = function(event){
@@ -34,5 +35,25 @@ var submitPost = function(event){
 }
 
 $(".submitPost").on("click touchstart", submitPost)
+
+
+//delete post
+var deletePost = function(event){
+  event.preventDefault();
+  var posts = new Posts();
+  var post = new Post($(this));
+  $.ajax({
+      url: '/posts/' + post.id,
+      type: 'DELETE',
+      contentType: 'application/json',
+      data: JSON.stringify(posts)
+    }).done(function(data){
+      newPost(data.posts)
+      //Remove deleted post from popular posts
+      posts.removePostFromPopular(post);
+    })
+}
+
+$(".posts").on("click touchstart", ".deletePost", deletePost);
 
 });

@@ -1,6 +1,26 @@
- var Posts = function(){
+
+  var Post = function(selector){
+    this.post = selector.parents(".post"),
+    this.id = this.post.attr('data-id')
+  }
+
+
+  var Posts = function(){
     this.lastPost = $(".posts div:nth-child(10)"),
-    this.postsNumber = $(".posts div:nth-child(10)")
+    this.postsNumber = $(".posts div:nth-child(10)"),
+    this.firstPostId = $(".posts div:nth-child(1)").attr("data-id"),
+    this.popularPosts = $(".popularPosts.widget")
+  }
+
+  Posts.prototype.removePostFromPopular = function(id){
+    var deletedPost;
+    var popularPostsLinks = this.popularPosts.find("a");
+    popularPostsLinks.each(function(link){
+      if ($(this).attr('href').indexOf(id) > -1) {
+          deletedPost = $(this).parents(".popular_post_wrap")
+      }
+      deletedPost.remove();
+    })
   }
 
   var BlogForm = function(){
@@ -217,82 +237,6 @@ $(document).ready(function() {
     $("body").on("click touchstart", ".removeEditPreview", removeEditPreview)
 
 
-    var newPost = function(posts, searchArray, totalPosts){
-      $.ajax({
-          type: 'GET',
-          url: "/isAuthenticated",
-          contentType: 'application/json'
-      }).done(function(isAuthenticated){
-        $(".posts").empty()
-        var editForm = '';
-        if (posts.length === 0) {
-          var noPosts = "<p> Oops, no posts are found </p>"
-          $(".posts").append(noPosts);
-          $(".olderPosts").hide();
-        } else {
-          posts.forEach(function(post){
-            var image = "<img class='postImage' id='preview'>";
-            var deleteImageButton ='';
-            var changeImageForm = '';
-            var changeImageButton = '';
-            var fileUploadInput = '';
-            var tags = "";
-            var maxLength = 700;
-            var postBody = '';
-            var tagsImage = '';
-            var fullChangeImageForm = '';
-            post.tags.forEach(function(tag){
-              tags += "<span class='searchTag'>" + tag + "</span> "
-            })
-            if (post.tags[0] !== "") {
-              tagsImage = "<img src='/images/tag.png' width='20px'>";
-              tagsValue = "'" + post.tags.join(', ') + "'";
-            } else {
-              tagsValue = "'Tags...' style='color: #D1D1D1'";
-            }
-            if (isAuthenticated) {
-              if (post.image) {
-                image = "<img src='" + post.image.url + "' class='postImage' id='preview'>";
-                deleteImageButton = "<p class='deleteImage'>Delete Image</p>";
-                changeImageForm = "<p class='openChangeImage'>Change Image</p><div class='changeImageInput'><input type='file' name='image' class='editFile'><p class='changeImage'>Submit Image</p></div>";
-                fullChangeImageForm = "<div class='change_image_wrap'>" + deleteImageButton + changeImageForm + "</div>"
-              } else {
-                fileUploadInput = "<input type='file' name='image' class='editFile'><p class='removePreview'>X</p>";
-              }
-             editForm = " </div><div class='edit_delete_wrapper'><p class='deletePost'>Delete</p><p class='openEdit'>Edit</p><div class='edit'><form id='editPostForm'>" + fullChangeImageForm + fileUploadInput + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value=" + tagsValue + "><div class='edit_post_wrap'><p class='editPost'>Update</p></div></form></div></div>"
-            }
-            if (post.image) {
-              image = "<img src='" + post.image.url +"' class='postImage' id='preview'>"
-            }
-            if (post.body.length > maxLength) {
-              var trimmedString = post.body.substr(0, maxLength);
-              var trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")));
-              postBody = "<p class='postBody'>" + trimmedString + " ... </p><div class='read_more_wrap'><a href='/posts/" + post._id + "' class='readMore'>READ MORE</a></div>"
-            } else {
-              postBody = "<p class='postBody'>" + post.body + "</p>"
-            }
-
-            var post = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a>" + image + "<div class='post_body_wrap'>" + postBody + "</div><p class='postTags'>" + tagsImage + tags + "</p><a href='/posts/"+ post._id +"' class='comment_link'>Comments (" + post.comments.length + ")</a>" + editForm + "</div>";
-            $(".posts").append(post);
-            $(".postImage#preview").show()
-          });
-          if (searchArray && searchArray !== "searchByTags") {
-            $("p").highlight(searchArray);
-            if(totalPosts > 10) {
-              searchPostsPages.totalPages = Math.ceil(totalPosts/10);
-              $(".olderSearchPosts").show()
-              $(".olderPosts").hide();
-            }
-          } else if (searchArray && searchArray === "searchByTags"){
-            if(totalPosts > 10) {
-              tagPostsPages.totalPages = Math.ceil(totalPosts/10);
-              $(".olderTagPosts").show()
-              $(".olderPosts").hide();
-            }
-          }
-        }
-      });
-    };
 
     var newReview = function(reviews){
       $.ajax({
@@ -435,37 +379,6 @@ $("body").delegate(".editFile","change", function(){
 
 //submit post
 
-
-
-  //delete post
-  var deletePost = function(event){
-    event.preventDefault();
-    var post = $(this).parent();
-    var id = $(this).parents(".post").attr("data-id");
-    var data = {
-      postNumber: $(".posts div:nth-child(1)").attr("data-id")
-    }
-    $.ajax({
-        url: '/posts/' + id,
-        type: 'DELETE',
-        contentType: 'application/json',
-        data: JSON.stringify(data)
-      }).done(function(data){
-        newPost(data.posts)
-
-        //Remove deleted post from popular posts
-
-        var deletedPost;
-        var popularPosts = $(".popular_posts_body").children("a");
-        popularPosts.each(function(link){
-          if ($(this).attr('href').indexOf(data.id) > -1) {
-            deletedPost = $(this).parents(".popular_post_wrap")
-          }
-        })
-        deletedPost.remove();
-      })
-  }
-  $(".posts").on("click touchstart", ".deletePost", deletePost);
 
 
   //open edit form
