@@ -27,11 +27,13 @@ $(document).ready(function() {
   $(window).on('scroll resize', check_if_in_view);
 
   $(window).scroll(function() {
-    if ($(this).scrollTop() > $(".bottom_div").offset().top ){
-      $('.header').addClass("sticky");
-    }
-    else{
-      $('.header').removeClass("sticky");
+    if ($(window).width() >= 736 ) {
+      if ($(this).scrollTop() > $(".bottom_div").offset().top ){
+        $('.header').addClass("sticky");
+      }
+      else{
+        $('.header').removeClass("sticky");
+      }
     }
   });
 
@@ -171,6 +173,7 @@ $(document).ready(function() {
         //Default is 75px, set to 0 for demo so any distance triggers swipe
         threshold: 45
   });
+
 
 
   changeDirection();

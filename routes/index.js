@@ -36,6 +36,7 @@ var sendEmails = function(){
       emails.forEach(function(email){
         emailList.push(email.email)
       })
+      console.log("ghgj")
       var email = {
         from: 'massagebygerill@gmail.com',
         to: emailList.join(", "),
@@ -86,7 +87,7 @@ router.get('/login', function(req, res, next){
 })
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/');
+    res.redirect('/blog');
 });
 
 router.get('/logout', function(req, res) {
@@ -161,9 +162,9 @@ router.post('/blog', function(req, res){
                 Blog.Post.find({}).limit(10).sort({date: 'desc'}).exec(function(err, posts){
                   if (err) {res.send(err)}
                   else {
-                    //send notification to subscribed users
-                    // sendEmails();
-                    console.log(posts)
+                    // send notification to subscribed users
+                    console.log(sendEmails)
+                    sendEmails();
                     res.send({posts: posts, post: post})
                   }
                 })
@@ -174,7 +175,7 @@ router.post('/blog', function(req, res){
           Blog.Post.find({}).limit(10).sort({date: 'desc'}).exec(function(err, posts){
             if (err) {res.send(err)}
             else {
-              // sendEmails();
+              sendEmails();
               res.send({posts: posts, post: post})
             }
           })
@@ -319,7 +320,6 @@ router.get('/tags/:name', function(req, res){
 })
 
 router.get('/search', function(req, res){
-    console.log(req.query.params)
   Blog.Post.find(
     { $text: {$search: req.query.params}}
     ).sort({"_id":-1}).limit(10).exec(function(err, posts){

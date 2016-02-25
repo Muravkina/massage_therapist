@@ -14,7 +14,7 @@
   </head>
   <body>
 
-
+  <img src="gifs/load.gif" id="spinster">
     <% include ./partials/blog_header.ejs %>
       <div class="container main_wrapper">
         <div class="row">
@@ -92,7 +92,6 @@
                           </div><!--change_image_wrap-->
                         <% } else { %>
                           <input type="file" name="image" class="editFile">
-                          <p class="removePreview">X</p>
                         <% } %>
                         <input type="text" name="editPostTitle" value="<%=post.title %>" class="editPostTitle">
                         <textarea name="editPostBody" class="editPostBody"><%= post.body %></textarea>
@@ -138,6 +137,7 @@
     <script src="javascripts/libraries/jquery.sidr.min.js"></script>
     <script src="/javascripts/libraries/highlight.js"></script>
     <script src="/javascripts/functionality.js"></script>
+    <script src="/javascripts/blog/routes.js"></script>
     <script src="/javascripts/libraries/jquery.sidr.min.js"></script>
 
 

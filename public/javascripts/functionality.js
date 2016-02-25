@@ -1,22 +1,59 @@
-$(document).ready(function() {
+ var Posts = function(){
+    this.lastPost = $(".posts div:nth-child(10)"),
+    this.postsNumber = $(".posts div:nth-child(10)")
+  }
 
-    //parse posts
-    $(".postBody").each(function(){
-      html = $.parseHTML($(this).text());
-      $(this).text('');
-      $(this).append(html)
-    })
+  var BlogForm = function(){
+    this.form = $("#blogForm"),
+    this.previewImage = this.form.find("#preview")
+  }
 
-    //facebook sharing
-    $('.fb-share').click(function() {
-      FB.ui({
-        method: 'feed',
-        link: window.location.href,
-        caption: 'http://massage-59439.onmodulus.net/',
-      }, function(response){});
+  BlogForm.prototype.closeBlogForm = function(){
+    $("#blogForm").hide();
+    //change buuton back to 'New Post'
+    $(".openPostForm").text("New Post");
+    //remove preview image
+    this.previewImage.attr('src', '');
+    $(":file").val('')
+  }
+
+  var getFormData = function(){
+    var formData = new FormData();
+    var form = $('form').serializeArray();
+    formData.append("image", $("#submitImageForPost")[0].files[0]);
+     $.each(form,function(key,input){
+        formData.append(input.name,input.value);
     });
+    return formData;
+  }
 
-    //check if the fields are valid
+  var updateCategories = function(postTags){
+    var tags = "";
+    var categories = [];
+    var uniqueCategories = [];
+    //find all existing categories
+    $(".categories_wrap").children().each(function(category){
+      categories.push($(this).text())
+    })
+    //add new category to the categories array
+    postTags.forEach(function(tag){
+      categories.push(tag)
+    })
+    //filter category array to keep only unique fileds
+    uniqueCategories = categories.filter(function(elem, index, self){
+      return index == self.indexOf(elem);
+    })
+    //update categories box on the page
+    $(".categories_wrap").empty()
+    uniqueCategories.forEach(function(category){
+      if(category !== "") {
+        var categoryField = "<p class='searchTag'>" + category + "</p>"
+        $(".categories").append(categoryField)
+      }
+    })
+  }
+
+      //check if the fields are valid
     var isValid = function(field){
       if (!field.val()){
         return false
@@ -43,10 +80,107 @@ $(document).ready(function() {
       }
     }
 
-    var dateFormat = function(date){
+    var newPost = function(posts, searchArray, totalPosts){
+      $.ajax({
+          type: 'GET',
+          url: "/isAuthenticated",
+          contentType: 'application/json'
+      }).done(function(isAuthenticated){
+        $(".posts").empty()
+        var editForm = '';
+        if (posts.length === 0) {
+          var noPosts = "<p> Oops, no posts are found </p>"
+          $(".posts").append(noPosts);
+          $(".olderPosts").hide();
+        } else {
+          posts.forEach(function(post){
+            var image = "<img class='postImage' id='preview'>";
+            var deleteImageButton ='';
+            var changeImageForm = '';
+            var changeImageButton = '';
+            var fileUploadInput = '';
+            var tags = "";
+            var maxLength = 700;
+            var postBody = '';
+            var tagsImage = '';
+            var fullChangeImageForm = '';
+            post.tags.forEach(function(tag){
+              tags += "<span class='searchTag'>" + tag + "</span> "
+            })
+            if (post.tags[0] !== "") {
+              tagsImage = "<img src='/images/tag.png' width='20px'>";
+              tagsValue = "'" + post.tags.join(', ') + "'";
+            } else {
+              tagsValue = "'Tags...' style='color: #D1D1D1'";
+            }
+            if (isAuthenticated) {
+              if (post.image) {
+                image = "<img src='" + post.image.url + "' class='postImage' id='preview'>";
+                deleteImageButton = "<p class='deleteImage'>Delete Image</p>";
+                changeImageForm = "<p class='openChangeImage'>Change Image</p><div class='changeImageInput'><input type='file' name='image' class='editFile'><p class='changeImage'>Submit Image</p></div>";
+                fullChangeImageForm = "<div class='change_image_wrap'>" + deleteImageButton + changeImageForm + "</div>"
+              } else {
+                fileUploadInput = "<input type='file' name='image' class='editFile'><p class='removePreview'>X</p>";
+              }
+             editForm = " </div><div class='edit_delete_wrapper'><p class='deletePost'>Delete</p><p class='openEdit'>Edit</p><div class='edit'><form id='editPostForm'>" + fullChangeImageForm + fileUploadInput + "<input type='text' name='editPostTitle' class='editPostTitle' value='" + post.title + "'><textarea name='editPostBody' class='editPostBody'>" + post.body + "</textarea><input type='text' name='editPostTags' class='editPostTags' value=" + tagsValue + "><div class='edit_post_wrap'><p class='editPost'>Update</p></div></form></div></div>"
+            }
+            if (post.image) {
+              image = "<img src='" + post.image.url +"' class='postImage' id='preview'>"
+            }
+            if (post.body.length > maxLength) {
+              var trimmedString = post.body.substr(0, maxLength);
+              var trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")));
+              postBody = "<p class='postBody'>" + trimmedString + " ... </p><div class='read_more_wrap'><a href='/posts/" + post._id + "' class='readMore'>READ MORE</a></div>"
+            } else {
+              postBody = "<p class='postBody'>" + post.body + "</p>"
+            }
+
+            var post = "<div class='post' data-id='" + post._id + "'><div class='postData'><p class='postDate'>" + dateFormat(post.date) + "</p><a href='/posts/" + post._id + "' class='postTitle'>" + post.title + "</a>" + image + "<div class='post_body_wrap'>" + postBody + "</div><p class='postTags'>" + tagsImage + tags + "</p><a href='/posts/"+ post._id +"' class='comment_link'>Comments (" + post.comments.length + ")</a>" + editForm + "</div>";
+            $(".posts").append(post);
+            $(".postImage#preview").show()
+          });
+          if (searchArray && searchArray !== "searchByTags") {
+            $("p").highlight(searchArray);
+            if(totalPosts > 10) {
+              searchPostsPages.totalPages = Math.ceil(totalPosts/10);
+              $(".olderSearchPosts").show()
+              $(".olderPosts").hide();
+            }
+          } else if (searchArray && searchArray === "searchByTags"){
+            if(totalPosts > 10) {
+              tagPostsPages.totalPages = Math.ceil(totalPosts/10);
+              $(".olderTagPosts").show()
+              $(".olderPosts").hide();
+            }
+          }
+        }
+      });
+    };
+
+        var dateFormat = function(date){
       var date = new Date(date);
       return date.toDateString()
     }
+
+$(document).ready(function() {
+
+    //parse posts
+    $(".postBody").each(function(){
+      html = $.parseHTML($(this).text());
+      $(this).text('');
+      $(this).append(html)
+    })
+
+    //facebook sharing
+    $('.fb-share').click(function() {
+      FB.ui({
+        method: 'feed',
+        link: window.location.href,
+        caption: 'http://massage-59439.onmodulus.net/',
+      }, function(response){});
+    });
+
+
 
     var removePostPreview = function(event){
       event.preventDefault();
@@ -301,67 +435,7 @@ $("body").delegate(".editFile","change", function(){
 
 //submit post
 
-  var submitPost = function(event){
-    event.preventDefault()
 
-    var formData = new FormData();
-    var form = $('form').serializeArray();
-    formData.append("image", $("#submitImageForPost")[0].files[0]);
-    $.each(form,function(key,input){
-        formData.append(input.name,input.value);
-    });
-    var postsData = {
-      lastPost : $(".posts div:nth-child(10)"),
-      postsNumber: $(".posts div:nth-child(10)"),
-      previewImage : $(this).parents("#blogForm").find("#preview")
-    }
-
-    var checkable = [$("input[name='title']"), $("textarea[name='body']")];
-    var fields = [$("input[name='title']"), $("textarea[name='body']"), $("input[name='tags']")];
-
-    if (fieldsAreValid(checkable)) {
-      $.ajax({
-        type: 'POST',
-        url: "/blog",
-        contentType: false,
-        processData: false,
-        data: formData
-      }).done(function(data){
-        removeRed(fields);
-        $("#blogForm").hide();
-        $(".openPostForm").text("New Post")
-        postsData.previewImage.attr('src', '');
-        var tags = "";
-        $(":file").val('')
-        newPost(data.posts);
-
-        //update the categories
-        var categories = [];
-        data.post.tags.forEach(function(tag){
-          tags += "<span class='searchTag'>" + tag + "</span> ";
-          categories.push(tag)
-        })
-        var uniqueCategories = [];
-        $(".categories_wrap").children().each(function(category){
-          categories.push($(this).text())
-        })
-        uniqueCategories = categories.filter(function(elem, index, self){
-          return index == self.indexOf(elem);
-        })
-        $(".categories_wrap").empty()
-        uniqueCategories.forEach(function(category){
-          if(category !== "") {
-            var categoryField = "<p class='searchTag'>" + category + "</p>"
-            $(".categories").append(categoryField)
-          }
-        })
-      })
-    } else {
-      errorForm()
-    }
-  }
-
-  $(".submitPost").on("click touchstart", submitPost)
 
   //delete post
   var deletePost = function(event){
@@ -401,7 +475,6 @@ $("body").delegate(".editFile","change", function(){
     var changeImageInput = editForm.find(".changeImageInput");
     if (!editForm.is(":visible")){
       editForm.show();
-      console.log(post)
       post.hide();
       post.find("#preview").clone().prependTo(editForm)
       $(this).text("Close");
@@ -756,6 +829,7 @@ var changeImage = function(event){
   if ($(this).parent().find(".editFile").length !== 0) {
     formData.append('image', $(this).parent().find('.editFile')[0].files[0]);
   }
+  $("#spinster").show();
   $.ajax({
     url: '/changeImage/' + id,
     type: 'PUT',
@@ -763,6 +837,7 @@ var changeImage = function(event){
     processData: false,
     data: formData
   }).done(function(data){
+    $("#spinster").hide();
     images.attr("src", data.image.url);
     editForm.find(".changeImageInput").hide();
     editForm.find(".openChangeImage").text('Change Image');
@@ -903,6 +978,9 @@ var changeImage = function(event){
     }
 
   }
+
+
+
   $(".openPostForm").on("click touchstart", openPostForm)
   $(".pages").on("click touchstart", ".olderTagPosts", getOlderTagPosts);
   $(".pages").on("click touchstart", ".newerTagPosts", getNewerTagPosts)

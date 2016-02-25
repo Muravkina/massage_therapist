@@ -734,6 +734,10 @@ p.openEdit, p.deletePost, p.deleteComment {
   width: 90%;
 }
 
+#spinster {
+  display:none;
+}
+
 @media only screen and (min-width: 768px) {
   .container .eight.columns {
     width: 64%;
