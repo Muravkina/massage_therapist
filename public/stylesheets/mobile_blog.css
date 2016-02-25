@@ -11,6 +11,8 @@
 
     #mobile-header {
       display: inline-block;
+      float: right;
+      margin-right: 2%;
     }
 
     .navigation_links .two.columns:nth-child(2) {
