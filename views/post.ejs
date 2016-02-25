@@ -12,7 +12,7 @@
     <meta property="og:image"         content="<%= post.image.url %>" />
     <meta property="og:image:type"    content="image/png">
     <meta property="og:image:width" content="480"/>
-<meta property="og:image:height" content="480"/>
+    <meta property="og:image:height" content="480"/>
   </head>
   <body>
 
@@ -24,14 +24,6 @@
           <div class="content_wrapper">
             <a href="/blog" class="link_back"><p class="all_posts back">Back to all posts</p></a>
             <div class="posts">
-              <div class="socialShare">
-                <!--Facebook share button-->
-                <div class="fb-share" data-href="http://massage-59439.onmodulus.net/posts/<%= post._id %>"><img src="/images/facebook-ci.png"></div>
-                <!--Twitter share button-->
-                <a href="https://twitter.com/share" class="twitter-share-button" data-via="Muravkina">Tweet</a>
-                <script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
-<script type="IN/Share"></script>
-              </div><!--socialShare-->
 
               <div class="post" data-id="<%= post.id %>">
                 <div class="postData">
@@ -94,15 +86,15 @@
                 <h4>Share this post on:</h4>
                 <div class="share_content">
                   <div class = "facebook_share">
-                    <img src="/images/facebook-ci.png">
+                    <img src="/images/facebook-ci.png" class="fb-share">
                     <p>Facebook</p>
                   </div><!--facebook_share-->
                   <div class="twitter_share">
-                    <img src="/images/twitter-ci.png">
-                    <p>Twitter</p>
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-via="Muravkina"><img src="/images/twitter-ci.png">
+                    <p>Twitter</p></a>
                   </div><!--twitter_share-->
                   <div class="linkedin_share">
-                    <img src="/images/linkedin-ci.png">
+                  <a href="https://www.linkedin.com/shareArticle?mini=true&url=<%= url %>&title=<%= post.title %>&summary=<%= post.body %>&source=http://massage-59439.onmodulus.net/"><img src="/images/linkedin-ci.png"></a>
                     <p>Linkedin</p>
                   </div><!--linkedin_share-->
                 </div><!--share_content-->

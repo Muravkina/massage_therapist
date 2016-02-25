@@ -74,6 +74,7 @@ $(document).ready(function() {
     }, 1000);
   }
 
+
   var scrollToSectionFromTop = function(){
     var buttonName = $(this).attr("id");
     $('html, body').animate({

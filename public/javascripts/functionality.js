@@ -10,10 +10,10 @@ $(document).ready(function() {
     //facebook sharing
     $('.fb-share').click(function() {
       FB.ui({
-  method: 'feed',
-  link: window.location.href,
-  caption: 'An example caption',
-}, function(response){});
+        method: 'feed',
+        link: window.location.href,
+        caption: 'http://massage-59439.onmodulus.net/',
+      }, function(response){});
     });
 
     //check if the fields are valid

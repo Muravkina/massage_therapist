@@ -574,6 +574,10 @@ p.openEdit, p.deletePost, p.deleteComment {
   vertical-align: middle;
 }
 
+.twitter_share a {
+  text-decoration: none;
+}
+
 .social_box img:hover, .social_box a:hover {
   background-color: #F2F2F2;
 }

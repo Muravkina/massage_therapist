@@ -16,7 +16,7 @@ var options = {
         api_user: process.env.SG_USERNAME,
         api_key: process.env.SG_PASSWORD
     }
-}
+};
 
 var mailer = nodemailer.createTransport(sgTransport(options));
 
