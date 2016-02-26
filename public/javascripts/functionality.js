@@ -177,7 +177,7 @@
       });
     };
 
-        var dateFormat = function(date){
+    var dateFormat = function(date){
       var date = new Date(date);
       return date.toDateString()
     }
@@ -224,10 +224,16 @@ $(document).ready(function() {
     }
 
     var removeEditPreview = function(){
+      var edit = $(this).parents(".edit");
       var preview = $(this).parents(".edit").find("img#preview");
       var imageUrl = $(this).data("img_url")
       preview.fadeOut(1000, function(){
-        $(this).attr("src", imageUrl).show();
+        if(imageUrl !== 'undefined'){
+          $(this).attr("src", imageUrl).show();
+        } else {
+          $(".removeEditPreview").remove()
+          $(this).attr("src", "")
+        }
         $(":file").val('');
         $(this).parents().find(".editFile").replaceWith(selected_photo = $(this).parents().find(".editFile"));
       })
@@ -290,7 +296,7 @@ $(document).ready(function() {
             $(".removeEditPreview").remove();
             var image_url = $(input).parents(".post").find(".postImage").attr('src');
             var preview = "<p class='removeEditPreview' data-img_url='" + image_url + "''>Remove preview</p>";
-            $(input).parents(".edit").find(".changeImage").after(preview);
+            $(input).parents(".edit").find(".editFile").after(preview);
             $(input).parents(".edit").find("#preview").attr('src', e.target.result);
 
           }
@@ -298,6 +304,7 @@ $(document).ready(function() {
         }
       reader.readAsDataURL(input.files[0]);
       }
+      $(input).parents(".edit").find(".postImage").show();
     }
 
 $("body").delegate(".editFile","change", function(){
@@ -410,11 +417,11 @@ $("body").delegate(".editFile","change", function(){
 
     var formData = new FormData();
     if ($(this).parents(".edit").find(".editFile").length !== 0) {
-      formData.append('image', $(this).parents().find('.editFile')[0].files[0]);
+      formData.append('image', $(this).parents("#editPostForm").find('.editFile')[0].files[0]);
     }
-    formData.append('title', $(this).parent().children(".editPostTitle").val());
-    formData.append('body', $(this).parent().children(".editPostBody").val());
-    formData.append('tags', $(this).parent().children(".editPostTags").val());
+    formData.append('title', $(this).parents("#editPostForm").children(".editPostTitle").val());
+    formData.append('body', $(this).parents("#editPostForm").children(".editPostBody").val());
+    formData.append('tags', $(this).parents("#editPostForm").children(".editPostTags").val());
 
     var editForm = $(this).parents(".edit");
     var post = $(this).parents(".post");
@@ -699,7 +706,8 @@ $("body").delegate(".editFile","change", function(){
     event.preventDefault()
     var id = $(this).parents(".post").attr("data-id");
     var postImage = $(this).parents(".post").find(".postImage");
-    var changeButton = $(this).parents().find(".changeImage");
+    var changeButton = $(this).parents("#editPostForm").find(".openChangeImage");
+    console.log(changeButton)
     var editForm = $(this).parents("#editPostForm");
     var deleteButton = $(this)
 
@@ -710,9 +718,9 @@ $("body").delegate(".editFile","change", function(){
       }).done(function(data){
         deleteButton.hide();
         changeButton.hide();
-        var fileInput = "<input type='file' name='image' class='editFile'><img id='preview' height='100'/><p class='removePreview'>X</p>";
+        var fileInput = "<input type='file' name='image' class='editFile'>";
         editForm.prepend(fileInput);
-        postImage.attr('src', '')
+        postImage.removeAttr('src')
       })
   })
 

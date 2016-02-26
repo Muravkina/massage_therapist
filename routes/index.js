@@ -202,6 +202,7 @@ router.delete('/posts/:id', function(req, res){
 router.put('/posts/:id', function(req, res){
   var form = new formidable.IncomingForm();
   form.parse(req, function(err, fields, files) {
+    console.log(fields)
     Blog.Post.findById(req.params.id, function (err, post) {
       if (err) res.send(err);
       post.title = fields.title;
