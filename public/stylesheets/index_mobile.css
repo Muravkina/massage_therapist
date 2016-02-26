@@ -700,6 +700,7 @@ and (max-width : 649px){
 #calendar .fc-center button {
   width: 45%;
   float: right;
+  margin-bottom: 2%;
 }
 
 #calendar .fc-center button:nth-child(2) {

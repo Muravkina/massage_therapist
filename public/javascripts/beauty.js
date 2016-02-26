@@ -154,7 +154,7 @@ $(document).ready(function() {
     },
     header: {
       left: 'title',
-      center: 'basicDay, month',
+      center: 'basicDay, basicWeek, month',
       right: 'today prev,next'
     },
     height: 600
@@ -169,6 +169,11 @@ $(document).ready(function() {
         },
         swipeRight: function () {
             $.sidr('close', 'sidr-main');
+        },
+        eventClick: function(event) {
+          if (event.url) {
+              return false;
+          }
         },
         //Default is 75px, set to 0 for demo so any distance triggers swipe
         threshold: 45

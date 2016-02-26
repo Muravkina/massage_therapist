@@ -658,6 +658,10 @@ input[type="reset"]{
   margin-top: 0.5em;
 }
 
+.review_row label[for="email"] {
+  display: block;
+}
+
 label[for="email"]{
   margin-right: 1em;
 }
@@ -772,6 +776,11 @@ legend {
   font-size: 1em;
   margin-bottom: 4%;
   margin-top: 2%;
+  text-indent: 1em;
+}
+
+.indented {
+  margin-left: 1em;
 }
 
 .contact.scrollable p {
@@ -1095,7 +1104,7 @@ legend {
 
 #calendar .fc-center {
   position: relative;
-  margin-left: 40%;
+  margin-left: 33%;
   display: block;
   overflow: hidden;
 }

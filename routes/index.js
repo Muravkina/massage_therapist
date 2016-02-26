@@ -36,7 +36,6 @@ var sendEmails = function(){
       emails.forEach(function(email){
         emailList.push(email.email)
       })
-      console.log("ghgj")
       var email = {
         from: 'massagebygerill@gmail.com',
         to: emailList.join(", "),
@@ -163,7 +162,6 @@ router.post('/blog', function(req, res){
                   if (err) {res.send(err)}
                   else {
                     // send notification to subscribed users
-                    console.log(sendEmails)
                     sendEmails();
                     res.send({posts: posts, post: post})
                   }
@@ -190,7 +188,6 @@ router.delete('/posts/:id', function(req, res){
       console.log("db error in DELETE /posts: " + err);
       res.render('error');
     } else {
-      console.log(req.body)
       Blog.Post.find({_id : { "$lte" : req.body.firstPostId } }).sort({"_id":-1}).limit(10).exec(function(err, posts){
         if (err) {res.send(err)}
         else {res.send({posts: posts, id: req.params.id})}
@@ -202,7 +199,6 @@ router.delete('/posts/:id', function(req, res){
 router.put('/posts/:id', function(req, res){
   var form = new formidable.IncomingForm();
   form.parse(req, function(err, fields, files) {
-    console.log(fields)
     Blog.Post.findById(req.params.id, function (err, post) {
       if (err) res.send(err);
       post.title = fields.title;
@@ -285,7 +281,6 @@ router.post('/posts/:id/comments', function(req, res){
         if (err) {
           res.send(err)
         } else {
-          console.log(newComment)
           res.send({comment: newComment, user: req.user})
         }
       })
@@ -313,7 +308,6 @@ router.get('/tags/:name', function(req, res){
       Blog.Post.count({tags: { $in: [req.params.name] }}, function(err, count){
         if(err){res.send(err)}
         else{
-          console.log(posts)
           res.send({posts:posts, count:count});
         }
       })
