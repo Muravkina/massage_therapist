@@ -489,7 +489,7 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
   text-align: center;
   font-size: 1.7em;
   letter-spacing: 0.3em;
-  margin-bottom: 5%;
+  margin-bottom: 3%;
 }
 
 .submit_documents.wrap{
@@ -662,9 +662,6 @@ input[type="reset"]{
   display: block;
 }
 
-label[for="email"]{
-  margin-right: 1em;
-}
 label[for="author"]{
   margin-right: 0.7em;
   display: block;
@@ -1175,6 +1172,12 @@ legend {
 
 .deleteReview {
   width: 23%;
+}
+
+.success_message {
+  margin: 0 auto;
+  width: 30%;
+  margin-bottom: 3%;
 }
 
 

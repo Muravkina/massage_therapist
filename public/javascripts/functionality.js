@@ -353,21 +353,21 @@ $("body").delegate(".editFile","change", function(){
 // submit request for documents
   var submitDocuments = function(event){
     event.preventDefault();
+    event.stopPropagation();
     var checkable = [$("input[name='email']"), $("textarea[name='comment']")];
     var data = {
       phone: $("#phone").val(),
       email: $(".email").val(),
       comment: $(".comment").val(),
       documents: {
-        resume: $("#resume").is(":checked"),
-        registration: $("#registration").is(":checked"),
-        insurance: $("#insurance").is(":checked"),
-        medical: $("#medical").is(":checked"),
-        certificates: $("#certificates").is(":checked"),
-        cpr: $("#cpr").is(":checked")
+        Resume: $("#resume_document").is(":checked"),
+        NYC_Registration: $("#registration").is(":checked"),
+        AMTA_Insurance: $("#insurance").is(":checked"),
+        Medical_Exams: $("#medical").is(":checked"),
+        Continue_Ed_Certificates: $("#certificates").is(":checked"),
+        CPR_Card: $("#cpr").is(":checked")
       }
     }
-
     if (fieldsAreValid(checkable)) {
       $.ajax({
         type: 'POST',
@@ -375,7 +375,9 @@ $("body").delegate(".editFile","change", function(){
         contentType: 'application/json',
         data: JSON.stringify(data)
       }).done(function(data){
-        console.log("yes")
+        var html = "<p class='success_message'>Your request was succesfully submitted</p>";
+        var header = $("#resume").find("h2");
+        header.after(html)
       })
     } else {
       errorForm();
@@ -383,10 +385,6 @@ $("body").delegate(".editFile","change", function(){
   }
 
   $(".submit_documents").on("click touchstart", submitDocuments)
-
-//submit post
-
-
 
   //open edit form
   var openEdit = function(){
@@ -432,7 +430,7 @@ $("body").delegate(".editFile","change", function(){
       tags  : post.find(".postTags"),
       image : post.find(".postImage")
     }
-
+    $("#spinster").show();
     $.ajax({
         url: '/posts/' + id,
         type: 'PUT',
@@ -455,6 +453,7 @@ $("body").delegate(".editFile","change", function(){
         post.children(".postData").show();
         $(":file").val('');
         editForm.prev(".openEdit").text("Edit");
+        $("#spinster").hide();
       })
   }
 
@@ -493,6 +492,7 @@ $("body").delegate(".editFile","change", function(){
     var fields = [$("input[name='commentTitle']"), $("textarea[name='commentBody']"), $("input[name='commentAuthorEmail']"), $("input[name='commentAuthorName']"), $("input[name='commentAuthorWebsite']")];
 
     if(fieldsAreValid(checkable)){
+      $("#spinster").show();
      $.ajax({
         url: '/posts/' + id + '/comments',
         type: 'POST',
@@ -518,6 +518,7 @@ $("body").delegate(".editFile","change", function(){
         $(".commentsCollection").prepend(comment);
         commentForm.prev(".openComment").text('Leave a comment');
         commentForm.hide();
+        $("#spinster").hide();
       })
     } else {
       errorForm();
@@ -535,13 +536,14 @@ $("body").delegate(".editFile","change", function(){
   var postId = $(this).parents(".posts").find(".post").attr("data-id")
   var commentId = $(this).parents(".comment").attr("data-id");
   var comment = $(this).parents(".comment")
-
+  $("#spinster").show();
   $.ajax({
       url: '/posts/' + postId + '/comments/' + commentId,
       type: 'DELETE',
       contentType: 'application/json'
     }).done(function(data){
       comment.empty();
+      $("#spinster").hide();
     })
   }
 
@@ -551,6 +553,7 @@ $("body").delegate(".editFile","change", function(){
   var searchTag = function(){
     var tag = $(this).text();
     $(".tagPagination").data('searchTag', tag)
+    $("#spinster").show();
     $.ajax({
       url: '/tags/' + tag,
       type: 'GET',
@@ -558,6 +561,7 @@ $("body").delegate(".editFile","change", function(){
     }).done(function(data){
       newPost(data.posts, "searchByTags", data.count);
       $('.all_posts').show();
+      $("#spinster").hide();
     });
   }
 
@@ -569,14 +573,17 @@ $("body").delegate(".editFile","change", function(){
     if(event.which == 13){
       var searchArray = {params: $(this).val().trim().toLowerCase()};
       var word = $(this).val().replace(/[^a-zA-Z ]/g, '');
+      $("#spinster").show();
       $.ajax({
         url: '/search',
         type: 'GET',
         data: searchArray,
         contentType: 'application/json'
       }).done(function(data){
+        $("#spinster").hide();
         newPost(data.posts, word, data.count);
         $('.all_posts').show();
+        $("input[name='searchPosts']").val('');
       })
     }
   })
@@ -586,12 +593,14 @@ $("body").delegate(".editFile","change", function(){
   //older posts
   $(".pages").on("click touchstart", ".olderPosts", function(){
     var id = {id: $(".posts div:nth-child(10)").attr("data-id")};
+    $("#spinster").show();
     $.ajax({
       url: '/olderPosts',
       type: 'GET',
       data: id,
       contentType: 'application/json'
     }).done(function(posts){
+      $("#spinster").hide();
       newPost(posts);
       $(".newerPosts").show();
       $(".all_posts").show();
@@ -605,12 +614,14 @@ $("body").delegate(".editFile","change", function(){
   //newer posts
   $(".pages").on("click touchstart", ".newerPosts", function(){
     var id = {id: $(".posts div:nth-child(1)").attr("data-id")};
+    $("#spinster").show();
     $.ajax({
       url: '/newerPosts',
       type: 'GET',
       data: id,
       contentType: 'application/json'
     }).done(function(posts){
+      $("#spinster").hide();
       newPost(posts);
       postPages.currentPage -=1;
       if (postPages.currentPage === 1) {
@@ -627,12 +638,14 @@ $("body").delegate(".editFile","change", function(){
    //older reviews
   $(".pages").on("click touchstart", ".olderReviews", function(){
     var id = {id: $(".reviews_collection div:nth-child(10)").attr("data-id")};
+    $("#spinster").show();
     $.ajax({
       url: '/olderReviews',
       type: 'GET',
       data: id,
       contentType: 'application/json'
     }).done(function(reviews){
+      $("#spinster").hide();
       newReview(reviews);
       reviewsPages.currentPage += 1;
       if (reviewsPages.totalPages === reviewsPages.currentPage){
@@ -645,12 +658,14 @@ $("body").delegate(".editFile","change", function(){
    //newer reviews
   $(".pages").on("click touchstart", ".newerReviews", function(){
     var id = {id: $(".reviews_collection div:nth-child(1)").attr("data-id")};
+    $("#spinster").show();
     $.ajax({
       url: '/newerReviews',
       type: 'GET',
       data: id,
       contentType: 'application/json'
     }).done(function(reviews){
+      $("#spinster").hide();
       newReview(reviews);
       reviewsPages.currentPage -=1;
 
@@ -668,12 +683,14 @@ $("body").delegate(".editFile","change", function(){
     event.preventDefault();
     var review = $(this).parent();
     var id = $(this).parent().attr("data-id")
+    $("#spinster").show();
     $.ajax({
         url: '/reviews/' + id,
         type: 'DELETE',
         contentType: 'application/json'
       }).done(function(data){
         review.empty();
+        $("#spinster").hide();
       })
   }
   $(".reviews_collection").on("click touchstart", ".deleteReview", deleteReview);
@@ -683,6 +700,7 @@ $("body").delegate(".editFile","change", function(){
   var backToPosts = function(){
     $('.olderSearchPosts, .newerSearchPosts, .olderTagPosts, .newerTagPosts').hide();
     $('.olderPosts').show();
+    $("#spinster").show();
     $.ajax({
         url: '/blog',
         type: 'GET',
@@ -696,6 +714,7 @@ $("body").delegate(".editFile","change", function(){
         postPages.currentPage = 1;
         $(".all_posts").hide();
         $(".newerReviews").hide();
+        $("#spinster").hide();
       })
   }
 
@@ -710,12 +729,13 @@ $("body").delegate(".editFile","change", function(){
     console.log(changeButton)
     var editForm = $(this).parents("#editPostForm");
     var deleteButton = $(this)
-
+    $("#spinster").show();
     $.ajax({
         url: '/deleteImage/' + id,
         type: 'DELETE',
         contentType: 'application/json'
       }).done(function(data){
+        $("#spinster").hide();
         deleteButton.hide();
         changeButton.hide();
         var fileInput = "<input type='file' name='image' class='editFile'>";
@@ -776,13 +796,15 @@ var changeImage = function(event){
     var data = {
       email : $(".subscribeEmail").val()
     }
+    $("#spinster").show();
     $.ajax({
       url: '/addEmail',
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(data)
     }).done(function(email){
-      console.log(email)
+      $("#spinster").hide();
+      $(".subscribeEmail").val('');
     });
   }
 
@@ -797,6 +819,7 @@ var changeImage = function(event){
       searchWords: $("input[name='searchPosts']").val().trim().toLowerCase(),
       word : $("input[name='searchPosts']").val().replace(/[^a-zA-Z ]/g, '')
     };
+    $("#spinster").show();
      $.ajax({
       url: '/olderSearchPosts',
       type: 'GET',
@@ -810,6 +833,7 @@ var changeImage = function(event){
       if (searchPostsPages.totalPages === searchPostsPages.currentPage){
           $(".olderSearchPosts").hide();
       }
+      $("#spinster").hide();
     })
   }
 
@@ -819,12 +843,14 @@ var changeImage = function(event){
       searchWords: $("input[name='searchPosts']").val().trim().toLowerCase(),
       word : $("input[name='searchPosts']").val().replace(/[^a-zA-Z ]/g, '')
     };
+    $("#spinster").show();
      $.ajax({
       url: '/newerSearchPosts',
       type: 'GET',
       contentType: 'application/json',
       data: data
     }).done(function(posts){
+      $("#spinster").hide();
       newPost(posts, data.word);
       searchPostsPages.currentPage -=1;
       if (searchPostsPages.currentPage === 1) {
@@ -847,12 +873,14 @@ var changeImage = function(event){
       id: $(".posts div:nth-child(10)").attr("data-id"),
       searchTag: $(".tagPagination").data('searchTag')
     };
+    $("#spinster").show();
      $.ajax({
       url: '/olderTagPosts',
       type: 'GET',
       contentType: 'application/json',
       data: data
     }).done(function(posts){
+      $("#spinster").hide();
       newPost(posts, "searchByTags");
       $(".newerTagPosts").show();
       $(".all_posts").show();
@@ -868,13 +896,14 @@ var changeImage = function(event){
       id: $(".posts div:nth-child(1)").attr("data-id"),
       searchTag: $(".tagPagination").data('searchTag')
     };
+    $("#spinster").show();
      $.ajax({
       url: '/newerTagPosts',
       type: 'GET',
       contentType: 'application/json',
       data: data
     }).done(function(posts){
-      console.log(posts)
+      $("#spinster").hide();
       newPost(posts, "serachByTags");
       tagPostsPages.currentPage -=1;
       if (tagPostsPages.currentPage === 1) {

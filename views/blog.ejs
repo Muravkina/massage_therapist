@@ -5,6 +5,9 @@
     <link rel='stylesheet' href='/stylesheets/jquery.sidr.dark.css'/>
     <link rel='stylesheet' href='/stylesheets/blog.css' />
     <link rel='stylesheet' href='/stylesheets/mobile_blog.css' />
+    <link href='http://fonts.googleapis.com/css?family=Raleway:300,400' rel='stylesheet' type='text/css'/>
+<link href='http://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'/>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'/>
     <meta property="og:title"/>
     <meta property="og:description"/>
     <meta property="og:image"/>
@@ -99,7 +102,7 @@
                         <% if (post.tags[0] !== "") { %>
                           value="<%= post.tags.join(', ') %>"
                         <% } else { %>
-                          value="Tags..." style="color: #D1D1D1"
+                          value="" style="color: #D1D1D1"
                         <% } %>
                         >
                         <div class="edit_post_wrap">

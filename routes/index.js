@@ -13,7 +13,6 @@ var sgTransport = require('nodemailer-sendgrid-transport');
 //emailer
 var options = {
     auth: {
-        api_user: process.env.SG_USERNAME,
         api_key: process.env.SG_PASSWORD
     }
 };
@@ -39,7 +38,7 @@ var sendEmails = function(){
       var email = {
         from: 'massagebygerill@gmail.com',
         to: emailList.join(", "),
-        subject: 'Hello',
+        subject: 'New Post by Ilia Gerassimov',
         text: 'Hello world',
         html: '<b>Hello world</b>'
       };
@@ -85,9 +84,10 @@ router.get('/login', function(req, res, next){
   res.render('login', {user: req.user})
 })
 
-router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/blog');
-});
+router.post('/login', passport.authenticate('local',{ successRedirect: '/blog',
+                                   failureRedirect: '/login'}
+));
+
 
 router.get('/logout', function(req, res) {
     req.logout();
@@ -479,7 +479,29 @@ router.get('/newerTagPosts', function(req, res, next){
 })
 
 router.post('/documentRequest', function(req, res, next){
-  console.log(req.body)
+  var documents = [];
+  for(prop in req.body.documents) {
+    console.log(req.body.documents[prop])
+    if (req.body.documents[prop] == true) {
+      documents.push(prop)
+    }
+  }
+  var message = "<b>Hello from your favourite wife</b><p>A new request for documents was submitted</p><h2>Request</h2><p><b>Phone: </b>" + req.body.phone + "<br><b>Email: </b>" + req.body.email + "<br><b>Comment: </b>" + req.body.comment + "<br><b>Documents: </b>" + documents.join(', ') + "<br><br>Don't forget to answer!<br> Best, your email provider - wife.com"
+  var email = {
+    from: 'massagebygerill@gmail.com',
+    to: 'massagebygerill@gmail.com',
+    subject: 'Request for documents',
+    html: message
+  };
+  mailer.sendMail(email, function(err, info){
+    if (err ){
+      console.log(err);
+    }
+    else {
+      console.log('Message sent: ' + info.response);
+      res.send("Success")
+    }
+  })
 })
 
 module.exports = router;

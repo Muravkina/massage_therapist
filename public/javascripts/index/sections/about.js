@@ -62,6 +62,7 @@ Section.prototype.hideAllImages = function(selector){
   this.iterateThoughImages(this.hideImage)
   this.hideWord();
   this.wait(selector, this.displayContent.bind(this))
+  $(".success_message").hide();
 }
 
 Section.prototype.showAllImages = function(selector){
@@ -123,7 +124,6 @@ MobileSection.prototype.hideMobileContent = function(){
 
 
 $(".section").on("mouseover", function(){
-  console.log($(window).width())
   if ($(window).width() >= 736 ) {
     var section = new Section($(this));
     section.displayTitle();

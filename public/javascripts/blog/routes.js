@@ -13,6 +13,7 @@ var submitPost = function(event){
   var blogForm = new BlogForm();
 
   if (fieldsAreValid(checkable)) {
+    $("#spinster").show();
     $.ajax({
       type: 'POST',
       url: "/blog",
@@ -20,6 +21,7 @@ var submitPost = function(event){
       processData: false,
       data: formData
     }).done(function(data){
+      $("#spinster").hide();
       //remove error fields
       removeRed(fields);
       //hide form for a new post
