@@ -312,7 +312,7 @@ $("body").delegate(".editFile","change", function(){
 });
 
 // submit review
-    $(".submit").on("click touchstart", function(event){
+    $(".submit_review").on("click touchstart", function(event){
       event.preventDefault();
 
       var data = {
@@ -354,6 +354,7 @@ $("body").delegate(".editFile","change", function(){
   var submitDocuments = function(event){
     event.preventDefault();
     event.stopPropagation();
+    var form = $("#document_request_form");
     var checkable = [$("input[name='email']"), $("textarea[name='comment']")];
     var data = {
       phone: $("#phone").val(),
@@ -369,15 +370,21 @@ $("body").delegate(".editFile","change", function(){
       }
     }
     if (fieldsAreValid(checkable)) {
+      $("#spinster").show();
       $.ajax({
         type: 'POST',
         url:'/documentRequest',
         contentType: 'application/json',
         data: JSON.stringify(data)
       }).done(function(data){
+        $("#spinster").hide();
         var html = "<p class='success_message'>Your request was succesfully submitted</p>";
         var header = $("#resume").find("h2");
-        header.after(html)
+        header.after(html);
+        form.find('input, textarea').val('');
+        $("#resume").find('input[type=checkbox]').each(function(){
+          this.checked = false
+        })
       })
     } else {
       errorForm();
@@ -926,11 +933,42 @@ var changeImage = function(event){
       blogForm.hide();
       $(".openPostForm").text("New Post")
     }
+  }
 
+  var submitEmail = function(event){
+    event.preventDefault();
+    event.stopPropagation();
+
+    console.log("b")
+
+    var data = {
+      name: $("#message_name").val(),
+      email: $("#message_email").val(),
+      message: $("#message_text").val()
+    }
+
+    $("#spinster").show();
+    $.ajax({
+      type: 'POST',
+      url:'/submitEmail',
+      contentType: 'application/json',
+      data: JSON.stringify(data)
+    }).done(function(data){
+      $("#spinster").hide();
+      $("#message_name").val('');
+      $("#message_email").val('');
+      $("#message_text").val('');
+      var html = "<p class='success_message'>Your message was succesfully submitted</p>";
+      var header = $("p.contact_info");
+      header.after(html)
+    })
   }
 
 
 
+
+
+  $("#submitEmail").on("click", submitEmail)
   $(".openPostForm").on("click touchstart", openPostForm)
   $(".pages").on("click touchstart", ".olderTagPosts", getOlderTagPosts);
   $(".pages").on("click touchstart", ".newerTagPosts", getNewerTagPosts)

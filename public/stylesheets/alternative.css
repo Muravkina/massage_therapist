@@ -1174,10 +1174,17 @@ legend {
   width: 23%;
 }
 
-.success_message {
+.scrollable p.success_message {
   margin: 0 auto;
   width: 30%;
   margin-bottom: 3%;
 }
 
+#spinster {
+  display:none;
+  position: fixed;
+  z-index: 999999;
+  left: 45%;
+  top: 40%;
+}
 

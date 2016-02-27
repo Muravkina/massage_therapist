@@ -481,7 +481,6 @@ router.get('/newerTagPosts', function(req, res, next){
 router.post('/documentRequest', function(req, res, next){
   var documents = [];
   for(prop in req.body.documents) {
-    console.log(req.body.documents[prop])
     if (req.body.documents[prop] == true) {
       documents.push(prop)
     }
@@ -491,6 +490,25 @@ router.post('/documentRequest', function(req, res, next){
     from: 'massagebygerill@gmail.com',
     to: 'massagebygerill@gmail.com',
     subject: 'Request for documents',
+    html: message
+  };
+  mailer.sendMail(email, function(err, info){
+    if (err ){
+      console.log(err);
+    }
+    else {
+      console.log('Message sent: ' + info.response);
+      res.send("Success")
+    }
+  })
+})
+
+router.post('/submitEmail', function(req, res, next){
+  var message = "<b>Hello from your favourite wife</b><p>You received a new email from your website</p><h2>Email</h2><p><b>Name: </b>" + req.body.name + "<br><b>Email: </b>" + req.body.email + "<br><b>Message: </b>" + req.body.message + "<br><br>Don't forget to answer!<br> Best, your email provider - wife.com"
+  var email = {
+    from: 'massagebygerill@gmail.com',
+    to: 'massagebygerill@gmail.com',
+    subject: 'New Message from your website',
     html: message
   };
   mailer.sendMail(email, function(err, info){
