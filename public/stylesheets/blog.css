@@ -24,6 +24,10 @@ a:hover, .removePostPreview:hover, .pages p:hover {
   cursor: pointer;
 }
 
+.formErrors p {
+  color: red;
+}
+
 /*NAVIGATION*/
 
 .navigation {
@@ -694,7 +698,7 @@ p.openEdit, p.deletePost, p.deleteComment {
   text-decoration: none;
 }
 
-#red {
+.red, input.red {
   border-color: red;
 }
 

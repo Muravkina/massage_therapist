@@ -148,6 +148,8 @@ $(".section").on("click touchstart", function(){
 });
 
 $(".close_icon_wrap").on("click touchstart", function(e){
+  var fields = [$(".email"), $(".comment")]
+  removeRed(fields)
   e.stopImmediatePropagation();
   e.preventDefault();
   var infoBoxId = $(this).parents(".container").attr('id');

@@ -755,7 +755,7 @@ legend {
   transform: translate3d(0px, 50px, 0px);
 }
 
-#red {
+.red, .email.red, .contact.scrollable input[type='email'].red {
   border-color: red;
 }
 

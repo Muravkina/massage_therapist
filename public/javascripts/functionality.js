@@ -85,8 +85,9 @@
     var fieldsAreValid = function(checkable) {
       var fieldsAreValid = true;
       for (var i = 0; i < checkable.length; i++){
+        console.log(checkable[i])
         if(!isValid(checkable[i])){
-          checkable[i].attr("id", "red");
+          checkable[i].addClass('red');
           fieldsAreValid = false;
         }
       }
@@ -94,9 +95,10 @@
     }
 
     var removeRed = function(checkable) {
-      $(".formErrors > p").remove();
+      var errorsForm = checkable[0].parents(".row").find(".formErrors");
+      errorsForm.find("p").remove();
       for(var i = 0; i < checkable.length; i++){
-        checkable[i].attr("id", "").val('');
+        checkable[i].removeClass('red').val('');
       }
     }
 
@@ -356,7 +358,7 @@ $("body").delegate(".editFile","change", function(){
     event.preventDefault();
     event.stopPropagation();
     var form = $("#document_request_form");
-    var checkable = [$("input[name='email']"), $("textarea[name='comment']")];
+    var checkable = [form.find("input[name='email']"), form.find("textarea[name='comment']")];
     var data = {
       phone: $("#phone").val(),
       email: $(".email").val(),
@@ -472,11 +474,13 @@ $("body").delegate(".editFile","change", function(){
 // open comment form
   var openComment = function(){
     var commentForm = $(this).next();
+    var fields = [$("input[name='commentAuthorName']"), $("textarea[name='commentBody']"), $("input[name='commentAuthorEmail']")];
     if (!commentForm.is(":visible")){
       commentForm.show();
       $(this).text("Close");
     } else {
       commentForm.hide();
+      removeRed(fields)
       $(this).text("Leave a comment");
     }
    }
@@ -947,7 +951,7 @@ var changeImage = function(event){
     }
 
     var checkable = [$("#message_name"), $("#message_email"), $("#message_text")];
-
+    console.log(checkable)
     if (fieldsAreValid(checkable)) {
 
     $("#spinster").show();
