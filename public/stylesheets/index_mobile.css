@@ -664,49 +664,10 @@ and (max-width : 649px){
 #calendar h2 {
   font-size: 1.5em;
 }
-
-#calendar .fc-left {
-  width: 100%;
-  margin-bottom: 2%;
-}
-
-#calendar .fc-button-group {
-  margin-left: 0%;
-}
-
 #calendar .fc-right {
-  float: none;
-  width: 41%;
-  position: static;
-  display: block;
-  float: left;
-  overflow: auto;
+  margin-bottom: 4%;
 }
 
-#calendar .fc-center {
-  width: 59%;
-  margin-left: 0;
-  float: left;
-  overflow: auto;
-  position: static;
-  float: right;
-}
-
-#calendar button {
-  line-height: 0;
-  font-size: 0.8em;
-}
-
-#calendar .fc-center button {
-  width: 45%;
-  float: right;
-  margin-bottom: 2%;
-}
-
-#calendar .fc-center button:nth-child(2) {
-  margin-left: 0;
-  margin-right: 2%;
-}
 
 }
 

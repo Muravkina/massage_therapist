@@ -25,17 +25,21 @@
 a {
   text-decoration: none;
 }
+html {
+  background-color: black;
+}
 
 body {
   max-width: 1600px;
   min-width: 320px;
   margin: 0 auto;
+  padding-top: 5%;
+  background-color: white;
 }
 /*MAIN HEADING*/
 
 .landing_image {
   margin-left: 15%;
-  margin-top: 5%;
   margin-bottom: 6.7%;
   overflow: auto;
   width: 80%;
@@ -1097,45 +1101,6 @@ legend {
 
 #calendar button {
   border-radius: 0;
-}
-
-#calendar .fc-center {
-  position: relative;
-  margin-left: 33%;
-  display: block;
-  overflow: hidden;
-}
-
-#calendar .fc-center button {
-  width: 30%;
-  background-color: black;
-  color: white;
-  font-family: 'Abduco', sans-serif;
-  font-size: 1.1em;
-}
-
-#calendar .fc-center .fc-state-default {
-  background-image: -webkit-linear-gradient(top, #5b5c5c, #000000);
-  background-image: -moz-linear-gradient(top, #5b5c5c, #000000);
-  background-image: -ms-linear-gradient(top, #5b5c5c, #000000);
-  background-image: -o-linear-gradient(top, #5b5c5c, #000000);
-  background-image: linear-gradient(to bottom, #5b5c5c, #000000);
-}
-
-#calendar .fc-center .fc-state-active {
-  background-image: -webkit-linear-gradient(top, #000000, #616161);
-  background-image: -moz-linear-gradient(top, #000000, #616161);
-  background-image: -ms-linear-gradient(top, #000000, #616161);
-  background-image: -o-linear-gradient(top, #000000, #616161);
-  background-image: linear-gradient(to bottom, #000000, #616161);
-}
-
-#calendar .fc-center button:nth-child(2) {
-  margin-left: 2%
-}
-
-#calendar .fc-head {
-  background-color: white;
 }
 
 .schedule_instructions {
