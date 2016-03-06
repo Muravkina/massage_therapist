@@ -262,10 +262,11 @@ $(document).ready(function() {
       });
     };
 
-    var errorForm = function(){
-      $(".formErrors > p").remove();
+    var errorForm = function(selector){
+      errorsForm = selector.parents(".row").find(".formErrors");
+      errorsForm.find("p").remove();
       var error = "<p>Don't forget to fill out the fields marked in red</p>"
-      $(".formErrors").append(error)
+      errorsForm.append(error)
     }
 
     var postPages = {
@@ -345,7 +346,7 @@ $("body").delegate(".editFile","change", function(){
             $(".reviews_collection").prepend(review);
           })
       } else {
-        errorForm();
+        errorForm($(this));
       }
   })
 
@@ -387,7 +388,7 @@ $("body").delegate(".editFile","change", function(){
         })
       })
     } else {
-      errorForm();
+      errorForm($(this));
     }
   }
 
@@ -528,7 +529,7 @@ $("body").delegate(".editFile","change", function(){
         $("#spinster").hide();
       })
     } else {
-      errorForm();
+      errorForm($(this));
     }
   }
 
@@ -939,13 +940,15 @@ var changeImage = function(event){
     event.preventDefault();
     event.stopPropagation();
 
-    console.log("b")
-
     var data = {
       name: $("#message_name").val(),
       email: $("#message_email").val(),
       message: $("#message_text").val()
     }
+
+    var checkable = [$("#message_name"), $("#message_email"), $("#message_text")];
+
+    if (fieldsAreValid(checkable)) {
 
     $("#spinster").show();
     $.ajax({
@@ -958,10 +961,15 @@ var changeImage = function(event){
       $("#message_name").val('');
       $("#message_email").val('');
       $("#message_text").val('');
+      removeRed(checkable)
       var html = "<p class='success_message'>Your message was succesfully submitted</p>";
       var header = $("p.contact_info");
       header.after(html)
     })
+
+  } else {
+    errorForm($(this));
+  }
   }
 
 

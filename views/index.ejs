@@ -613,9 +613,10 @@
         </div><!--five columns-->
         <div class="five columns">
           <form method='POST' action='/message' id="message">
+          <div class="formErrors"></div>
             <input type="text" id="message_name" name="message_name" placeholder="*Your name">
             <input type="email" id="message_email" name="message_email" placeholder="*Your email">
-            <textarea name="message_text" id="message_text" name="message_text">*Your message</textarea>
+            <textarea name="message_text" id="message_text" name="message_text"></textarea>
             <button class="submit" id="submitEmail">Submit</button>
             <input type="reset" value="Clear">
           </form>

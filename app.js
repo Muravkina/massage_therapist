@@ -7,6 +7,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var compression = require('compression');
+var oneDay = 86400000;
 
 require('dotenv').load();
 
@@ -41,7 +43,9 @@ app.use(require('express-session')({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(compression());
+app.use('/public', express.static(__dirname+'/public', {maxAge: oneDay}))
+app.use(express.static('public'));
 
 
 app.use('/', routes);

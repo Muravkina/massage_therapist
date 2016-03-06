@@ -1145,3 +1145,25 @@ and (max-width : 649px) {
     font-size: 0.7em;
   }
 }
+
+@media only screen and (min-width: 1400px)  {
+  .massage_therapist_image {
+    width: 48%;
+  }
+  .main_heading {
+    width: 45%;
+  }
+  .main_heading h1 {
+    font-size: 5.5em;
+  }
+  .main_heading p {
+    font-size: 2.4em;
+  }
+  .landing_image {
+    margin-bottom: 15%;
+    margin-top: 8%;
+  }
+  .about_pictures {
+    margin: 15% auto;
+  }
+}

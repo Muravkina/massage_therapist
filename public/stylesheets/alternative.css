@@ -25,10 +25,6 @@
 a {
   text-decoration: none;
 }
-html {
-  background-color: black;
-}
-
 body {
   max-width: 1600px;
   min-width: 320px;
@@ -223,6 +219,9 @@ body {
 
 
 /*ABOUT ME*/
+.about.scrollable, .reviews.scrollable {
+  padding-bottom: 5%;
+}
 
 .about .section {
   position:relative;
@@ -784,7 +783,7 @@ legend {
   margin-left: 1em;
 }
 
-.contact.scrollable p {
+.contact.scrollable .three.columns p {
   font-family: 'Modeka', sans-serif;
   font-size: 1.5em;
   margin-left: 15%;
