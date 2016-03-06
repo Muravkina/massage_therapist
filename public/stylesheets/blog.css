@@ -1,4 +1,7 @@
-
+body {
+  margin: 0 auto;
+  max-width: 2100px;
+}
 
 .blog_centerpiece {
   text-align: center;
@@ -210,6 +213,10 @@ a:hover, .removePostPreview:hover, .pages p:hover {
   float:left;
   width: 70%;
   margin-bottom: 1rem;
+}
+
+.postBody {
+  margin-top: 3%;
 }
 
 .postTags span {

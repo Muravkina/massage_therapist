@@ -779,6 +779,14 @@ legend {
   text-indent: 1em;
 }
 
+.contact.scrollable a {
+  color: black;
+}
+
+.contact.scrollable a:hover {
+  text-decoration: underline;
+}
+
 .indented {
   margin-left: 1em;
 }

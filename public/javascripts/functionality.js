@@ -91,6 +91,7 @@
           fieldsAreValid = false;
         }
       }
+      console.log(fieldsAreValid)
       return fieldsAreValid;
     }
 
@@ -330,13 +331,16 @@ $("body").delegate(".editFile","change", function(){
       var checkable = [$(".reviewAuthor"), $(".reviewBody"), $("input[name=rating]:checked")];
       var fields = [$(".reviewAuthor"), $(".reviewBody"), $("input[name=rating]:checked"), $(".reviewEmail")];
 
+
       if (fieldsAreValid(checkable)) {
+        $("#spinster").show();
         $.ajax({
             type: 'POST',
             url: "/",
             contentType: 'application/json',
             data: JSON.stringify(data)
           }).done(function(review){
+            $("#spinster").hide();
             removeRed(fields);
             $('input[name=rating]').attr('checked', false);
             var review = "<div class='review six columns'><div class='star-ratings-css' title= '." + review.stars + "'></div><p class='review_body'>" + review.body + "</p><p class='review_author'>" + review.author + "</p></div>"
@@ -346,6 +350,13 @@ $("body").delegate(".editFile","change", function(){
               data.lastReview.empty()
             }
             $(".reviews_collection").prepend(review);
+            $(".submit_review").off("click touchstart").on("click touchstart", function(e){
+              e.preventDefault()
+              var errorsForm = $(this).parents('.row').find(".formErrors");
+              var text = "<p>Oops, seems like you've already submitted your review</p>"
+              errorsForm.find("p").remove();
+              errorsForm.append(text)
+            })
           })
       } else {
         errorForm($(this));
@@ -374,6 +385,7 @@ $("body").delegate(".editFile","change", function(){
     }
     if (fieldsAreValid(checkable)) {
       $("#spinster").show();
+      removeRed(checkable);
       $.ajax({
         type: 'POST',
         url:'/documentRequest',
@@ -932,7 +944,10 @@ var changeImage = function(event){
     blogForm = $("#blogForm");
     if (!blogForm.is(":visible")){
       blogForm.show();
-      $(".openPostForm").text("Close")
+      $(".openPostForm").text("Close");
+      console.log($(this))
+      $(this).siblings("#blogForm").find("#preview").attr("height", "0").attr("width", "0");
+      $(".removePostPreview").remove();
     } else {
       removeRed(fields);
       blogForm.hide();
@@ -943,6 +958,7 @@ var changeImage = function(event){
   var submitEmail = function(event){
     event.preventDefault();
     event.stopPropagation();
+    $(".success_message").remove();
 
     var data = {
       name: $("#message_name").val(),
@@ -951,24 +967,20 @@ var changeImage = function(event){
     }
 
     var checkable = [$("#message_name"), $("#message_email"), $("#message_text")];
-    console.log(checkable)
     if (fieldsAreValid(checkable)) {
-
-    $("#spinster").show();
-    $.ajax({
-      type: 'POST',
-      url:'/submitEmail',
-      contentType: 'application/json',
-      data: JSON.stringify(data)
-    }).done(function(data){
-      $("#spinster").hide();
-      $("#message_name").val('');
-      $("#message_email").val('');
-      $("#message_text").val('');
-      removeRed(checkable)
-      var html = "<p class='success_message'>Your message was succesfully submitted</p>";
-      var header = $("p.contact_info");
-      header.after(html)
+      removeRed(checkable);
+      $("#spinster").show();
+      $.ajax({
+        type: 'POST',
+        url:'/submitEmail',
+        contentType: 'application/json',
+        data: JSON.stringify(data)
+      }).done(function(data){
+        $("#spinster").hide();
+        removeRed(checkable)
+        var html = "<p class='success_message'>Your message was succesfully submitted</p>";
+        var header = $("p.contact_info");
+        header.after(html)
     })
 
   } else {
