@@ -39,7 +39,6 @@ var sendEmails = function(){
         from: 'massagebygerill@gmail.com',
         to: emailList.join(", "),
         subject: 'New Post by Ilia Gerassimov',
-        text: 'Hello world',
         html: '<b>Hello world</b>'
       };
       mailer.sendMail(email, function(err, info){

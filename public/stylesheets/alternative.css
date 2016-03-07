@@ -755,6 +755,8 @@ legend {
   display: none;
   margin-left: 35%;
   font-family: 'SensoryOverload', sans-serif;
+  float: left;
+  width: 10%;
 }
 
 .olderReviews {
@@ -858,7 +860,8 @@ legend {
 }
 
 .social_media.wrap img:hover {
-  transform: scale(1.1)
+  transform: scale(1.1);
+  -webkit-transform: scale(1.1);
 }
 
 .contact h2 {
@@ -1076,6 +1079,10 @@ legend {
   margin-bottom: 4%;
 }
 
+.container.table {
+  margin-left: 4%;
+}
+
 .rates.scrollable .four.columns p {
   margin-bottom: 0.25%;
 }
@@ -1120,14 +1127,6 @@ legend {
   top: 5%;
 }
 
-.discount_wrap .sales {
-  position: absolute;
-  width: 15%;
-  bottom: 9%;
-  left: 5%;
-  -webkit-transform: rotate(40deg);
-  transform: rotate(225deg);
-}
 
 .sticky.header {
   padding-left: 0;
@@ -1197,49 +1196,26 @@ legend {
 
 #spinster {
   display:none;
-  position: fixed;
   z-index: 999999;
-  left: 45%;
-  top: 40%;
   width: 10%;
+  position: relative;
 }
 
-@-webkit-keyframes spinster /* Safari and Chrome */ {
-  from {
-    -ms-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -ms-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+.submit_review #spinster {
+  position: relative;
+  width: 20%;
+  top: 6px;
+  right: 20px;
 }
-@keyframes spinster {
-  from {
-    -ms-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -ms-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+
+.submit_documents #spinster {
+  top: 5px;
 }
-#spinster {
-  -webkit-animation: spinster 1.5s linear infinite;
-  -moz-animation: spinster 1.5s linear infinite;
-  -ms-animation: spinster 1.5s linear infinite;
-  -o-animation: spinster 1.5s linear infinite;
-  animation: spinster 1.5s linear infinite;
+
+.pages #spinster {
+  position: fixed;
+  width: 2%;
+  left: 47%;
+  bottom: 7%;
+}
 

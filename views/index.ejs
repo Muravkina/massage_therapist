@@ -14,7 +14,7 @@
   </head>
 
   <body>
-  <img src="images/spinster.png" id="spinster">
+  <!-- <img src="images/spinster.png" id="spinster"> -->
     <div class="main">
       <div class="main_landing">
         <div class="landing_image">
@@ -330,7 +330,10 @@
           <label>Continue education certificates</label><br>
         </div><!--five columns-->
         <div class="submit_documents wrap">
-          <button class="submit_documents">Submit request</button>
+          <button class="submit_documents">
+            <img src="/gifs/spinster.gif" id="spinster">
+            <span>Submit request</span>
+          </button>
         </div>
       </div><!--row-->
     </div><!--container-->
@@ -533,9 +536,6 @@
     </div><!--container-->
     <div class="discount_wrap">
       <h3>Discounts</h3>
-      <div class="sales wrap">
-        <img src="images/sale.png" alt="scissors cutting a dollar bill">
-      </div><!--sakes wrap-->
       <h5>Ask about seasonal discounts</h5>
       <div class="container discounts">
         <div class="row">
@@ -590,7 +590,7 @@
               </div>
             </fieldset>
             <div class="review_button">
-              <button class="submit_review">Submit</button>
+              <button class="submit_review"><img src="/gifs/spinster.gif" id="spinster"><span>Submit</span></button>
               <input type="reset" value="Clear">
             </div><!-- review_buttons -->
           </form>
@@ -605,13 +605,17 @@
           <p class="review_body"><%= review.body %></p>
           <p class="review_author"><%= review.author %></p>
           <% if(user) { %>
-            <button class="deleteReview">Delete</button>
+            <button class="deleteReview">
+              <img src="/gifs/spinster.gif" id="spinster">
+              <span>Delete</span>
+            </button>
           <% } %>
         </div><!-- review -->
       <% }) %>
       </div><!-- reviews_collection row -->
       <div class="pages">
         <p class="newerReviews">Newer reviews</p>
+        <img src="/gifs/load.gif" id="spinster">
         <% if (reviews.length === 10) { %>
           <p class="olderReviews">Older reviews</p>
         <% } %>
@@ -649,7 +653,10 @@
             <input type="text" id="message_name" name="message_name" placeholder="*Your name">
             <input type="email" id="message_email" name="message_email" placeholder="*Your email">
             <textarea name="message_text" id="message_text" name="message_text"></textarea>
-            <button class="submit" id="submitEmail">Submit</button>
+            <button class="submit" id="submitEmail">
+              <img src="/gifs/spinster.gif" id="spinster">
+              <span>Submit</span>
+            </button>
             <input type="reset" value="Clear">
           </form>
         </div><!--ficecolumns-->

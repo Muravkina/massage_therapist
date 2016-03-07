@@ -333,14 +333,16 @@ $("body").delegate(".editFile","change", function(){
 
 
       if (fieldsAreValid(checkable)) {
-        $("#spinster").show();
+        $(".submit_review > #spinster").show();
+        $(".submit_review > span").text("Submitting")
         $.ajax({
             type: 'POST',
             url: "/",
             contentType: 'application/json',
             data: JSON.stringify(data)
           }).done(function(review){
-            $("#spinster").hide();
+            $(".submit_review").text("Done")
+            $(".submit_review > #spinster").hide();
             removeRed(fields);
             $('input[name=rating]').attr('checked', false);
             var review = "<div class='review six columns'><div class='star-ratings-css' title= '." + review.stars + "'></div><p class='review_body'>" + review.body + "</p><p class='review_author'>" + review.author + "</p></div>"
@@ -384,7 +386,8 @@ $("body").delegate(".editFile","change", function(){
       }
     }
     if (fieldsAreValid(checkable)) {
-      $("#spinster").show();
+      $(".submit_documents> #spinster").show();
+      $(".submit_documents > span").text("Submitting")
       removeRed(checkable);
       $.ajax({
         type: 'POST',
@@ -392,7 +395,8 @@ $("body").delegate(".editFile","change", function(){
         contentType: 'application/json',
         data: JSON.stringify(data)
       }).done(function(data){
-        $("#spinster").hide();
+        $(".submit_documents> #spinster").hide();
+        $(".submit_documents > span").text("Submit")
         var html = "<p class='success_message'>Your request was succesfully submitted</p>";
         var header = $("#resume").find("h2");
         header.after(html);
@@ -662,14 +666,14 @@ $("body").delegate(".editFile","change", function(){
    //older reviews
   $(".pages").on("click touchstart", ".olderReviews", function(){
     var id = {id: $(".reviews_collection div:nth-child(10)").attr("data-id")};
-    $("#spinster").show();
+    $(".pages > #spinster").show();
     $.ajax({
       url: '/olderReviews',
       type: 'GET',
       data: id,
       contentType: 'application/json'
     }).done(function(reviews){
-      $("#spinster").hide();
+      $(".pages > #spinster").hide();
       newReview(reviews);
       reviewsPages.currentPage += 1;
       if (reviewsPages.totalPages === reviewsPages.currentPage){
@@ -682,14 +686,14 @@ $("body").delegate(".editFile","change", function(){
    //newer reviews
   $(".pages").on("click touchstart", ".newerReviews", function(){
     var id = {id: $(".reviews_collection div:nth-child(1)").attr("data-id")};
-    $("#spinster").show();
+    $(".pages > #spinster").show();
     $.ajax({
       url: '/newerReviews',
       type: 'GET',
       data: id,
       contentType: 'application/json'
     }).done(function(reviews){
-      $("#spinster").hide();
+      $(".pages > #spinster").hide();
       newReview(reviews);
       reviewsPages.currentPage -=1;
 
@@ -707,14 +711,15 @@ $("body").delegate(".editFile","change", function(){
     event.preventDefault();
     var review = $(this).parent();
     var id = $(this).parent().attr("data-id")
-    $("#spinster").show();
+    $(this).children("#spinster").show();
+    $(this).children("span").text("Deleting..")
     $.ajax({
         url: '/reviews/' + id,
         type: 'DELETE',
         contentType: 'application/json'
       }).done(function(data){
         review.empty();
-        $("#spinster").hide();
+        $(".deleteReview > #spinster").hide();
       })
   }
   $(".reviews_collection").on("click touchstart", ".deleteReview", deleteReview);
@@ -971,14 +976,16 @@ var changeImage = function(event){
     var checkable = [$("#message_name"), $("#message_email"), $("#message_text")];
     if (fieldsAreValid(checkable)) {
       removeRed(checkable);
-      $("#spinster").show();
+      $("#submitEmail > #spinster").show();
+        $("#submitEmail > span").text("Submitting")
       $.ajax({
         type: 'POST',
         url:'/submitEmail',
         contentType: 'application/json',
         data: JSON.stringify(data)
       }).done(function(data){
-        $("#spinster").hide();
+        $("#submitEmail > #spinster").hide();
+        $("#submitEmail > span").text("Submit")
         removeRed(checkable)
         var html = "<p class='success_message'>Your message was succesfully submitted</p>";
         var header = $("p.contact_info");

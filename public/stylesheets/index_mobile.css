@@ -890,7 +890,7 @@ and (max-device-width : 1024px) {
 
   .rates .container.table {
     width: 95%;
-    margin: 0 auto;
+    margin-left: 4%;
   }
 
   .rates .table .head .three.columns {
@@ -1195,7 +1195,7 @@ and (max-width : 649px) {
   }
 }
 
-@media only screen and (min-width: 1400px)  {
+@media only screen and (min-width: 1500px)  {
   .massage_therapist_image {
     width: 48%;
   }
