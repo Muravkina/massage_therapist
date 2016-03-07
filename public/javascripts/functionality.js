@@ -939,7 +939,9 @@ var changeImage = function(event){
     })
   }
 
-  var openPostForm = function(){
+  var openPostForm = function(e){
+    e.stopPropagation();
+    e.preventDefault();
     var fields = [$("input[name='title']"), $("textarea[name='body']"), $("input[name='tags']")];
     blogForm = $("#blogForm");
     if (!blogForm.is(":visible")){

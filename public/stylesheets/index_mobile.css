@@ -410,8 +410,12 @@ and (max-width : 649px){
   padding: 0%;
   height: auto;
   line-height: 2em;
+}
 
-
+.deleteReview {
+  height: 22px;
+  line-height: 22px;
+  width: 38%;
 }
 
 .review_button {
@@ -911,6 +915,7 @@ and (max-device-width : 1024px) {
   }
 
 
+
 }
 
 @media only screen and (max-width: 1100px) and (min-width: 960px) {
@@ -1105,6 +1110,14 @@ and (max-device-width : 1024px) {
   .sticky.header {
     min-width: 650px;
   }
+
+  .reviews_collection_wrap {
+    width: 100%;
+  }
+
+  .review.six.columns {
+    width: 45%;
+  }
 }
 
 @media only screen
@@ -1143,6 +1156,14 @@ and (max-width : 649px) {
 
   .header p {
     font-size: 0.7em;
+  }
+
+  .reviews_collection_wrap {
+    width: 100%;
+  }
+
+  .review.six.columns {
+    width: 45%;
   }
 }
 

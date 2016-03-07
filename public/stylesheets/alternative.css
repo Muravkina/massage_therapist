@@ -1143,7 +1143,9 @@ legend {
 }
 
 .deleteReview {
-  width: 23%;
+    width: 41%;
+    height:30px;
+    line-height: 25px;
 }
 
 .scrollable p.success_message {
@@ -1158,6 +1160,7 @@ legend {
   z-index: 999999;
   left: 45%;
   top: 40%;
+  width: 10%;
 }
 
 @-webkit-keyframes spinster /* Safari and Chrome */ {
