@@ -397,6 +397,47 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
   cursor: pointer;
 }
 
+/*MEDICAL */
+
+#medical .image.wrap {
+   width: 12%;
+   margin-left: 5%;
+   margin-right: 3%;
+}
+
+#medical .description {
+  width: 65%;
+}
+
+#medical h3 {
+  font-size: 1.3em;
+  font-weight: bold;
+  letter-spacing: 0.01em;
+}
+
+#medical ul {
+  font-family: 'Karla', sans-serif;
+  margin-left: 3%;
+  margin-bottom: 2%;
+}
+
+#medical li {
+  margin-bottom: 0%;
+  font-size: 1.1em;
+}
+
+#medical h1 {
+  margin-bottom: 3%;
+}
+
+#medical .description {
+   margin-bottom: 3%;
+}
+
+#medical p {
+  font-size: 0.7em;
+  font-style: italic;
+}
 /*EDUCATION*/
 
 #education.info h3 {
