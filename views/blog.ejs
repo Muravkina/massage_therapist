@@ -33,11 +33,17 @@
                 <input type="file" name="image" class="editFile" id="submitImageForPost" size="500">
                 <img id="preview"/>
                 <div class="submitPost_wrap">
-                  <p class="submitPost">Submit</p>
+                  <p class="submitPost">
+                    <img src="/gifs/spinster.gif" id="spinster">
+                    <span>Submit</span>
+                  </p>
                 </div><!--submitPost_wrap-->
               </form>
               <% } %>
-              <p class="all_posts back">Back to all posts</p>
+              <p class="all_posts back">
+                <img src="/gifs/spinster.gif" id="spinster">
+                <span>Back to all posts</span>
+              </p>
               <div class="posts">
                 <% posts.forEach(function(post){ %>
                 <div class="post" data-id= <%= post.id %>>
@@ -86,11 +92,17 @@
                       <form id="editPostForm">
                         <% if (post.image.url) { %>
                           <div class="change_image_wrap">
-                            <p class="deleteImage">Delete Image</p>
+                            <p class="deleteImage">
+                              <img src="/gifs/spinster.gif" id="spinster">
+                              <span>Delete Image</span>
+                            </p>
                             <p class="openChangeImage">Change Image</p>
                             <div class="changeImageInput">
                               <input type="file" name="image" class="editFile">
-                                <p class="changeImage">Submit Image</p>
+                                <p class="changeImage">
+                                  <img src="/gifs/spinster.gif" id="spinster">
+                                  <span>Submit Image</span>
+                                </p>
                             </div><!--changeImageInput-->
                           </div><!--change_image_wrap-->
                         <% } else { %>
@@ -106,7 +118,10 @@
                         <% } %>
                         >
                         <div class="edit_post_wrap">
-                          <p class="editPost">Update</p>
+                          <p class="editPost">
+                            <img src="/gifs/spinster.gif" id="spinster">
+                            <span>Update</span>
+                          </p>
                         </div><!--edit_post_wrap-->
                       </form>
                     </div><!--edit-->
@@ -128,6 +143,7 @@
                   <p class="newerTagPosts">Newer Posts</p>
                   <p class="olderTagPosts">Older Posts</p>
                 </div><!--tagPagination-->
+                <img src="/gifs/load.gif" id="spinster">
               </div><!--pages-->
 
             </div><!--content_wrapper-->

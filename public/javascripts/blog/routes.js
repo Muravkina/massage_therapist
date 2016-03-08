@@ -13,7 +13,8 @@ var submitPost = function(event){
   var blogForm = new BlogForm();
 
   if (fieldsAreValid(checkable)) {
-    $("#spinster").show();
+    $(".submitPost > #spinster").show();
+    $(".submitPost > span").text("Submitting");
     $.ajax({
       type: 'POST',
       url: "/blog",
@@ -21,7 +22,8 @@ var submitPost = function(event){
       processData: false,
       data: formData
     }).done(function(data){
-      $("#spinster").hide();
+      $(".submitPost > #spinster").hide();
+      $(".submitPost > span").text("Submit");
       //remove error fields
       removeRed(fields);
       //hide form for a new post
@@ -44,12 +46,14 @@ var deletePost = function(event){
   event.preventDefault();
   var posts = new Posts();
   var post = new Post($(this));
+  $("#spinster.body").show();
   $.ajax({
       url: '/posts/' + post.id,
       type: 'DELETE',
       contentType: 'application/json',
       data: JSON.stringify(posts)
     }).done(function(data){
+      $("#spinster.body").hide();
       newPost(data.posts)
       //Remove deleted post from popular posts
       posts.removePostFromPopular(post);

@@ -747,10 +747,37 @@ p.openEdit, p.deletePost, p.deleteComment {
 
 #spinster {
   display:none;
-  position: fixed;
   z-index: 999999;
+  width: 10%;
+  position: relative;
+}
+
+#spinster.body{
+  width: 5%;
+  top: 45%;
   left: 45%;
-  top: 40%;
+  position: fixed;
+}
+
+.submitPost #spinster {
+  left: -16%;
+  width: 6%;
+}
+.changeImage #spinster, .deleteImage #spinster, .editPost #spinster {
+  width: 4%;
+}
+.pages #spinster {
+  width: 4%;
+  padding-left: 48%;
+  clear: both;
+  top: -21px;
+}
+
+.all_posts #spinster {
+  width: 2%;
+}
+.subscribeByEmail #spinster {
+  left: -16%;
 }
 
 @media only screen and (min-width: 768px) {

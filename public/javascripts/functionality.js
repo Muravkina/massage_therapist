@@ -164,16 +164,16 @@
           });
           if (searchArray && searchArray !== "searchByTags") {
             $("p").highlight(searchArray);
+            $(".olderPosts").hide()
             if(totalPosts > 10) {
               searchPostsPages.totalPages = Math.ceil(totalPosts/10);
-              $(".olderSearchPosts").show()
-              $(".olderPosts").hide();
+              $(".olderSearchPosts").show();
             }
           } else if (searchArray && searchArray === "searchByTags"){
+            $(".olderPosts").hide()
             if(totalPosts > 10) {
               tagPostsPages.totalPages = Math.ceil(totalPosts/10);
               $(".olderTagPosts").show()
-              $(".olderPosts").hide();
             }
           }
         }
@@ -456,7 +456,8 @@ $("body").delegate(".editFile","change", function(){
       tags  : post.find(".postTags"),
       image : post.find(".postImage")
     }
-    $("#spinster").show();
+    $(".editPost > #spinster").show();
+    $(".editPost > span").text('updating');
     $.ajax({
         url: '/posts/' + id,
         type: 'PUT',
@@ -479,7 +480,8 @@ $("body").delegate(".editFile","change", function(){
         post.children(".postData").show();
         $(":file").val('');
         editForm.prev(".openEdit").text("Edit");
-        $("#spinster").hide();
+        $(".editPost > #spinster").hide();
+        $(".editPost > span").text('update');
       })
   }
 
@@ -520,7 +522,7 @@ $("body").delegate(".editFile","change", function(){
     var fields = [$("input[name='commentTitle']"), $("textarea[name='commentBody']"), $("input[name='commentAuthorEmail']"), $("input[name='commentAuthorName']"), $("input[name='commentAuthorWebsite']")];
 
     if(fieldsAreValid(checkable)){
-      $("#spinster").show();
+      $("#spinster.body").show();
      $.ajax({
         url: '/posts/' + id + '/comments',
         type: 'POST',
@@ -546,7 +548,7 @@ $("body").delegate(".editFile","change", function(){
         $(".commentsCollection").prepend(comment);
         commentForm.prev(".openComment").text('Leave a comment');
         commentForm.hide();
-        $("#spinster").hide();
+        $("#spinster.body").hide();
       })
     } else {
       errorForm($(this));
@@ -564,14 +566,14 @@ $("body").delegate(".editFile","change", function(){
   var postId = $(this).parents(".posts").find(".post").attr("data-id")
   var commentId = $(this).parents(".comment").attr("data-id");
   var comment = $(this).parents(".comment")
-  $("#spinster").show();
+  $("#spinster.body").show();
   $.ajax({
       url: '/posts/' + postId + '/comments/' + commentId,
       type: 'DELETE',
       contentType: 'application/json'
     }).done(function(data){
       comment.empty();
-      $("#spinster").hide();
+      $("#spinster.body").hide();
     })
   }
 
@@ -581,7 +583,7 @@ $("body").delegate(".editFile","change", function(){
   var searchTag = function(){
     var tag = $(this).text();
     $(".tagPagination").data('searchTag', tag)
-    $("#spinster").show();
+    $("#spinster.body").show();
     $.ajax({
       url: '/tags/' + tag,
       type: 'GET',
@@ -589,7 +591,7 @@ $("body").delegate(".editFile","change", function(){
     }).done(function(data){
       newPost(data.posts, "searchByTags", data.count);
       $('.all_posts').show();
-      $("#spinster").hide();
+      $("#spinster.body").hide();
     });
   }
 
@@ -601,14 +603,14 @@ $("body").delegate(".editFile","change", function(){
     if(event.which == 13){
       var searchArray = {params: $(this).val().trim().toLowerCase()};
       var word = $(this).val().replace(/[^a-zA-Z ]/g, '');
-      $("#spinster").show();
+      $("#spinster.body").show();
       $.ajax({
         url: '/search',
         type: 'GET',
         data: searchArray,
         contentType: 'application/json'
       }).done(function(data){
-        $("#spinster").hide();
+        $("#spinster.body").hide();
         newPost(data.posts, word, data.count);
         $('.all_posts').show();
         $("input[name='searchPosts']").val('');
@@ -621,14 +623,14 @@ $("body").delegate(".editFile","change", function(){
   //older posts
   $(".pages").on("click touchstart", ".olderPosts", function(){
     var id = {id: $(".posts div:nth-child(10)").attr("data-id")};
-    $("#spinster").show();
+    $(".pages #spinster").css('display', 'block');
     $.ajax({
       url: '/olderPosts',
       type: 'GET',
       data: id,
       contentType: 'application/json'
     }).done(function(posts){
-      $("#spinster").hide();
+      $(".pages #spinster").css('display', 'none');
       newPost(posts);
       $(".newerPosts").show();
       $(".all_posts").show();
@@ -642,14 +644,14 @@ $("body").delegate(".editFile","change", function(){
   //newer posts
   $(".pages").on("click touchstart", ".newerPosts", function(){
     var id = {id: $(".posts div:nth-child(1)").attr("data-id")};
-    $("#spinster").show();
+    $(".pages #spinster").css('display', 'block');
     $.ajax({
       url: '/newerPosts',
       type: 'GET',
       data: id,
       contentType: 'application/json'
     }).done(function(posts){
-      $("#spinster").hide();
+      $(".pages #spinster").css('display', 'none');
       newPost(posts);
       postPages.currentPage -=1;
       if (postPages.currentPage === 1) {
@@ -729,13 +731,16 @@ $("body").delegate(".editFile","change", function(){
   var backToPosts = function(){
     $('.olderSearchPosts, .newerSearchPosts, .olderTagPosts, .newerTagPosts').hide();
     $('.olderPosts').show();
-    $("#spinster").show();
+    $(".all_posts.back > #spinster").show();
+    $(".all_posts.back > span").text("One second, please..")
     $.ajax({
         url: '/blog',
         type: 'GET',
         data: {back: true},
         contentType: 'application/json'
       }).done(function(posts){
+        $(".all_posts.back > #spinster").hide();
+        $(".all_posts.back > span").text('Back to all posts');
         newPost(posts);
         $(".searchBox > input").val('')
         $(".widget").unhighlight({ element: 'span'});
@@ -743,7 +748,6 @@ $("body").delegate(".editFile","change", function(){
         postPages.currentPage = 1;
         $(".all_posts").hide();
         $(".newerReviews").hide();
-        $("#spinster").hide();
       })
   }
 
@@ -755,16 +759,17 @@ $("body").delegate(".editFile","change", function(){
     var id = $(this).parents(".post").attr("data-id");
     var postImage = $(this).parents(".post").find(".postImage");
     var changeButton = $(this).parents("#editPostForm").find(".openChangeImage");
-    console.log(changeButton)
     var editForm = $(this).parents("#editPostForm");
     var deleteButton = $(this)
-    $("#spinster").show();
+    $(".deleteImage > #spinster").show();
+    $(".deleteImage > span").text('Deleting')
     $.ajax({
         url: '/deleteImage/' + id,
         type: 'DELETE',
         contentType: 'application/json'
       }).done(function(data){
-        $("#spinster").hide();
+        $(".deleteImage > #spinster").hide();
+        $(".deleteImage > span").text('Delete');
         deleteButton.hide();
         changeButton.hide();
         var fileInput = "<input type='file' name='image' class='editFile'>";
@@ -799,7 +804,8 @@ var changeImage = function(event){
   if ($(this).parent().find(".editFile").length !== 0) {
     formData.append('image', $(this).parent().find('.editFile')[0].files[0]);
   }
-  $("#spinster").show();
+  $(".changeImage > #spinster").show();
+  $(".changeImage > span").text('Submitting');
   $.ajax({
     url: '/changeImage/' + id,
     type: 'PUT',
@@ -807,7 +813,8 @@ var changeImage = function(event){
     processData: false,
     data: formData
   }).done(function(data){
-    $("#spinster").hide();
+    $(".changeImage > #spinster").hide();
+    $(".changeImage > span").text('Submit image');
     images.attr("src", data.image.url);
     editForm.find(".changeImageInput").hide();
     editForm.find(".openChangeImage").text('Change Image');
@@ -825,16 +832,23 @@ var changeImage = function(event){
     var data = {
       email : $(".subscribeEmail").val()
     }
-    $("#spinster").show();
-    $.ajax({
-      url: '/addEmail',
-      type: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify(data)
-    }).done(function(email){
-      $("#spinster").hide();
-      $(".subscribeEmail").val('');
-    });
+    if (!data.email) {
+      $(".subscribeEmail").css('border-color', 'red')
+    } else {
+      $(".subscribeByEmail > #spinster").show();
+      $(".subscribeByEmail > span").text('Submitting');
+      $(".subscribeEmail").css('border-color', '#aaaaaa')
+      $.ajax({
+        url: '/addEmail',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data)
+      }).done(function(email){
+        $(".subscribeByEmail > #spinster").hide();
+        $(".subscribeByEmail > span").text('Submit');
+        $(".subscribeEmail").val('');
+      });
+    }
   }
 
   $(".subscribeByEmail").on("click touchstart", addEmailToSubscribeList)
@@ -848,7 +862,7 @@ var changeImage = function(event){
       searchWords: $("input[name='searchPosts']").val().trim().toLowerCase(),
       word : $("input[name='searchPosts']").val().replace(/[^a-zA-Z ]/g, '')
     };
-    $("#spinster").show();
+    $(".pages #spinster").css('display', 'block');
      $.ajax({
       url: '/olderSearchPosts',
       type: 'GET',
@@ -862,7 +876,7 @@ var changeImage = function(event){
       if (searchPostsPages.totalPages === searchPostsPages.currentPage){
           $(".olderSearchPosts").hide();
       }
-      $("#spinster").hide();
+      $(".pages #spinster").css('display', 'none');
     })
   }
 
@@ -872,14 +886,14 @@ var changeImage = function(event){
       searchWords: $("input[name='searchPosts']").val().trim().toLowerCase(),
       word : $("input[name='searchPosts']").val().replace(/[^a-zA-Z ]/g, '')
     };
-    $("#spinster").show();
+    $(".pages #spinster").css('display', 'block');
      $.ajax({
       url: '/newerSearchPosts',
       type: 'GET',
       contentType: 'application/json',
       data: data
     }).done(function(posts){
-      $("#spinster").hide();
+      $(".pages #spinster").css('display', 'none');
       newPost(posts, data.word);
       searchPostsPages.currentPage -=1;
       if (searchPostsPages.currentPage === 1) {
@@ -902,14 +916,14 @@ var changeImage = function(event){
       id: $(".posts div:nth-child(10)").attr("data-id"),
       searchTag: $(".tagPagination").data('searchTag')
     };
-    $("#spinster").show();
+    $(".pages #spinster").css('display', 'block');
      $.ajax({
       url: '/olderTagPosts',
       type: 'GET',
       contentType: 'application/json',
       data: data
     }).done(function(posts){
-      $("#spinster").hide();
+      $(".pages #spinster").css('display', 'none');
       newPost(posts, "searchByTags");
       $(".newerTagPosts").show();
       $(".all_posts").show();
@@ -925,14 +939,14 @@ var changeImage = function(event){
       id: $(".posts div:nth-child(1)").attr("data-id"),
       searchTag: $(".tagPagination").data('searchTag')
     };
-    $("#spinster").show();
+    $(".pages #spinster").css('display', 'block');
      $.ajax({
       url: '/newerTagPosts',
       type: 'GET',
       contentType: 'application/json',
       data: data
     }).done(function(posts){
-      $("#spinster").hide();
+      $$(".pages #spinster").css('display', 'none');
       newPost(posts, "serachByTags");
       tagPostsPages.currentPage -=1;
       if (tagPostsPages.currentPage === 1) {
