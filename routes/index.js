@@ -9,6 +9,11 @@ var formidable = require('formidable');
 var S3 = require("../config");
 var nodemailer = require('nodemailer');
 var sgTransport = require('nodemailer-sendgrid-transport');
+var EmailTemplate = require('email-templates').EmailTemplate;
+var path = require('path');
+var async = require('async');
+var templatesDir = path.resolve(__dirname, '..', 'templates');
+var template = new EmailTemplate(path.join(templatesDir, 'newpost'))
 
 //emailer
 var options = {
@@ -27,28 +32,32 @@ var knox = require('knox').createClient({
 });
 
 // send email with the email template
-var sendEmails = function(){
-  Blog.EmailList.find({}, {email: 1, _id: 0 }).exec(function(err, emails){
+var sendEmails = function(post){
+  Blog.EmailList.find({}).exec(function(err, emails){
     if(err){res.send(err)}
     else {
-      var emailList = [];
-      emails.forEach(function(email){
-        emailList.push(email.email)
+      async.each(emails, function(email, next){
+        template.render(post, function(err, results){
+          console.log(results.html)
+          if(err){console.log(err)}
+          else {
+            mailer.sendMail({
+              attachments: [{
+                  filename: 'gotmail.png',
+                  path: __dirname + '/../public/images/gotmail.jpg',
+                  cid: 'gotmail' //same cid value as in the html img src
+              }],
+              from: 'Ilia Gerassimov <massagebygerill@gmail.com>',
+              to: email.email,
+              subject: 'New Post by Ilia Gerassimov',
+              html: results.html
+            }, function(err, responseStatus){
+              if(err){console.log(err)}
+              console.log(responseStatus)
+            })
+          }
+        })
       })
-      var email = {
-        from: 'massagebygerill@gmail.com',
-        to: emailList.join(", "),
-        subject: 'New Post by Ilia Gerassimov',
-        html: '<b>Hello world</b>'
-      };
-      mailer.sendMail(email, function(err, info){
-        if (err ){
-          console.log(err);
-        }
-        else {
-          console.log('Message sent: ' + info.response);
-        }
-      });
     }
   })
 }
@@ -161,7 +170,7 @@ router.post('/blog', function(req, res){
                   if (err) {res.send(err)}
                   else {
                     // send notification to subscribed users
-                    sendEmails();
+                    sendEmails(post);
                     res.send({posts: posts, post: post})
                   }
                 })
@@ -172,7 +181,7 @@ router.post('/blog', function(req, res){
           Blog.Post.find({}).limit(10).sort({date: 'desc'}).exec(function(err, posts){
             if (err) {res.send(err)}
             else {
-              sendEmails();
+              sendEmails(post);
               res.send({posts: posts, post: post})
             }
           })
