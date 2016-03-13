@@ -43,6 +43,10 @@ header img {
   font-size: 1.5em;
   margin-top: 2%;
 }
+.postTitle:hover {
+  cursor: pointer;
+  color: rgb(211, 211, 211);
+}
 .postBody {
   margin: 2% auto;
   font-size: 1.2em;
@@ -74,6 +78,11 @@ header img {
   text-align: center;
 }
 
+.read_more_wrap:hover {
+  background-color: rgb(89, 89, 89);
+  cursor: pointer;
+}
+
 .read_more_wrap a{
   color: white;
   text-decoration: none;
@@ -86,4 +95,8 @@ header img {
 .comment p {
   text-align: center;
   font-size: 1.2em;
+}
+
+.comment a:hover {
+  cursor: pointer;
 }
