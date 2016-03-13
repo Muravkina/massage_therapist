@@ -7,24 +7,28 @@
     font-family: JD;
     src: url(../fonts/jd.ttf);
 }*/
-body {
-  width: 820px;
+header img {
+  margin: 2% auto;
+  margin-bottom: 4%;
+  width: 90%;
 }
-.body p:first-child {
-  background-color: black;
-  color: white;
-  width: 80%;
-  font-size: 1.5em;
+
+.intro {
+  text-align: center;
+  font-size: 1.3em;
+  margin-top: 1%;
 }
+
 .postDate {
   font: 'Lato', sans-serif;
   letter-spacing: 2px;
   text-align: center;
-  font-size: 11px;
+  font-size: 0.9em;
 }
 
 .postTitle {
   display: block;
+  color: black;
   text-transform: uppercase;
   text-decoration: none;
   text-align: center;
@@ -35,10 +39,51 @@ body {
     -ms-transition: all 0.3s ease-in-out;
   letter-spacing: 3px;
   font-weight: bold;
-  margin-top: -3%;
   margin-bottom: 0em;
-  font-size: 5em;
+  font-size: 1.5em;
+  margin-top: 2%;
 }
 .postBody {
-  margin-top: 3%;
+  margin: 2% auto;
+  font-size: 1.2em;
+  text-align: left;
+  text-indent: 2em;
+}
+.postData {
+  border: 1px solid black;
+  margin: 3% auto;
+  width: 90%;
+  padding: 3%;
+  margin-top: 5%;
+}
+
+.postData p {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.wrap {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.read_more_wrap {
+  width: 15%;
+  background-color: black;
+  padding: 1% 2%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.read_more_wrap a{
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: georgia, sans-serif;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+}
+
+.comment p {
+  text-align: center;
+  font-size: 1.2em;
 }

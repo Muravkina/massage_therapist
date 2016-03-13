@@ -38,12 +38,11 @@ var sendEmails = function(post){
     else {
       async.each(emails, function(email, next){
         template.render(post, function(err, results){
-          console.log(results.html)
           if(err){console.log(err)}
           else {
             mailer.sendMail({
               attachments: [{
-                  filename: 'gotmail.png',
+                  filename: 'gotmail.jpg',
                   path: __dirname + '/../public/images/gotmail.jpg',
                   cid: 'gotmail' //same cid value as in the html img src
               }],

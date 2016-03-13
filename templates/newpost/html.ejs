@@ -1,18 +1,19 @@
+<div class="wrap">
 <head>
   <link rel='stylesheet' href='/style.css' />
 </head>
 <header>
   <img src="cid:gotmail" alt="car with a mail">
-  <!-- <img src="../../public/images/gotmail.jpg"> -->
+<!--   <img src="../../public/images/gotmail.jpg"> -->
 </header><!--header-->
 <div class="body">
-  <p>Ilia Gerassimov just created a new post in his blog that you're subscribed to.</p>
+  <p class="intro">Ilia Gerassimov just created a new post in his blog that you're subscribed to.</p>
   <div class="postData">
     <p class="postDate">
       <% var postDate = new Date(date); postDate = postDate.toDateString() %>
       <%= postDate %>
     </p><!--postDate-->
-     <a  href="/posts/<%= post.id %>" class="postTitle"><%= title %></a>
+     <a  href="/posts/<%= id %>" class="postTitle" target="_blank"><%= title %></a>
     <div class="post_body_wrap">
       <% var maxLength = 700; %>
       <% if (body.length > maxLength) {
@@ -20,7 +21,7 @@
         var trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))) %>
       <p class="postBody"><%= trimmedString %> ...</p>
       <div class="read_more_wrap">
-        <a href="/posts/<%= id %>" class="readMore">READ MORE</a>
+        <a href="/posts/<%= id %>" class="readMore" target="_blank">READ MORE</a>
       </div>
        <% } else { %>
       <p class="postBody"><%= body %></p>
@@ -29,9 +30,10 @@
   </div><!--postData-->
   <footer>
     <div class="comment">
-      <p>Check it out: <a  href="/posts/<%= id %>">/posts/<%= id %></a> and don't hesitate to leave a comment</p>
+      <p>Check it out: <a  href="/posts/<%= id %>" target="_blank">/posts/<%= id %></a> and don't hesitate to leave a comment</p>
     </div><!--comment-->
   </footer>
 </div><!--body-->
+</div>
 
 
