@@ -734,9 +734,8 @@ $("body").delegate(".editFile","change", function(){
     $(".all_posts.back > #spinster").show();
     $(".all_posts.back > span").text("One second, please..")
     $.ajax({
-        url: '/blog',
+        url: '/back',
         type: 'GET',
-        data: {back: true},
         contentType: 'application/json'
       }).done(function(posts){
         $(".all_posts.back > #spinster").hide();

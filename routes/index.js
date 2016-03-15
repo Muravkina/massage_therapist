@@ -69,7 +69,7 @@ router.get('/', function(req, res, next) {
       res.render('error');
     } else {
       Review.count({}, function(err, count){
-        if(err){
+        if (err) {
           console.log("db error in GET /reviews: " + err);
           res.render('error');
         } else {
@@ -95,7 +95,6 @@ router.post('/login', passport.authenticate('local',{ successRedirect: '/blog',
                                    failureRedirect: '/login'}
 ));
 
-
 router.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');
@@ -117,75 +116,46 @@ router.post('/register', function(req, res) {
 });
 
 router.get('/blog', function(req, res){
-  Blog.Post.find({}).limit(10).sort({date: 'desc'}).exec(function(err, posts){
+  Blog.Post.findFirstTenPosts(function(err, posts){
     if (err) {
       console.log("db error in GET /blog: " + err);
       res.render('error');
     } else {
       Blog.Post.count({}, function(err, count){
-        Blog.Post.aggregate([
-          {$unwind: "$comments"},
-          {$group: {_id:"$_id", title: {$first :"$title"}, body: {$first :"$body"}, image: {$first: "$image"}, comments: {$push:"$comments"}, size: {$sum:1}}},
-          {$sort:{size:1}}]).exec(function(err, popularPosts){
-            popularPosts.reverse();
-            ///find all the tags
-            var tags = [];
-            var uniqueTags = [];
-
-            var getCategories = function(posts){
-              posts.forEach(function(post){
-                post.tags.forEach(function(tag){
-                  tags.push(tag);
-                })
-              })
-              uniqueTags = tags.filter(function(elem, index, self){
-                return index == self.indexOf(elem);
-              })
-            }
-            getCategories(posts);
-
-            if (req.query.back) {
-              res.send(posts)
-            } else {
-              res.render('blog', {url: req.path.split('/')[1], posts: posts, user: req.user, tags:uniqueTags, totalPosts: count, popularPosts: popularPosts});
-            }
+        Blog.Post.findPopularPosts(function(err, popularPosts){
+          if (err) {console.log(err)}
+          Blog.Post.findUniqueTags(function(uniqueTags) {
+            if(err){console.log(err)}
+            res.render('blog', {url: req.path.split('/')[1], posts: posts, user: req.user, tags:uniqueTags, totalPosts: count, popularPosts: popularPosts});
+          })
         })
       })
     };
   })
 })
 
+router.get('/back', function(req, res){
+  Blog.Post.findFirstTenPosts(function(err, posts){
+    if(err){
+      console.log("db error in GET /blog: " + err);
+      res.render('error');
+    } else {
+      res.send(posts)
+    }
+  })
+})
+
 router.post('/blog', function(req, res){
   var form = new formidable.IncomingForm();
-   form.parse(req, function(err, fields, files) {
-      tagsArray = fields.tags.replace(" ", "").split(',');
-      new Blog.Post({title: fields.title, body: fields.body, date: new Date(), tags: tagsArray}).save(function(err, post){
-        if (Object.keys(files).length !== 0) {
-          post.attach('image', {path: files.image.path}, function(error){
-            post.save(function(err){
-              if(err){res.send(err)}
-              else {
-                Blog.Post.find({}).limit(10).sort({date: 'desc'}).exec(function(err, posts){
-                  if (err) {res.send(err)}
-                  else {
-                    // send notification to subscribed users
-                    sendEmails(post);
-                    res.send({posts: posts, post: post})
-                  }
-                })
-              }
-            })
-          })
-        } else {
-          Blog.Post.find({}).limit(10).sort({date: 'desc'}).exec(function(err, posts){
-            if (err) {res.send(err)}
-            else {
-              sendEmails(post);
-              res.send({posts: posts, post: post})
-            }
-          })
-        }
-      })
+  form.parse(req, function(err, fields, files) {
+    new Blog.Post({title: fields.title, body: fields.body, date: new Date(), tags: fields.tags})
+      .save(files)
+      .then(function(post){
+        sendEmails(post);
+        Blog.Post.findFirstTenPosts(function(err, posts){
+          res.send({posts: posts, post: post});
+        })
+       })
     });
 })
 
@@ -195,7 +165,7 @@ router.delete('/posts/:id', function(req, res){
       console.log("db error in DELETE /posts: " + err);
       res.render('error');
     } else {
-      Blog.Post.find({_id : { "$lte" : req.body.firstPostId } }).sort({"_id":-1}).limit(10).exec(function(err, posts){
+      Blog.Post.findThisPagePosts(req.body.firstPostId, function(err, posts){
         if (err) {res.send(err)}
         else {res.send({posts: posts, id: req.params.id})}
       })
@@ -208,19 +178,12 @@ router.put('/posts/:id', function(req, res){
   form.parse(req, function(err, fields, files) {
     Blog.Post.findById(req.params.id, function (err, post) {
       if (err) res.send(err);
-      post.title = fields.title;
-      post.body = fields.body;
-      post.tags = fields.tags.split(', ')
-      post.save()
-      if (Object.keys(files).length === 0) {
-        res.send(post)
-      } else {
-        post.attach('image', {path: files.image.path}, function(error){
-        if (err) res.send(err);
-        post.save()
-        res.send(post)
+        post.title = fields.title;
+        post.body = fields.body;
+        post.tags = fields.tags;
+        post.save(files).then(function(post){
+          res.send(post)
         })
-      }
     });
   });
 })
@@ -230,36 +193,14 @@ router.get('/posts/:id', function(req, res){
     if (err) {
       res.send(err)
     } else {
-      tags = post.tags.join(', ')
-      Blog.Post.find({tags: {$in: post.tags}}).sort({"_id":-1}).limit(3).exec(function(err, relatedPosts){
+      Blog.Post.findRelatedPosts(post.tags, function(err, relatedPosts){
         if (err) {res.send(err)}
         else {
-          Blog.Post.find({}).exec(function(err, posts){
-            Blog.Post.count({}, function(err, count){
-              Blog.Post.aggregate([
-                {$unwind: "$comments"},
-                {$group: {_id:"$_id", title: {$first :"$title"}, body: {$first :"$body"}, image: {$first: "$image"}, comments: {$push:"$comments"}, size: {$sum:1}}},
-                {$sort:{size:1}}]).exec(function(err, popularPosts){
-                popularPosts.reverse();
-                ///find all the tags
-                var tags = [];
-                var uniqueTags = [];
-                var getCategories = function(posts){
-                  posts.forEach(function(post){
-                    post.tags.forEach(function(tag){
-                      tags.push(tag);
-                    })
-                  })
-                  uniqueTags = tags.filter(function(elem, index, self){
-                  return index == self.indexOf(elem);
-                  })
-                }
-                getCategories(posts);
-                if (req.query.back) {
-                  res.send(posts)
-                } else {
-                  res.render('post', {url: req.path.split('/')[1], posts: posts, user: req.user, tags:uniqueTags, totalPosts: count, popularPosts: popularPosts, post: post, relatedPosts: relatedPosts});
-                }
+          Blog.Post.findPopularPosts(function(err, popularPosts){
+            if(err){console.log(err)}
+            Blog.Post.findUniqueTags(function(uniqueTags){
+              Blog.Post.count({}, function(err, count){
+                res.render('post', {url: req.path.split('/')[1], user: req.user, tags:uniqueTags, totalPosts: count, popularPosts: popularPosts, post: post, relatedPosts: relatedPosts});
               })
             })
           })
@@ -340,7 +281,7 @@ router.get('/search', function(req, res){
 })
 
 router.get('/olderPosts', function(req, res){
-  Blog.Post.find( {_id : { "$lt" : req.query.id } } ).limit(10).sort({"_id":-1}).exec(function(err,posts){
+  Blog.Post.findOlderPosts(req.query.id, function(err, posts){
     if (err) {
       console.log("db error in GET /olderPosts: " + err);
       res.render('error');
@@ -351,12 +292,11 @@ router.get('/olderPosts', function(req, res){
 })
 
 router.get('/newerPosts', function(req, res){
-  Blog.Post.find( {_id : { "$gt" : req.query.id } } ).sort({"_id": 1}).limit(10).exec(function(err,posts){
+  Blog.Post.findNewerPosts(req.query.id, function(err,posts){
     if (err) {
       console.log("db error in GET /newerPosts: " + err);
       res.render('error');
     } else {
-      posts.reverse();
       res.send(posts);
     }
   });
