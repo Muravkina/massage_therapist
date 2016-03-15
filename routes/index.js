@@ -264,16 +264,14 @@ router.get('/tags/:name', function(req, res){
 })
 
 router.get('/search', function(req, res){
-  Blog.Post.find(
-    { $text: {$search: req.query.params}}
-    ).sort({"_id":-1}).limit(10).exec(function(err, posts){
+  Blog.Post.findPostsOnSearch(req.query.params, function(err, posts){
     if (err) {
       res.send(err);
     } else {
-      Blog.Post.count({$text: {$search: req.query.params}}, function(err, count){
+      Blog.Post.findTotalSearchedPosts(req.query.params, function(err, count){
         if(err){res.send(err)}
         else{
-          res.send({posts:posts, count: count});
+          res.send({posts:posts, count:count});
         }
       })
     }
@@ -346,11 +344,8 @@ router.get('/isAuthenticated', function(req, res, next){
 })
 
 router.delete('/deleteImage/:id', function(req,res, next){
-  Blog.Post.findByIdAndUpdate(req.params.id, {$unset: {image: ''}}, function (err, post) {
-    knox.deleteFile(post.image.name, function(err, result) {
-      if (err) res.send(err);
-      res.send('success')
-    });
+  Blog.Post.deleteImage(req.params.id, function(){
+    res.send('success')
   })
 })
 

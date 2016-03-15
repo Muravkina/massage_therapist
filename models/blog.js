@@ -2,7 +2,13 @@ var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 var crate = require('mongoose-crate');
 var S3 = require('mongoose-crate-s3');
-var S3info = require('../config')
+var S3info = require('../config');
+//Amazon S3 configuration
+var knox = require('knox').createClient({
+    key: S3info.S3_KEY,
+    secret: S3info.S3_SECRET,
+    bucket: S3info.S3_BUCKET
+});
 
 var Comments = new mongoose.Schema({
     title     : String,
@@ -68,11 +74,28 @@ Posts.statics.findThisPagePosts = function(first, cb){
   return this.find({_id : { "$lte" : first } }).sort({"_id":-1}).limit(10).exec(cb);
 }
 Posts.statics.findOlderPosts = function(last, cb){
-  return this.find( {_id : { "$lt" : last } } ).limit(10).sort({"_id":-1}).exec(cb)
+  return this.find( {_id : { "$lt" : last } } ).limit(10).sort({"_id":-1}).exec(cb);
 }
 Posts.statics.findNewerPosts = function(last, cb){
-  return this.find( {_id : { "$gt" : last } } ).sort({"_id": -1}).limit(10).exec(cb)
+  return this.find( {_id : { "$gt" : last } } ).sort({"_id": -1}).limit(10).exec(cb);
 }
+Posts.statics.findPostsOnSearch = function(text, cb){
+  return this.find({ $text: {$search: text}}).sort({"_id":-1}).limit(10).exec(cb);
+}
+Posts.statics.findTotalSearchedPosts = function(text, cb){
+  return this.count({$text: {$search: text}}, cb);
+}
+Posts.statics.deleteImage = function(id, cb){
+  this.findByIdAndUpdate(id, {$unset: {image: ''}}, function (err, post) {
+    knox.deleteFile(post.image.name, function(err, result) {
+      if (err) {console.log(err)}
+      else {
+        cb
+      }
+    })
+  })
+}
+
 Posts.pre('save', function(next){
   this.tags = this.tags[0].replace(/ /g,'').split(",");
   next()
