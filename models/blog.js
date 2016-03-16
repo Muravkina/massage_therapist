@@ -90,7 +90,17 @@ Posts.statics.deleteImage = function(id, cb){
     knox.deleteFile(post.image.name, function(err, result) {
       if (err) {console.log(err)}
       else {
-        cb
+        cb(post)
+      }
+    })
+  })
+}
+Posts.statics.updateImage = function(id, files, cb){
+  this.deleteImage(id, function(post){
+    post.save(files, function(err, newPost){
+      if(err){console.log(err)}
+      else {
+        cb(newPost)
       }
     })
   })

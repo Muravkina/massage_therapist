@@ -352,18 +352,9 @@ router.delete('/deleteImage/:id', function(req,res, next){
 router.put('/changeImage/:id', function(req, res, next){
   var form = new formidable.IncomingForm();
   form.parse(req, function(err, fields, files) {
-    Blog.Post.findByIdAndUpdate(req.params.id, {$unset: {image: ''}}, function(err, post){
-      knox.deleteFile(files.image.name, function(err, result) {
-        if (err) {res.send(err)}
-        else {
-          post.attach('image', {path: files.image.path}, function(error){
-          if (err) res.send(err);
-          post.save()
-          res.send(post)
-          })
-        }
-      });
-    });
+    Blog.Post.updateImage(req.params.id, files, function(post) {
+      res.send(post)
+    })
   })
 })
 
