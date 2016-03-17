@@ -13,7 +13,8 @@ var EmailTemplate = require('email-templates').EmailTemplate;
 var path = require('path');
 var async = require('async');
 var templatesDir = path.resolve(__dirname, '..', 'templates');
-var template = new EmailTemplate(path.join(templatesDir, 'newpost'))
+var template = new EmailTemplate(path.join(templatesDir, 'newpost'));
+var helpers = require("./../models/email")
 
 //emailer
 var options = {
@@ -116,22 +117,15 @@ router.post('/register', function(req, res) {
 });
 
 router.get('/blog', function(req, res){
-  Blog.Post.findFirstTenPosts(function(err, posts){
-    if (err) {
-      console.log("db error in GET /blog: " + err);
-      res.render('error');
-    } else {
-      Blog.Post.count({}, function(err, count){
-        Blog.Post.findPopularPosts(function(err, popularPosts){
-          if (err) {console.log(err)}
-          Blog.Post.findUniqueTags(function(uniqueTags) {
-            if(err){console.log(err)}
-            res.render('blog', {url: req.path.split('/')[1], posts: posts, user: req.user, tags:uniqueTags, totalPosts: count, popularPosts: popularPosts});
-          })
-        })
-      })
-    };
-  })
+  async.parallel({
+    posts: function(cb){Blog.Post.findFirstTenPosts(cb)},
+    count: function(cb){Blog.Post.count(cb)},
+    uniqueTags: function(cb){Blog.Post.findUniqueTags(cb)},
+    popularPosts: function(cb){Blog.Post.findPopularPosts(cb)}
+    }, function(err, results){
+      if(err){console.log(err)}
+       res.render('blog', {url: req.path.split('/')[1], posts: results.posts, user: req.user, tags:results.uniqueTags, totalPosts: results.count, popularPosts: results.popularPosts});
+    })
 })
 
 router.get('/back', function(req, res){
@@ -250,10 +244,10 @@ router.delete('/posts/:postId/comments/:commentId', function(req, res){
 })
 
 router.get('/tags/:name', function(req, res){
-  Blog.Post.find({tags: { $in: [req.params.name] }}).sort({"_id":-1}).limit(10).exec(function(err, posts){
+  Blog.Post.findTagPosts(req.params.name, function(err, posts){
     if (err) {res.send(err)}
     else {
-      Blog.Post.count({tags: { $in: [req.params.name] }}, function(err, count){
+      Blog.Post.findTotalTagPosts(req.params.name, function(err, count){
         if(err){res.send(err)}
         else{
           res.send({posts:posts, count:count});
@@ -366,7 +360,7 @@ router.post('/addEmail', function(req, res, next){
 })
 
 router.get('/olderSearchPosts', function(req, res, next){
-  Blog.Post.find({ $text: {$search: req.query.searchWords}, _id : { "$lt" : req.query.id } } ).sort({"_id":-1}).limit(10).exec(function(err,posts){
+  Blog.Post.findOlderSearchPosts(req.query.searchWords, req.query.id, function(err,posts){
     if (err) {
       console.log("db error in GET /olderPosts: " + err);
       res.render('error');
@@ -377,19 +371,18 @@ router.get('/olderSearchPosts', function(req, res, next){
 })
 
 router.get('/newerSearchPosts', function(req, res, next){
-  Blog.Post.find({ $text: {$search: req.query.searchWords}, _id : { "$gt" : req.query.id } } ).sort({"_id":1}).limit(10).exec(function(err,posts){
+  Blog.Post.findNewerSearchPosts(req.query.searchWords, req.query.id, function(err,posts){
     if (err) {
       console.log("db error in GET /olderPosts: " + err);
       res.render('error');
     } else {
-      posts.reverse();
       res.send(posts)
     }
   });
 })
 
 router.get('/olderTagPosts', function(req, res, next){
-  Blog.Post.find({ tags: { $in: [req.query.searchTag] }, _id : { "$lt" : req.query.id } } ).sort({"_id":-1}).limit(10).exec(function(err,posts){
+  Blog.Post.findOlderTagPosts(req.query.searchTag, req.query.id, function(err,posts){
     if (err) {
       console.log("db error in GET /olderPosts: " + err);
       res.render('error');
@@ -400,12 +393,11 @@ router.get('/olderTagPosts', function(req, res, next){
 })
 
 router.get('/newerTagPosts', function(req, res, next){
-  Blog.Post.find({ tags: { $in: [req.query.searchTag] }, _id : { "$gt" : req.query.id } } ).sort({"_id":1}).limit(10).exec(function(err,posts){
+  Blog.Post.findNewerTagPosts(req.query.searchTag, req.query.id, function(err,posts){
     if (err) {
       console.log("db error in GET /olderPosts: " + err);
       res.render('error');
     } else {
-      posts.reverse();
       res.send(posts)
     }
   });
@@ -419,13 +411,8 @@ router.post('/documentRequest', function(req, res, next){
     }
   }
   var message = "<b>Hello from your favourite wife</b><p>A new request for documents was submitted</p><h2>Request</h2><p><b>Phone: </b>" + req.body.phone + "<br><b>Email: </b>" + req.body.email + "<br><b>Comment: </b>" + req.body.comment + "<br><b>Documents: </b>" + documents.join(', ') + "<br><br>Don't forget to answer!<br> Best, your email provider - wife.com"
-  var email = {
-    from: 'massagebygerill@gmail.com',
-    to: 'massagebygerill@gmail.com',
-    subject: 'Request for documents',
-    html: message
-  };
-  mailer.sendMail(email, function(err, info){
+    var email = new helpers.Email(message);
+    mailer.sendMail(email, function(err, info){
     if (err ){
       console.log(err);
     }
@@ -438,13 +425,8 @@ router.post('/documentRequest', function(req, res, next){
 
 router.post('/submitEmail', function(req, res, next){
   var message = "<b>Hello from your favourite wife</b><p>You received a new email from your website</p><h2>Email</h2><p><b>Name: </b>" + req.body.name + "<br><b>Email: </b>" + req.body.email + "<br><b>Message: </b>" + req.body.message + "<br><br>Don't forget to answer!<br> Best, your email provider - wife.com"
-  var email = {
-    from: 'massagebygerill@gmail.com',
-    to: 'massagebygerill@gmail.com',
-    subject: 'New Message from your website',
-    html: message
-  };
-  mailer.sendMail(email, function(err, info){
+  var newEmail = new email(message);
+  mailer.sendMail(newEmail, function(err, info){
     if (err ){
       console.log(err);
     }

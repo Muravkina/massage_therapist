@@ -61,11 +61,16 @@ Posts.statics.findUniqueTags = function(cb){
       uniqueTags = tags.filter(function(elem, index, self){
         return index == self.indexOf(elem);
       })
-      return cb(uniqueTags);
+        return cb(null, uniqueTags);
     });
 };
 Posts.statics.findFirstTenPosts = function(cb){
-  return this.find({}).limit(10).sort({date: 'desc'}).exec(cb);
+  return this.find({}).limit(10).sort({date: 'desc'}).exec(function(err, posts){
+    if(err){console.log(err)}
+    else {
+      cb(null, posts)
+    }
+  });
 }
 Posts.statics.findRelatedPosts = function(tags, cb){
   return this.find({tags: {$in: tags}}).sort({"_id":-1}).limit(3).exec(cb);
@@ -79,11 +84,29 @@ Posts.statics.findOlderPosts = function(last, cb){
 Posts.statics.findNewerPosts = function(last, cb){
   return this.find( {_id : { "$gt" : last } } ).sort({"_id": -1}).limit(10).exec(cb);
 }
+Posts.statics.findOlderSearchPosts = function(text, first, cb){
+  return this.find({ $text: {$search: text}, _id : { "$lt" : first} } ).sort({"_id":-1}).limit(10).exec(cb);
+}
+Posts.statics.findNewerSearchPosts = function(text, last, cb){
+  return this.find({ $text: {$search: text}, _id : { "$gt" : last } } ).sort({"_id":-1}).limit(10).exec(cb);
+}
 Posts.statics.findPostsOnSearch = function(text, cb){
   return this.find({ $text: {$search: text}}).sort({"_id":-1}).limit(10).exec(cb);
 }
 Posts.statics.findTotalSearchedPosts = function(text, cb){
   return this.count({$text: {$search: text}}, cb);
+}
+Posts.statics.findTotalTagPosts = function(tag, cb){
+  return this.count({tags: { $in: [tag] }}, cb);
+}
+Posts.statics.findOlderTagPosts = function(tag, first, cb){
+  return this.find({ tags: { $in: [tag] }, _id : { "$lt" : first } } ).sort({"_id":-1}).limit(10).exec(cb);
+}
+Posts.statics.findNewerTagPosts = function(tag, last, cb){
+  return this.find({ tags: { $in: [tag] }, _id : { "$gt" : last } } ).sort({"_id":-1}).limit(10).exec(cb);
+}
+Posts.statics.findTagPosts = function(tag, cb){
+  return this.find({tags: { $in: [tag] }}).sort({"_id":-1}).limit(10).exec(cb);
 }
 Posts.statics.deleteImage = function(id, cb){
   this.findByIdAndUpdate(id, {$unset: {image: ''}}, function (err, post) {
