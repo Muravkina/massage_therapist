@@ -72,11 +72,23 @@ Posts.statics.findFirstTenPosts = function(cb){
     }
   });
 }
+Posts.statics.deletePost = function(id, cb){
+  return this.findOne({'_id': id}).remove().exec(function(err){
+    if(err){console.log(err)}
+    cb()
+  })
+}
 Posts.statics.findRelatedPosts = function(tags, cb){
   return this.find({tags: {$in: tags}}).sort({"_id":-1}).limit(3).exec(cb);
 }
 Posts.statics.findThisPagePosts = function(first, cb){
-  return this.find({_id : { "$lte" : first } }).sort({"_id":-1}).limit(10).exec(cb);
+  return this.find({_id : { "$lte" : first } }).sort({"_id":-1}).limit(10).exec(function(err, posts){
+    if(err){console.log(err)}
+    else {
+      console.log(posts)
+      cb(null, posts)
+    }
+  });
 }
 Posts.statics.findOlderPosts = function(last, cb){
   return this.find( {_id : { "$lt" : last } } ).limit(10).sort({"_id":-1}).exec(cb);

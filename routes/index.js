@@ -64,20 +64,14 @@ var sendEmails = function(post){
 
 
 router.get('/', function(req, res, next) {
-  Review.find({}).sort({"_id":-1}).limit(10).exec(function(err, reviews) {
-    if (err) {
-      console.log("db error in GET /reviews: " + err);
-      res.render('error');
-    } else {
-      Review.count({}, function(err, count){
-        if (err) {
-          console.log("db error in GET /reviews: " + err);
-          res.render('error');
-        } else {
-          res.render('index', {reviews: reviews, user: req.user, totalReviews: count});
-        }
-      })
-    };
+  async.parallel({
+    reviews: function(cb){Review.findTenReviews(cb)},
+    count: function(cb){Review.count(cb)}
+  }, function(err, results){
+    if(err){console.log(err)}
+    else {
+      res.render('index', {reviews: results.reviews, user: req.user, totalReviews: results.count});
+    }
   });
 });
 
@@ -130,12 +124,7 @@ router.get('/blog', function(req, res){
 
 router.get('/back', function(req, res){
   Blog.Post.findFirstTenPosts(function(err, posts){
-    if(err){
-      console.log("db error in GET /blog: " + err);
-      res.render('error');
-    } else {
       res.send(posts)
-    }
   })
 })
 
@@ -149,21 +138,17 @@ router.post('/blog', function(req, res){
         Blog.Post.findFirstTenPosts(function(err, posts){
           res.send({posts: posts, post: post});
         })
-       })
-    });
-})
+      })
+  });
+});
+
 
 router.delete('/posts/:id', function(req, res){
-  Blog.Post.findOne({'_id': req.params.id}).remove().exec(function(err){
-    if (err) {
-      console.log("db error in DELETE /posts: " + err);
-      res.render('error');
-    } else {
-      Blog.Post.findThisPagePosts(req.body.firstPostId, function(err, posts){
-        if (err) {res.send(err)}
-        else {res.send({posts: posts, id: req.params.id})}
-      })
-    }
+  async.waterfall([
+    function(cb){Blog.Post.deletePost(req.params.id, cb)},
+    function(cb){Blog.Post.findThisPagePosts(req.body.firstPostId, cb)}
+    ], function(err, results){
+      res.send({posts: results, id: req.params.id})
   })
 })
 

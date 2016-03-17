@@ -29,6 +29,7 @@ var submitPost = function(event){
       //hide form for a new post
       blogForm.closeBlogForm();
       //create a new post
+      console.log(data.posts)
       newPost(data.posts);
       //update the categories
       updateCategories(data.post.tags)
