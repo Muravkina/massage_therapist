@@ -3,6 +3,7 @@ var Schema       = mongoose.Schema;
 var crate = require('mongoose-crate');
 var S3 = require('mongoose-crate-s3');
 var S3info = require('../config');
+
 //Amazon S3 configuration
 var knox = require('knox').createClient({
     key: S3info.S3_KEY,
@@ -78,6 +79,18 @@ Posts.statics.deletePost = function(id, cb){
     cb()
   })
 }
+Posts.statics.updatePost = function(id, fields, files, cb){
+  this.findById(id, function (err, post) {
+    if (err) res.send(err);
+    post.title = fields.title;
+    post.body = fields.body;
+    post.tags = fields.tags;
+    post.save(files, function(err, post){
+      if(err){console.log(err)}
+      else {cb(null, post)}
+    })
+  });
+}
 Posts.statics.findRelatedPosts = function(tags, cb){
   return this.find({tags: {$in: tags}}).sort({"_id":-1}).limit(3).exec(cb);
 }
@@ -85,7 +98,6 @@ Posts.statics.findThisPagePosts = function(first, cb){
   return this.find({_id : { "$lte" : first } }).sort({"_id":-1}).limit(10).exec(function(err, posts){
     if(err){console.log(err)}
     else {
-      console.log(posts)
       cb(null, posts)
     }
   });
@@ -135,13 +147,14 @@ Posts.statics.updateImage = function(id, files, cb){
     post.save(files, function(err, newPost){
       if(err){console.log(err)}
       else {
-        cb(newPost)
+        cb(null, newPost)
       }
     })
   })
 }
 
 Posts.pre('save', function(next){
+  console.log(this)
   this.tags = this.tags[0].replace(/ /g,'').split(",");
   next()
 })

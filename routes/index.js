@@ -14,7 +14,8 @@ var path = require('path');
 var async = require('async');
 var templatesDir = path.resolve(__dirname, '..', 'templates');
 var template = new EmailTemplate(path.join(templatesDir, 'newpost'));
-var helpers = require("./../models/email")
+var helpers = require("./../models/email");
+var form = new formidable.IncomingForm();
 
 //emailer
 var options = {
@@ -153,18 +154,13 @@ router.delete('/posts/:id', function(req, res){
 })
 
 router.put('/posts/:id', function(req, res){
-  var form = new formidable.IncomingForm();
-  form.parse(req, function(err, fields, files) {
-    Blog.Post.findById(req.params.id, function (err, post) {
-      if (err) res.send(err);
-        post.title = fields.title;
-        post.body = fields.body;
-        post.tags = fields.tags;
-        post.save(files).then(function(post){
-          res.send(post)
-        })
-    });
-  });
+  async.waterfall([
+    function(cb){form.parse(req, cb)},
+    function(fields, files, cb){Blog.Post.updatePost(req.params.id, fields, files, cb)}
+    ], function(err, result){
+      if(err) {console.log(err)}
+        res.send(result)
+  })
 })
 
 router.get('/posts/:id', function(req, res){
