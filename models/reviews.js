@@ -17,9 +17,17 @@ ReviewsSchema.statics.findTenReviews = function(cb){
   })
 }
 ReviewsSchema.statics.count = function(cb){
-  return this.find({}).count({}).exec(cb)
+  return this.find({}).count({}).exec(cb);
 }
-
+ReviewsSchema.statics.findOlder = function(first, cb){
+  return this.find( {_id : { "$lt" : first } } ).limit(10).sort({"_id":-1}).exec(cb);
+}
+ReviewsSchema.statics.findNewer = function(last, cb){
+  return this.find( {_id : { "$gt" : last } } ).limit(10).sort({"_id":-1}).exec(cb);
+}
+ReviewsSchema.statics.delete= function(id, cb){
+  return this.findOne({'_id': id}).remove().exec(cb);
+}
 
 
 module.exports = mongoose.model('Reviews', ReviewsSchema);

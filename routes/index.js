@@ -125,12 +125,11 @@ router.get('/blog', function(req, res){
 
 router.get('/back', function(req, res){
   Blog.Post.findFirstTenPosts(function(err, posts){
-      res.send(posts)
+      res.send({posts: posts, user: req.user})
   })
 })
 
 router.post('/blog', function(req, res){
-  var form = new formidable.IncomingForm();
   form.parse(req, function(err, fields, files) {
     new Blog.Post({title: fields.title, body: fields.body, date: new Date(), tags: fields.tags})
       .save(files)
@@ -164,24 +163,15 @@ router.put('/posts/:id', function(req, res){
 })
 
 router.get('/posts/:id', function(req, res){
-  Blog.Post.findById(req.params.id, function(err, post){
-    if (err) {
-      res.send(err)
-    } else {
-      Blog.Post.findRelatedPosts(post.tags, function(err, relatedPosts){
-        if (err) {res.send(err)}
-        else {
-          Blog.Post.findPopularPosts(function(err, popularPosts){
-            if(err){console.log(err)}
-            Blog.Post.findUniqueTags(function(uniqueTags){
-              Blog.Post.count({}, function(err, count){
-                res.render('post', {url: req.path.split('/')[1], user: req.user, tags:uniqueTags, totalPosts: count, popularPosts: popularPosts, post: post, relatedPosts: relatedPosts});
-              })
-            })
-          })
-        }
-      })
-    }
+  async.parallel({
+    popularPosts: function(cb){Blog.Post.findPopularPosts(cb)},
+    uniqueTags: function(cb){Blog.Post.findUniqueTags(cb)},
+    count: function(cb){Blog.Post.count(cb)},
+    post: function(cb){Blog.Post.findById(req.params.id, cb)}
+  }, function(err, results){
+    Blog.Post.findRelatedPosts(results.post.tags, function(err, relatedPosts){
+      res.render('post', {url: req.path.split('/')[1], user: req.user, tags:results.uniqueTags, totalPosts: results.count, popularPosts: results.popularPosts, post: results.post, relatedPosts: relatedPosts});
+    })
   })
 })
 
@@ -225,31 +215,20 @@ router.delete('/posts/:postId/comments/:commentId', function(req, res){
 })
 
 router.get('/tags/:name', function(req, res){
-  Blog.Post.findTagPosts(req.params.name, function(err, posts){
-    if (err) {res.send(err)}
-    else {
-      Blog.Post.findTotalTagPosts(req.params.name, function(err, count){
-        if(err){res.send(err)}
-        else{
-          res.send({posts:posts, count:count});
-        }
-      })
-    }
-  })
+  async.parallel({
+    posts: function(cb){Blog.Post.findTagPosts(req.params.name, cb)},
+    count: function(cb){Blog.Post.findTotalTagPosts(req.params.name, cb)}
+  }, function(err, results){
+    res.send({posts:results.posts, count:results.count, user: req.user});
+  });
 })
 
 router.get('/search', function(req, res){
-  Blog.Post.findPostsOnSearch(req.query.params, function(err, posts){
-    if (err) {
-      res.send(err);
-    } else {
-      Blog.Post.findTotalSearchedPosts(req.query.params, function(err, count){
-        if(err){res.send(err)}
-        else{
-          res.send({posts:posts, count:count});
-        }
-      })
-    }
+  async.parallel({
+    posts: function(cb){Blog.Post.findPostsOnSearch(req.query.params, cb)},
+    count: function(cb){Blog.Post.findTotalSearchedPosts(req.query.params, cb)}
+  }, function(err, results){
+    res.send({posts:results.posts, count:results.count, user: req.user});
   })
 })
 
@@ -259,7 +238,7 @@ router.get('/olderPosts', function(req, res){
       console.log("db error in GET /olderPosts: " + err);
       res.render('error');
     } else {
-      res.send(posts)
+      res.send({posts: posts, user: req.user})
     }
   });
 })
@@ -270,37 +249,35 @@ router.get('/newerPosts', function(req, res){
       console.log("db error in GET /newerPosts: " + err);
       res.render('error');
     } else {
-      res.send(posts);
+      res.send({posts: posts, user: req.user});
     }
   });
 })
 
 router.get('/olderReviews', function(req, res){
-  Review.find( {_id : { "$lt" : req.query.id } } ).limit(10).sort({"_id":-1}).exec(function(err, reviews){
+  Review.findOlder(req.query.id, function(err, reviews){
     if (err) {
       console.log("db error in GET /olderReviews: " + err);
       res.render('error');
     } else {
-
-      res.send(reviews)
+       res.send({reviews: reviews, user: req.user})
     }
   });
 })
 
 router.get('/newerReviews', function(req, res){
-  Review.find( {_id : { "$gt" : req.query.id } } ).limit(10).sort({"_id":1}).exec(function(err, reviews){
+  Review.findNewer(req.query.id, function(err, reviews){
     if (err) {
       console.log("db error in GET /olderReviews: " + err);
       res.render('error');
     } else {
-      reviews.reverse();
-      res.send(reviews);
+      res.send({reviews: reviews, user: req.user});
     }
   });
 })
 
 router.delete('/reviews/:id', function(req, res){
-  Review.findOne({'_id': req.params.id}).remove().exec(function(err){
+  Review.delete(req.params.id, function(err){
     if (err) {
       console.log("db error in DELETE /posts: " + err);
       res.render('error');
@@ -310,14 +287,6 @@ router.delete('/reviews/:id', function(req, res){
   })
 })
 
-router.get('/isAuthenticated', function(req, res, next){
-  if(req.user){
-    res.send(true)
-  } else {
-    res.send(false)
-  }
-})
-
 router.delete('/deleteImage/:id', function(req,res, next){
   Blog.Post.deleteImage(req.params.id, function(){
     res.send('success')
@@ -325,11 +294,11 @@ router.delete('/deleteImage/:id', function(req,res, next){
 })
 
 router.put('/changeImage/:id', function(req, res, next){
-  var form = new formidable.IncomingForm();
-  form.parse(req, function(err, fields, files) {
-    Blog.Post.updateImage(req.params.id, files, function(post) {
-      res.send(post)
-    })
+  async.waterfall([
+    function(cb){form.parse(req, cb)},
+    function(fields, files, cb){Blog.Post.updateImage(req.params.id, files, cb)}
+    ], function(err, result){
+      res.send(result)
   })
 })
 
@@ -346,7 +315,7 @@ router.get('/olderSearchPosts', function(req, res, next){
       console.log("db error in GET /olderPosts: " + err);
       res.render('error');
     } else {
-      res.send(posts)
+      res.send({posts: posts, user: req.user})
     }
   });
 })
@@ -357,7 +326,7 @@ router.get('/newerSearchPosts', function(req, res, next){
       console.log("db error in GET /olderPosts: " + err);
       res.render('error');
     } else {
-      res.send(posts)
+      res.send({posts: posts, user: req.user})
     }
   });
 })
@@ -368,7 +337,7 @@ router.get('/olderTagPosts', function(req, res, next){
       console.log("db error in GET /olderPosts: " + err);
       res.render('error');
     } else {
-      res.send(posts)
+      res.send({posts:posts, user: req.user})
     }
   });
 })
@@ -379,7 +348,7 @@ router.get('/newerTagPosts', function(req, res, next){
       console.log("db error in GET /olderPosts: " + err);
       res.render('error');
     } else {
-      res.send(posts)
+      res.send({posts: posts, user: req.user})
     }
   });
 })

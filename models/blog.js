@@ -92,7 +92,10 @@ Posts.statics.updatePost = function(id, fields, files, cb){
   });
 }
 Posts.statics.findRelatedPosts = function(tags, cb){
-  return this.find({tags: {$in: tags}}).sort({"_id":-1}).limit(3).exec(cb);
+  this.find({tags: {$in: tags}}).sort({"_id":-1}).limit(3).exec(function(err, posts){
+    if(err){console.log(err)}
+    else {cb(null, posts)}
+  });
 }
 Posts.statics.findThisPagePosts = function(first, cb){
   return this.find({_id : { "$lte" : first } }).sort({"_id":-1}).limit(10).exec(function(err, posts){
