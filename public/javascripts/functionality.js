@@ -170,6 +170,7 @@
         if (searchArray && searchArray !== "searchByTags") {
           $("p").highlight(searchArray);
           $(".olderPosts").hide()
+          console.log(totalPosts)
           if(totalPosts > 10) {
             searchPostsPages.totalPages = Math.ceil(totalPosts/10);
             $(".olderSearchPosts").show();
@@ -599,6 +600,7 @@ $("body").delegate(".editFile","change", function(){
         newPost(data.posts, data.user, word, data.count);
         $('.all_posts').show();
         $("input[name='searchPosts']").val('');
+        $("input[name='searchPosts']").data('word', word);
       })
     }
   })
@@ -800,6 +802,7 @@ var changeImage = function(event){
     $(".changeImage > #spinster").hide();
     $(".changeImage > span").text('Submit image');
     images.attr("src", data.image.url);
+    editForm.find(".removeEditPreview").data('img_url', data.image.url)
     editForm.find(".changeImageInput").hide();
     editForm.find(".openChangeImage").text('Change Image');
   });
@@ -843,8 +846,7 @@ var changeImage = function(event){
   var getOlderSearchPosts = function(){
     var data = {
       id: $(".posts div:nth-child(10)").attr("data-id"),
-      searchWords: $("input[name='searchPosts']").val().trim().toLowerCase(),
-      word : $("input[name='searchPosts']").val().replace(/[^a-zA-Z ]/g, '')
+      searchWords: $("input[name='searchPosts']").data('word')
     };
     $(".pages #spinster").css('display', 'block');
      $.ajax({
@@ -867,8 +869,7 @@ var changeImage = function(event){
   var getNewerSearchPosts = function(){
     var data = {
       id: $(".posts div:nth-child(1)").attr("data-id"),
-      searchWords: $("input[name='searchPosts']").val().trim().toLowerCase(),
-      word : $("input[name='searchPosts']").val().replace(/[^a-zA-Z ]/g, '')
+      searchWords: $("input[name='searchPosts']").data('word')
     };
     $(".pages #spinster").css('display', 'block');
      $.ajax({

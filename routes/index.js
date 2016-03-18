@@ -298,7 +298,8 @@ router.put('/changeImage/:id', function(req, res, next){
     function(cb){form.parse(req, cb)},
     function(fields, files, cb){Blog.Post.updateImage(req.params.id, files, cb)}
     ], function(err, result){
-      res.send(result)
+      if(err){console.log(err)}
+      else {res.send(result)}
   })
 })
 

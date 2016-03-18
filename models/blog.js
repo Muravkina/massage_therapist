@@ -157,7 +157,6 @@ Posts.statics.updateImage = function(id, files, cb){
 }
 
 Posts.pre('save', function(next){
-  console.log(this)
   this.tags = this.tags[0].replace(/ /g,'').split(",");
   next()
 })
@@ -168,8 +167,8 @@ Posts.pre('save', function(next, files){
       next();
     })
   } else {
-      next();
-    }
+    next();
+  }
 })
 
 Posts.index({title: "text", body: "text"});
