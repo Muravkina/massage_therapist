@@ -37,7 +37,6 @@ $(document).ready(function() {
     }
   });
 
-
   $(".landing_button_image").hover(function(){
     var button = $(this).children("img");
     var buttonName = $(this).attr('id');
@@ -79,7 +78,6 @@ $(document).ready(function() {
       }, 1000);
     }
   }
-
 
   var scrollToSectionFromTop = function(){
     var buttonName = $(this).attr("id");
@@ -179,14 +177,38 @@ $(document).ready(function() {
         threshold: 45
   });
 
-
-
   changeDirection();
   $(window).on("scroll", startAnimation)
   $(".contact_directly").on("click touchstart", scrollToContact);
   $(".check_rates").on("click touchstart", scrollToRates)
   $(".landing_button_image").on("click touchstart", scrollToSectionFromTop);
   $(".landing_text").on("click touchstart", scrollToSection);
+
+  //google map
+  var displayMap = function(){
+    clearTimeout($(this).data('timeoutId'));
+    var map = $(".office_location");
+    var mapHeight = $(".office_location").height();
+    var mapWidth = $(".office_location").width();
+    map.css("top", $(this).height() + mapHeight)
+    map.css("left", $(this).offset().left - mapWidth + 100);
+    map.fadeIn("fast");
+  }
+  var hideMap = function(){
+    var map = $(".office_location");
+    var button = $(this),
+        timeoutId = setTimeout(function(){
+          if (map.is(":hover")){
+            setTimeout(hideMap, 100);
+          } else {
+            map.fadeOut("fast");
+          }
+        }, 650);
+    button.data('timeoutId', timeoutId);
+  }
+
+  $(".office").hover(displayMap, hideMap)
+
 
 })
 

@@ -95,13 +95,11 @@
     var fieldsAreValid = function(checkable) {
       var fieldsAreValid = true;
       for (var i = 0; i < checkable.length; i++){
-        console.log(checkable[i])
         if(!isValid(checkable[i])){
           checkable[i].addClass('red');
           fieldsAreValid = false;
         }
       }
-      console.log(fieldsAreValid)
       return fieldsAreValid;
     }
 
@@ -848,6 +846,7 @@ var changeImage = function(event){
       id: $(".posts div:nth-child(10)").attr("data-id"),
       searchWords: $("input[name='searchPosts']").data('word')
     };
+    $(".newerPosts").hide();
     $(".pages #spinster").css('display', 'block');
      $.ajax({
       url: '/olderSearchPosts',

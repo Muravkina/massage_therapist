@@ -1097,6 +1097,14 @@ legend {
   margin-bottom: 7%;
 }
 
+.rates .introduction a {
+  color: black;
+}
+
+.rates .introduction a:hover {
+  text-decoration: underline;
+}
+
 .rates.scrollable h3 {
   text-align: center;
   margin-top: 10px;
@@ -1219,3 +1227,11 @@ legend {
   bottom: 7%;
 }
 
+.office_location {
+  position: absolute;
+  z-index: 99999;
+  display: none;
+}
+.office {
+  cursor: pointer;
+}

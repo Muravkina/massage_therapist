@@ -4,7 +4,8 @@ $(document).ready(function() {
 //submit post
 
 var submitPost = function(event){
-  event.preventDefault()
+  event.preventDefault();
+  event.stopPropagation();
 
   var checkable = [$("input[name='title']"), $("textarea[name='body']")];
   var fields = [$("input[name='title']"), $("textarea[name='body']"), $("input[name='tags']")];
@@ -22,6 +23,7 @@ var submitPost = function(event){
       processData: false,
       data: formData
     }).done(function(data){
+      console.log(data)
       $(".submitPost > #spinster").hide();
       $(".submitPost > span").text("Submit");
       //remove error fields
@@ -29,8 +31,7 @@ var submitPost = function(event){
       //hide form for a new post
       blogForm.closeBlogForm();
       //create a new post
-      console.log(data.posts)
-      newPost(data.posts);
+      newPost(data.posts, data.user);
       //update the categories
       updateCategories(data.post.tags)
     })
@@ -55,7 +56,7 @@ var deletePost = function(event){
       data: JSON.stringify(posts)
     }).done(function(data){
       $("#spinster.body").hide();
-      newPost(data.posts)
+      newPost(data.posts, data.user)
       //Remove deleted post from popular posts
       posts.removePostFromPopular(post);
     })

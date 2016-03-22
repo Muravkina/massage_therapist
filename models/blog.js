@@ -66,42 +66,36 @@ Posts.statics.findUniqueTags = function(cb){
     });
 };
 Posts.statics.findFirstTenPosts = function(cb){
-  return this.find({}).limit(10).sort({date: 'desc'}).exec(function(err, posts){
-    if(err){console.log(err)}
-    else {
-      cb(null, posts)
-    }
-  });
+  return this.find({}).limit(10).sort({date: 'desc'}).exec(cb)
 }
 Posts.statics.deletePost = function(id, cb){
   return this.findOne({'_id': id}).remove().exec(function(err){
     if(err){console.log(err)}
-    cb()
+    return cb()
   })
 }
 Posts.statics.updatePost = function(id, fields, files, cb){
-  this.findById(id, function (err, post) {
-    if (err) res.send(err);
-    post.title = fields.title;
-    post.body = fields.body;
-    post.tags = fields.tags;
-    post.save(files, function(err, post){
-      if(err){console.log(err)}
-      else {cb(null, post)}
-    })
+  return this.findById(id, function (err, post) {
+    if (err) console.log(err);
+    else {
+      post.title = fields.title;
+      post.body = fields.body;
+      post.tags = fields.tags;
+      post.save(files).then(cb);
+    };
   });
 }
 Posts.statics.findRelatedPosts = function(tags, cb){
-  this.find({tags: {$in: tags}}).sort({"_id":-1}).limit(3).exec(function(err, posts){
+  return this.find({tags: {$in: tags}}).sort({"_id":-1}).limit(3).exec(function(err, posts){
     if(err){console.log(err)}
-    else {cb(null, posts)}
+    else {return cb(null, posts)}
   });
 }
 Posts.statics.findThisPagePosts = function(first, cb){
   return this.find({_id : { "$lte" : first } }).sort({"_id":-1}).limit(10).exec(function(err, posts){
     if(err){console.log(err)}
     else {
-      cb(null, posts)
+      return cb(null, posts)
     }
   });
 }
@@ -109,13 +103,24 @@ Posts.statics.findOlderPosts = function(last, cb){
   return this.find( {_id : { "$lt" : last } } ).limit(10).sort({"_id":-1}).exec(cb);
 }
 Posts.statics.findNewerPosts = function(last, cb){
-  return this.find( {_id : { "$gt" : last } } ).sort({"_id": -1}).limit(10).exec(cb);
+  return this.find( {_id : { "$gt" : last } } ).limit(10).sort({"_id": 1})
+    .exec(function(err, posts){
+      if(err){console.log(err)}
+        posts.reverse();
+        cb(posts)
+  });
 }
 Posts.statics.findOlderSearchPosts = function(text, first, cb){
   return this.find({ $text: {$search: text}, _id : { "$lt" : first} } ).sort({"_id":-1}).limit(10).exec(cb);
 }
 Posts.statics.findNewerSearchPosts = function(text, last, cb){
-  return this.find({ $text: {$search: text}, _id : { "$gt" : last } } ).sort({"_id":-1}).limit(10).exec(cb);
+  console.log(last)
+  return this.find({ $text: {$search: text}, _id : { "$gt" : last } } ).sort({"_id":1}).limit(10)
+    .exec(function(err, posts){
+      if(err){console.log(err)}
+      posts.reverse();
+      cb(posts)
+  });
 }
 Posts.statics.findPostsOnSearch = function(text, cb){
   return this.find({ $text: {$search: text}}).sort({"_id":-1}).limit(10).exec(cb);
@@ -127,30 +132,36 @@ Posts.statics.findTotalTagPosts = function(tag, cb){
   return this.count({tags: { $in: [tag] }}, cb);
 }
 Posts.statics.findOlderTagPosts = function(tag, first, cb){
-  return this.find({ tags: { $in: [tag] }, _id : { "$lt" : first } } ).sort({"_id":-1}).limit(10).exec(cb);
+  return this.find({ tags: { $in: [tag] }, _id : { "$lt" : first } } ).sort({"_id":-1}).limit(10)
+  .exec(cb);
 }
 Posts.statics.findNewerTagPosts = function(tag, last, cb){
-  return this.find({ tags: { $in: [tag] }, _id : { "$gt" : last } } ).sort({"_id":-1}).limit(10).exec(cb);
+  return this.find({ tags: { $in: [tag] }, _id : { "$gt" : last } } ).sort({"_id":1}).limit(10)
+    .exec(function(err, posts){
+        if(err){console.log(err)}
+          posts.reverse();
+          cb(posts)
+      });
 }
 Posts.statics.findTagPosts = function(tag, cb){
   return this.find({tags: { $in: [tag] }}).sort({"_id":-1}).limit(10).exec(cb);
 }
 Posts.statics.deleteImage = function(id, cb){
-  this.findByIdAndUpdate(id, {$unset: {image: ''}}, function (err, post) {
+  return this.findByIdAndUpdate(id, {$unset: {image: ''}}, function (err, post) {
     knox.deleteFile(post.image.name, function(err, result) {
       if (err) {console.log(err)}
       else {
-        cb(post)
+        return cb(post)
       }
     })
   })
 }
 Posts.statics.updateImage = function(id, files, cb){
-  this.deleteImage(id, function(post){
+  return this.deleteImage(id, function(post){
     post.save(files, function(err, newPost){
       if(err){console.log(err)}
       else {
-        cb(null, newPost)
+        return cb(null, newPost)
       }
     })
   })

@@ -23,7 +23,12 @@ ReviewsSchema.statics.findOlder = function(first, cb){
   return this.find( {_id : { "$lt" : first } } ).limit(10).sort({"_id":-1}).exec(cb);
 }
 ReviewsSchema.statics.findNewer = function(last, cb){
-  return this.find( {_id : { "$gt" : last } } ).limit(10).sort({"_id":-1}).exec(cb);
+  return this.find( {_id : { "$gt" : last } } ).limit(10).sort({"_id":1})
+    .exec(function(err, reviews){
+      if(err) console.log(err)
+      reviews.reverse()
+      cb(reviews)
+    });
 }
 ReviewsSchema.statics.delete= function(id, cb){
   return this.findOne({'_id': id}).remove().exec(cb);
