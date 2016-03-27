@@ -441,7 +441,7 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
 /*EDUCATION*/
 
 #education.info h3 {
-  font-size: 1.2em;
+  font-size: 1.1em;
   padding-top: 1em;
 }
 
@@ -451,14 +451,14 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
 }
 
 #education.info  ul {
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
 }
 
 #education.info  li {
 }
 
 #education.info .row {
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
 }
 
 #education.info .row:last-child {
@@ -483,14 +483,21 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
 
 #education.info  .logo {
   margin-right: 3%;
+  width: 15%;
 }
 
 .logo img {
   margin-top: 3%;
 }
-
-.continuing_education {
+.three.columns.wrap.offset-by-one.continuing_education{
   text-align: center;
+  width: 14%;
+}
+.continue_education .one.column.offset-by-one {
+  padding-left: 3.3%;
+}
+#education .one.column.offset-by-five {
+  padding-left: 26.4%;
 }
 
 .continuing_education p {
