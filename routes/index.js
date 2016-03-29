@@ -342,8 +342,8 @@ router.post('/documentRequest', function(req, res, next){
     }
   }
   var message = "<b>Hello from your favourite wife</b><p>A new request for documents was submitted</p><h2>Request</h2><p><b>Phone: </b>" + req.body.phone + "<br><b>Email: </b>" + req.body.email + "<br><b>Comment: </b>" + req.body.comment + "<br><b>Documents: </b>" + documents.join(', ') + "<br><br>Don't forget to answer!<br> Best, your email provider - wife.com"
-    var email = new helpers.Email(message);
-    mailer.sendMail(email, function(err, info){
+    var newEmail = new helpers.Email(message);
+    mailer.sendMail(newEmail, function(err, info){
     if (err ){
       console.log(err);
     }
@@ -356,7 +356,7 @@ router.post('/documentRequest', function(req, res, next){
 
 router.post('/submitEmail', function(req, res, next){
   var message = "<b>Hello from your favourite wife</b><p>You received a new email from your website</p><h2>Email</h2><p><b>Name: </b>" + req.body.name + "<br><b>Email: </b>" + req.body.email + "<br><b>Message: </b>" + req.body.message + "<br><br>Don't forget to answer!<br> Best, your email provider - wife.com"
-  var newEmail = new email(message);
+  var newEmail = new helpers.Email(message);
   mailer.sendMail(newEmail, function(err, info){
     if (err ){
       console.log(err);
