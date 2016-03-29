@@ -101,14 +101,14 @@ router.get('/register', function(req, res) {
 });
 
 router.post('/register', function(req, res) {
-    User.register(new User({ name: req.body.name, username: req.body.username }), req.body.password, function(err, user) {
-        if (err) {
-            return res.render('register', { user : user });
-        }
-        passport.authenticate('local')(req, res, function () {
-            return res.redirect('/');
-        });
-    });
+  User.register(new User({ name: req.body.name, username: req.body.username }), req.body.password, function(err, user) {
+      if (err) {
+          return res.render('register', { user : user });
+      }
+      passport.authenticate('local')(req, res, function () {
+          return res.redirect('/');
+      });
+  });
 });
 
 router.get('/blog', function(req, res){
@@ -131,7 +131,6 @@ router.get('/back', function(req, res){
 
 
 router.post('/blog', function(req, res){
-  var form = new formidable.IncomingForm();
   form.parse(req, function(err, fields, files) {
     new Blog.Post({title: fields.title, body: fields.body, date: new Date(), tags: fields.tags})
       .save(files)
@@ -140,7 +139,7 @@ router.post('/blog', function(req, res){
         Blog.Post.findFirstTenPosts(function(err, posts){
           return res.send({posts: posts, post: post, user: req.user});
         })
-       })
+      })
   });
 })
 
@@ -288,12 +287,10 @@ router.delete('/deleteImage/:id', function(req,res, next){
 })
 
 router.put('/changeImage/:id', function(req, res, next){
-  async.waterfall([
-    function(cb){form.parse(req, cb)},
-    function(fields, files, cb){Blog.Post.updateImage(req.params.id, files, cb)}
-    ], function(err, result){
-      if(err){console.log(err)}
-      else {return res.send(result)}
+  form.parse(req, function(err, fields, files){
+    Blog.Post.updateImage(req.params.id, files, function(result){
+      return res.send(result);
+    })
   })
 })
 

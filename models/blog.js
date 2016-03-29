@@ -114,7 +114,6 @@ Posts.statics.findOlderSearchPosts = function(text, first, cb){
   return this.find({ $text: {$search: text}, _id : { "$lt" : first} } ).sort({"_id":-1}).limit(10).exec(cb);
 }
 Posts.statics.findNewerSearchPosts = function(text, last, cb){
-  console.log(last)
   return this.find({ $text: {$search: text}, _id : { "$gt" : last } } ).sort({"_id":1}).limit(10)
     .exec(function(err, posts){
       if(err){console.log(err)}
@@ -147,23 +146,18 @@ Posts.statics.findTagPosts = function(tag, cb){
   return this.find({tags: { $in: [tag] }}).sort({"_id":-1}).limit(10).exec(cb);
 }
 Posts.statics.deleteImage = function(id, cb){
-  return this.findByIdAndUpdate(id, {$unset: {image: ''}}, function (err, post) {
+  this.findByIdAndUpdate(id, {$unset: {image: ''}}, function (err, post) {
     knox.deleteFile(post.image.name, function(err, result) {
       if (err) {console.log(err)}
       else {
-        return cb(post)
+        cb(post)
       }
     })
   })
 }
 Posts.statics.updateImage = function(id, files, cb){
-  return this.deleteImage(id, function(post){
-    post.save(files, function(err, newPost){
-      if(err){console.log(err)}
-      else {
-        return cb(null, newPost)
-      }
-    })
+  this.deleteImage(id, function(post){
+    post.save(files).then(cb);
   })
 }
 
