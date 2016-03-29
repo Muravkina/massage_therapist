@@ -150,7 +150,11 @@ router.delete('/posts/:id', function(req, res){
     function(cb){Blog.Post.deletePost(req.params.id, cb)},
     function(cb){Blog.Post.findThisPagePosts(req.body.firstPostId, cb)}
     ], function(err, results){
-     return res.send({posts: results, id: req.params.id, user: req.user})
+      if(results.length > 0){
+        return res.send({posts: results, id: req.params.id, user: req.user});
+      } else {
+        return res.send({redirect: '/blog'});
+      }
   })
 })
 

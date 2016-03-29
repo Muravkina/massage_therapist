@@ -681,21 +681,30 @@ var submitPost = function(event){
 $(".submitPost").on("click touchstart", submitPost)
 
 //delete post
+
 var deletePost = function(event){
 event.preventDefault();
 var posts = new Posts();
 var post = new Post($(this));
+var data;
+if (posts.lastPost.length > 0){
+  data = JSON.stringify(posts);
+}
 $("#spinster.body").show();
 $.ajax({
     url: '/posts/' + post.id,
     type: 'DELETE',
     contentType: 'application/json',
-    data: JSON.stringify(posts)
+    data: data
   }).done(function(data){
     $("#spinster.body").hide();
-    newPost(data.posts, data.user)
-    //Remove deleted post from popular posts
-    posts.removePostFromPopular(post);
+    if (typeof data.redirect == 'string'){
+      window.location = data.redirect
+    } else {
+      newPost(data.posts, data.user)
+      //Remove deleted post from popular posts
+      posts.removePostFromPopular(post);
+    }
   })
 }
 
