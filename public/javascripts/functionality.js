@@ -1,4 +1,41 @@
+  function checkDevice() {
+      var isiPhone = navigator.userAgent.toLowerCase().indexOf("iphone");
+        var isiPad = navigator.userAgent.toLowerCase().indexOf("ipad");
+        var isiPod = navigator.userAgent.toLowerCase().indexOf("ipod");
 
+        var isAndroid = /android/i.test(navigator.userAgent.toLowerCase());
+
+        var isBlackberry = navigator.userAgent.toLowerCase().indexOf("BlackBerry");
+
+        var isOpera = /Opera/i.test(navigator.userAgent.toLowerCase());
+
+        var isIE = navigator.userAgent.toLowerCase().indexOf("IEMobile");
+
+      if(isiPhone > -1){
+          console.log("iPhone");
+      }
+      else if(isiPad > -1){
+          console.log("iPad");
+        }
+      else if(isiPod > -1){
+          console.log("iPod");
+        }
+      else if(isAndroid){
+        console.log("Android");
+      }
+      else if(isBlackberry > -1){
+        console.log("BlackBerry");
+      }
+      else if(isOpera){
+        console.log("Opera Mini");
+      }
+      else if(isIE > -1){
+        console.log("IEMobile");
+      }
+      else{
+          console.log("You are not using any of the common mobile platforms like Apple, Android, Blackberry, Opera, IE Mobile");
+      }
+    }
   var Post = function(selector){
     this.post = selector.parents(".post"),
     this.id = this.post.attr('data-id')
@@ -189,7 +226,7 @@
     }
 
 $(document).ready(function() {
-
+    checkDevice();
     //parse posts
     $(".postBody").each(function(){
       html = $.parseHTML($(this).text());
