@@ -13,10 +13,6 @@
     src: url(../fonts/jd.ttf);
 }
 
-@font-face {
-    font-family: Modeka;
-    src: url(../fonts/Modeka.otf);
-}
 
 .wrap img, .wrap p {
   width: 100%;
@@ -31,13 +27,14 @@ body {
   margin: 0 auto;
   padding-top: 5%;
   background-color: white;
+  overflow: scroll;
 }
 /*MAIN HEADING*/
 
 .landing_image {
   margin-left: 15%;
   margin-bottom: 6.7%;
-  overflow: auto;
+  overflow: scroll;
   width: 80%;
 }
 .massage_therapist_image {
@@ -71,7 +68,7 @@ body {
 .black_landing {
   background-color: rgb(0, 0, 0);
   overflow: auto;
-  clear: both;
+  clear: scroll;
 }
 
 .landing_button_pictures {
@@ -497,7 +494,7 @@ border-image-slice: 18 15 15 17; border-image-width: 20px 20px 20px 20px; border
   padding-left: 3.3%;
 }
 #education .one.column.offset-by-five {
-  padding-left: 26.4%;
+  padding-left: 25%;
 }
 
 .continuing_education p {
@@ -763,7 +760,7 @@ legend {
   margin-left: 35%;
   font-family: 'SensoryOverload', sans-serif;
   float: left;
-  width: 10%;
+  width: 11%;
 }
 
 .olderReviews {
@@ -842,8 +839,8 @@ legend {
 }
 
 .contact.scrollable .three.columns p {
-  font-family: 'Modeka', sans-serif;
-  font-size: 1.5em;
+  font-family: 'Karla', sans-serif;
+  font-size: 1.2em;
   margin-left: 15%;
   text-align: left;
 }
@@ -1148,7 +1145,6 @@ legend {
   width: 100%;
 }
 
-
 /*SCHEDULE*/
 
 #calendar {
@@ -1212,7 +1208,7 @@ legend {
 #spinster {
   display:none;
   z-index: 999999;
-  width: 10%;
+  width: 8%;
   position: relative;
 }
 

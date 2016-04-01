@@ -3,14 +3,14 @@
   <head>
     <title>Ilia Gerassimov - <%= post.title %></title>
     <% include ./partials/head %>
-    <link rel='stylesheet' href='/stylesheets/jquery.sidr.dark.css'/>
+    <link rel='stylesheet' href='/stylesheets/libraries/jquery.sidr.dark.css'/>
     <link rel='stylesheet' href='/stylesheets/blog.css' />
     <link rel='stylesheet' href='/stylesheets/mobile_blog.css' />
     <link href='http://fonts.googleapis.com/css?family=Raleway:300,400' rel='stylesheet' type='text/css'/>
     <link href='http://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'/>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'/>
     <!-- Facebook sharing content -->
-    <meta property="og:url"           content="http://massage-59439.onmodulus.net/posts/<%= post._id %>" />
+    <meta property="og:url"           content="http://birchmassage.com/posts/<%= post._id %>" />
     <meta property="og:title"         content="<%= post.title %>" />
     <meta property="og:description"   content="<%= post.body %>" />
     <meta property="og:image"         content="<%= post.image.url %>" />
@@ -110,11 +110,11 @@
                     <p>Facebook</p>
                   </div><!--facebook_share-->
                   <div class="twitter_share">
-                    <a href="https://twitter.com/share" class="twitter-share-button" data-via="Muravkina"><img src="/images/twitter-ci.png">
+                    <a target="_blank" href="https://twitter.com/share" class="twitter-share-button" data-via="Muravkina"><img src="/images/twitter-ci.png">
                     <p>Twitter</p></a>
                   </div><!--twitter_share-->
                   <div class="linkedin_share">
-                  <a href="https://www.linkedin.com/shareArticle?mini=true&url=<%= url %>&title=<%= post.title %>&summary=<%= post.body %>&source=http://massage-59439.onmodulus.net/" target="_blank"><img src="/images/linkedin-ci.png"></a>
+                  <a href="https://www.linkedin.com/shareArticle?mini=true&url=<%= url %>&title=<%= post.title %>&summary=<%= post.body %>&source=http://birchmassage.com/" target="_blank"><img src="/images/linkedin-ci.png"></a>
                     <p>Linkedin</p>
                   </div><!--linkedin_share-->
                 </div><!--share_content-->

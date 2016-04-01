@@ -13,7 +13,7 @@
       <% var postDate = new Date(date); postDate = postDate.toDateString() %>
       <%= postDate %>
     </p><!--postDate-->
-     <a  href="http://massage-59439.onmodulus.net/posts/<%= id %>" class="postTitle" target="_blank"><%= title %></a>
+     <a  href="http://birchmassage.com/posts/<%= id %>" class="postTitle" target="_blank"><%= title %></a>
     <div class="post_body_wrap">
       <% var maxLength = 700; %>
       <% if (body.length > maxLength) {
@@ -21,7 +21,7 @@
         var trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))) %>
       <p class="postBody"><%= trimmedString %> ...</p>
       <div class="read_more_wrap">
-        <a href="http://massage-59439.onmodulus.net/posts/<%= id %>" class="readMore" target="_blank">READ MORE</a>
+        <a href="http://birchmassage.com/posts/<%= id %>" class="readMore" target="_blank">READ MORE</a>
       </div>
        <% } else { %>
       <p class="postBody"><%= body %></p>
@@ -30,7 +30,7 @@
   </div><!--postData-->
   <footer>
     <div class="comment">
-      <p>Check it out: <a  href="http://massage-59439.onmodulus.net/posts/<%= id %>" target="_blank">/posts/<%= id %></a> and don't hesitate to leave a comment</p>
+      <p>Check it out: <a  href="http://birchmassage.com/posts/<%= id %>" target="_blank">/posts/<%= id %></a> and don't hesitate to leave a comment</p>
     </div><!--comment-->
   </footer>
 </div><!--body-->

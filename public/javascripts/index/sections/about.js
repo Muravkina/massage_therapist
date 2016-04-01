@@ -124,21 +124,21 @@ MobileSection.prototype.hideMobileContent = function(){
 
 
 $(".section").on("mouseover", function(){
-  if ($(window).width() >= 736 ) {
+  if ($(window).width() > 737 ) {
     var section = new Section($(this));
     section.displayTitle();
   }
 });
 
 $(".section").on("mouseleave", function(){
-  if ($(window).width() >= 736 ) {
+  if ($(window).width() > 737 ) {
     var section = new Section($(this));
     section.hideTitle();
   }
 });
 
 $(".section").on("click touchstart", function(){
-  if ($(window).width() >= 736 ) {
+  if ($(window).width() > 737 ) {
     var section = new Section($(this))
     section.hideAllImages($(this));
   } else {
@@ -154,7 +154,7 @@ $(".close_icon_wrap").on("click touchstart", function(e){
   e.preventDefault();
   var infoBoxId = $(this).parents(".container").attr('id');
   var sectionSelector = $(".section."+infoBoxId);
-  if ($(window).width() >= 736 ) {
+  if ($(window).width() > 737 ) {
     var section = new Section(sectionSelector)
     section.hideContent();
   } else {

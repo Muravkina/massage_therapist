@@ -1,12 +1,12 @@
 $(document).ready(function() {
 //facebook sharing
-// $('.fb-share').click(function() {
-//   FB.ui({
-//     method: 'feed',
-//     link: window.location.href,
-//     caption: 'http://massage-59439.onmodulus.net/',
-//   }, function(response){});
-// });
+$('.fb-share').click(function() {
+  FB.ui({
+    method: 'feed',
+    link: window.location.href,
+    caption: 'http://birchmassage.com/'
+  }, function(response){});
+});
 
 // open comment form
 var openComment = function(){
