@@ -8,12 +8,6 @@
     src: url(../fonts/SensoryOverload.ttf);
 }
 
-@font-face {
-    font-family: JD;
-    src: url(../fonts/jd.ttf);
-}
-
-
 .wrap img, .wrap p {
   width: 100%;
 }
@@ -47,28 +41,14 @@ body {
   display: inline-block;
   float:left;
   width: 58%;
+  margin-left: -8%;
 }
 
-.main_heading h1 {
-  font-family: 'SensoryOverload', sans-serif;
-  margin-left: -17%;
-  font-size: 4.5em;
-  width: 82%;
-  float: left;
+.main_heading .wrap {
+  width: 85%
 }
 
-.main_heading p {
-  font-family: 'JD', sans-serif;
-  margin-left: 20%;
-  margin-top: -4.8%;
-  font-size: 1.7em;
-  width: 100%;
-  float: left;
-}
 
-.main_heading img {
-  width: 8%;
-}
 
 
 /*BLACK LANDING WITH BUTTONS*/
@@ -114,7 +94,7 @@ body {
 
 .landing_button_image.reviews {
   width: 70%;
-  padding-top: 22px;
+  padding-top: 16px;
 }
 
 .landing_button_image.contact {
