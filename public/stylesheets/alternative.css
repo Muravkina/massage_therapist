@@ -53,6 +53,8 @@ body {
   font-family: 'SensoryOverload', sans-serif;
   margin-left: -17%;
   font-size: 4.5em;
+  width: 82%;
+  float: left;
 }
 
 .main_heading p {
@@ -60,6 +62,12 @@ body {
   margin-left: 20%;
   margin-top: -4.8%;
   font-size: 1.7em;
+  width: 100%;
+  float: left;
+}
+
+.main_heading img {
+  width: 8%;
 }
 
 
