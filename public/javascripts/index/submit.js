@@ -43,6 +43,7 @@ var submitDocuments = function(event){
     errorForm($(this));
   }
 }
+
 $(".submit_documents").on("click touchstart", submitDocuments);
 
 var submitEmail = function(event){

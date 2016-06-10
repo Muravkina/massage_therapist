@@ -719,11 +719,17 @@
   }
 
   .landing_text.schedule, .landing_text.reviews {
-    margin-left: 6.5%;
+    margin-left: 8%;
   }
 
   .landing_button_image.rates {
+    padding-top: 16%;
+  }
+  .landing_button_image.reviews {
     padding-top: 20%;
+  }
+  .landing_button_image.schedule, .landing_button_image.about {
+    padding-top: 25%;
   }
 
   .landing_button_image.contact {

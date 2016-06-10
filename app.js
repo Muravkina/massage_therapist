@@ -18,7 +18,7 @@ var app = express();
 
 //set up a mongo db
 var mongoose   = require('mongoose');
-mongoose.connect('mongodb://ilia:Vehfif6903117@apollo.modulusmongo.net:27017/e2tubeMe')
+mongoose.connect('mongodb://gerill:Vehfif6903117@olympia.modulusmongo.net:27017/hiT4aqad')
 
 
 var Blog     = require('./models/blog');
