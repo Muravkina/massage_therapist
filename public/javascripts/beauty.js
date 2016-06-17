@@ -191,7 +191,7 @@ $(document).ready(function() {
     button.data('timeoutId', timeoutId);
   }
 
-  $(".office").hover(displayMap, hideMap)
+  $(".office").hover(displayMap, hideMap);
 
 
 })
