@@ -381,8 +381,9 @@ router.post('/submitStatus', function(req, res, next){
 })
 
 router.get('/status', function(req, res, next){
-  Status.find({}, function(status){
-    console.log(status);
+  Status.findOne({count : 1}, function(err, status){
+    if (err) console.log(err)
+    else res.send(status);
   })
 })
 
