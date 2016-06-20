@@ -22,13 +22,36 @@
         <span class="folded-corner"></span>
         <img src="gifs/current_status.gif">
         <p class="status trigger">Status</p>
+        <p class="status_edit trigger">Edit</p>
 
         <div class="popup">
           <div class="popup_content">
             <p>Status</p>
+            <p>Availability: </p>
+            <p>Location</p>
+            <p>Notes</p>
             <a href="#0" class="popup_close img-replace">Close</a>
           </div><!--content-->
         </div><!--popup-->
+
+        <div class="popup_form">
+          <div class='popup_form_content'>
+            <h3>Status Update</h3>
+            <form method="post" action="/statusUpdate" id="status_form">
+              <label for="availability">Availability:</label>
+              <select id="availability" name="availability">
+                <option value="true">Available</option>
+                <option value="false">Not available</option>
+              </select><br>
+              <label for="location">Location:</label>
+              <input type="text" id='location' class="location" name="location"><br>
+              <label for="notes">Notes</label>
+              <textarea id="notes" name="notes" placeholder="Additional notes"></textarea>
+              <input type="submit" class="submit_status" value="Submit">
+            </form>
+            <a href="#0" class="popup_close img-replace">Close</a>
+          </div><!--popup form content-->
+        </div><!--popup form-->
 
         <div class="overlay"></div>
 

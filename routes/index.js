@@ -4,6 +4,7 @@ var passport = require('passport');
 var Review = require("./../models/reviews");
 var Blog = require("./../models/blog");
 var User = require("./../models/user");
+var Status = require('./../models/status');
 var crypto = require( "crypto" );
 var formidable = require('formidable');
 var S3 = require("../config");
@@ -366,6 +367,22 @@ router.post('/submitEmail', function(req, res, next){
       console.log('Message sent: ' + info.response);
       res.send("Success")
     }
+  })
+})
+
+router.post('/submitStatus', function(req, res, next){
+  Status.findOneAndUpdate(  {count: 1},
+                            {$set:{available: req.body.availability, location: req.body.location, notes: req.body.notes}},
+                            {upsert: true, new:true},
+                            function(err, status){
+                                if(err) console.log(err)
+                                else res.send(status)
+  })
+})
+
+router.get('/status', function(req, res, next){
+  Status.find({}, function(status){
+    console.log(status);
   })
 })
 
