@@ -372,7 +372,7 @@ router.post('/submitEmail', function(req, res, next){
 
 router.post('/submitStatus', function(req, res, next){
   Status.findOneAndUpdate(  {count: 1},
-                            {$set:{available: req.body.availability, location: req.body.location, notes: req.body.notes}},
+                            {$set:{availability: req.body.availability, location: req.body.location, notes: req.body.notes}},
                             {upsert: true, new:true},
                             function(err, status){
                                 if(err) console.log(err)

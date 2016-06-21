@@ -10,7 +10,7 @@
 .massage_therapist_image {
   width: 85%;
   margin: 0 auto;
-  margin-top: 10%;
+  margin-top: 3em;
   float: none;
   display: block;
 }
@@ -44,7 +44,7 @@
 
 .header p {
   font-size: 1em;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 }
 
 .landing_image {
@@ -54,12 +54,13 @@
 }
 
 .main_heading {
-  width: 85%;
+  width: 100%;
   margin: 0 auto;
   float: none;
   display: block;
   margin-top: 20%;
-  margin-bottom: 20%
+  margin-bottom: 15%;
+  margin-left: 6%;
 }
 
 .wrap.menu img {
@@ -69,6 +70,71 @@
 .scrollable h1 {
   font-size: 2.5em;
   margin-top: 0;
+}
+
+/*CURRENT STATUS*/
+
+.folded-corner {
+  border-width: 3.5em;
+}
+
+.current_status {
+  width: 2.5em;
+}
+
+.current_status img {
+  top: 1.2em;
+}
+
+.current_status .status_edit.trigger {
+  opacity: 1;
+  margin-top: -6em;
+  right: -1em;
+  font-size: 0.5em;
+}
+
+.popup_content, .popup_form .popup_form_content {
+  width: 75%;
+  padding: 0.2em;
+  padding-bottom: 0.8em;
+}
+
+.popup_content h3 {
+  font-size: 1.3em;
+}
+
+.popup_content p {
+  font-size: 1em;
+  padding: 0.5em 1em;
+}
+
+.popup_form.is-visible {
+  font-size: 10px;
+}
+
+.popup_content .notes:not(span), .popup_content .location:not(span) {
+  margin-left: 0;
+  font-size: 0.8em;
+  padding-top: 0.5em;
+}
+
+#status_form {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.popup_form_content h3{
+  font-size: 2em;
+}
+
+#status_form input[type='submit'] {
+  font-size: 1em;
+  height: 2.5em;
+  line-height: 0em;
+}
+
+#status_form input[type='text'], #status_form textarea {
+  width: 100%;
 }
 
 /*ABOUT */
@@ -864,11 +930,24 @@
   body {
     font-size: 15px;
   }
+  .current_status .status_edit.trigger {
+    opacity: 1;
+    margin-top: -4.5em;
+    right: -3em;
+
+  }
 }
 
 @media only screen and (max-width: 959px) and (min-width: 768px) {
   body {
     font-size: 12px;
+  }
+
+  .current_status .status_edit.trigger {
+    opacity: 1;
+    margin-top: -4.5em;
+    right: -3.5em;
+
   }
 
   .header {
@@ -1073,17 +1152,30 @@
   }
 
   .massage_therapist_image {
-    width: 55%;
-    margin-left: 5%;
+    width: 70%;
+    margin-left: 8%;
     float: left;
-    margin-top: 5%;
+    margin-top: 8em;
   }
 
   .main_heading {
-    width: 66%;
+    width: 100%;
     float: right;
-    margin-bottom: 0%;
-    margin-top: 4%;
+    margin-bottom: 20%;
+    margin-top: 20%;
+    margin-right: -10%;
+  }
+
+  .current_status .folded-corner {
+    border-width: 4.5em;
+  }
+
+  .current_status {
+    width: 3.5em;
+  }
+
+  .current_status .status_edit.trigger {
+    right: -2em;
   }
 
   .header p {
@@ -1171,7 +1263,7 @@
 @media only screen and (min-device-width : 375px) and (max-device-width : 736px) and (orientation : landscape) {
   .landing_image {
     margin-left: 10%;
-    margin-bottom: 10.7%;
+    margin-bottom: 7.7%;
   }
   .black_landing {
     display: none;
@@ -1223,17 +1315,18 @@
   }
 
   .massage_therapist_image {
-    width: 45%;
+    width: 40%;
     margin-left: 2%;
-    margin-top: 5%;
+    margin-top: 3%;
     float: left;
   }
 
   .main_heading {
     float: left;
-    width: 60%;
-    margin-top: 8%;
+    width: 50%;
+    margin-top: 5%;
     margin-bottom: 2%;
+    margin-left: -10%;
   }
 
   .landing_text.wrap:last-child {
@@ -1243,6 +1336,15 @@
   .header {
     padding-top: 2%;
     padding-bottom: 2%;
+  }
+
+  .folded-corner {
+    background: none;
+    box-shadow: none;
+  }
+
+  .popup_content, .popup_form .popup_form_content {
+    margin: 5em auto;
   }
 
   .header p {

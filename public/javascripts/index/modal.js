@@ -1,6 +1,6 @@
 $(document).ready(function($){
   //open popup
-  $('.trigger').on('click', function(event){
+  $('.trigger, .current_status > img').on('click touchstart', function(event){
     event.preventDefault();
     getStatus();
     var el = $(this).hasClass('status_edit') ? $('.popup_form') : $('.popup')
@@ -15,26 +15,20 @@ $(document).ready(function($){
       type: 'GET',
       url: '/status'
     }).done(function(status){
-      
-      updateStatusContent(status);
-      $('.popup_content #spinster').hide();    
+      $('.popup_content #spinster').hide();
+      updateStatusContent(status, function(){
+      });
     })
   }
 
   //populate status box
-  function updateStatusContent(status) {
+  function updateStatusContent(status, cb) {
 
     // update availability
-    var availability,
-        availabilityColor;   
-    if (status.available === true) {
-      availability = 'available';
-      availabilityColor = 'true';
-    } else {
-      availability = 'not available';
-      availabilityColor = 'false';
-    }
-    $(".popup_content > p > .availability").text(availability).addClass(availabilityColor)
+    console.log(status)
+
+    var availabilityColor = (status.availability === 'available' || status.availability === 'limited availability') ? "available" : "unavailable";
+    $(".popup_content > .availability").text(status.availability).addClass(availabilityColor)
 
     //update location
 
@@ -54,16 +48,19 @@ $(document).ready(function($){
     } else {
       $('.popup_content > p.notes').hide();
     }
+
+    cb();
   }
 
 
   //close popup
-  $('.popup, .popup_form').on('click', function(event){
+  $('.popup, .popup_form').on('click touchstart', function(event){
     if( $(event.target).is('.popup_close') || $(event.target).is('.popup') || $(event.target).is('.popup_form') ) {
       event.preventDefault();
       $(this).removeClass('is-visible');
-      $('.popup_content > p > .availability').removeClass('true').removeClass('false');
-      $('.popup_form_content > .submission_status').hide();
+      $('.popup_content > .availability').removeClass('available').removeClass('unavailable');
+      $('.popup_content > .location, .popup_content > .notes, .popup_form_content > .submission_status').hide();
+      // $('.popup_form_content > .submission_status').hide();
     }
   });
 
@@ -71,7 +68,7 @@ $(document).ready(function($){
   $(document).keyup(function(event){
       if(event.which=='27'){
         $('.popup, .popup_form').removeClass('is-visible');
-        $('.popup_content > p > .availability').removeClass('true').removeClass('false');
+        $('.popup_content > .availability').removeClass('available').removeClass('unavailable');
         $('.popup_form_content > .submission_status').hide();
       }
     });

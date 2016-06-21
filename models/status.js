@@ -3,7 +3,7 @@ var Schema       = mongoose.Schema;
 
 var StatusSchema = new Schema({
     count: Number,
-    available: Boolean,
+    availability: String,
     location: String,
     notes: String
 });

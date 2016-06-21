@@ -26,11 +26,11 @@
 
         <div class="popup">
           <div class="popup_content">
-            <p>Status</p>
-            <img src="/gifs/spinster.gif" id="spinster">
-            <p>Availability: <span class='availability'></span></p>
+            <h3>Status</h3>
+            <img src="/gifs/load.gif" id="spinster">
+            <p class='availability'></p>
             <p class='location'>Location: <span></span></p>
-            <p class='notes'>Notes <span></span></p>
+            <p class='notes'>Notes: <span></span></p>
             <a href="#0" class="popup_close img-replace">Close</a>
           </div><!--content-->
         </div><!--popup-->
@@ -41,12 +41,13 @@
             <form method="post" action="/statusUpdate" id="status_form">
               <label for="availability">Availability:</label>
               <select id="availability" name="availability">
-                <option value="true">Available</option>
-                <option value="false">Not available</option>
+                <option value="available">Available</option>
+                <option value="not available">Unavailable</option>
+                <option value="limited availability">Limited availability</option>
               </select><br>
               <label for="location">Location:</label>
               <input type="text" id='location' class="location" name="location"><br>
-              <label for="notes">Notes</label>
+              <label for="notes">Notes:</label>
               <textarea id="notes" name="notes" placeholder="Additional notes"></textarea>
               <input type="submit" class="submit_status" value="Submit">
             </form>
