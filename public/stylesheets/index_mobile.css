@@ -137,6 +137,10 @@
   width: 100%;
 }
 
+.popup_content .availability {
+  font-size: 0.8em;
+}
+
 /*ABOUT */
 
 .about_image .top_part,.about_image .middle_part,.about_image .bottom_part {
@@ -1212,6 +1216,7 @@
 @media only screen  and (min-device-width : 320px) and (max-device-width : 568px) and (orientation : landscape) {
   .massage_therapist_image {
     width: 40%;
+    margin-left: 5%;
   }
   .main_heading {
     width: 55%;
@@ -1257,6 +1262,68 @@
   .section.education {
     margin-right: 0%;
   }
+  .landing_image .massage_therapist_image {
+    width: 40%;
+  }
+  .landing_image .main_heading {
+    width: 50%;
+  }
+
+  .popup_content h3 {
+    font-size: 2em;
+  }
+
+  .availability {
+    font-size: 1.3em;
+  }
+
+  .popup_form_content h3 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+  }
+
+  .popup .popup_content {
+    margin: 3em auto;
+  }
+
+  #status_form input[type='text'] {
+    width: 100%;
+    line-height: 2em;
+    height: 3em;
+    margin-bottom: 0.6em;
+  }
+
+  #status_form textarea {
+    margin-bottom: 0.6em;
+  }
+
+  #status_form select {
+    margin-bottom: 0.6em;
+    height: 3em;
+  }
+
+  #status_form input[type='submit'] {
+    height: 3em;
+    line-height: 2em;
+    margin-top: 0.3em;
+  }
+
+  #status_form {
+    padding-bottom: 0.6em;
+  }
+
+  .popup_form .popup_form_content {
+    margin: 1.5em auto;
+  }
+
+  .current_status .status_edit.trigger {
+    right: -2em;
+    top: 1em;
+    z-index: 999999999999999999999999;
+    opacity: 1;
+    font-size: 0.7em;
+  }
+
 }
 
 /*iphone 6 lanscape */
@@ -1315,7 +1382,7 @@
   }
 
   .massage_therapist_image {
-    width: 40%;
+    width: 48%;
     margin-left: 2%;
     margin-top: 3%;
     float: left;
@@ -1327,6 +1394,18 @@
     margin-top: 5%;
     margin-bottom: 2%;
     margin-left: -10%;
+  }
+
+  .main_heading .wrap {
+    width: 100%;
+  }
+
+  .main_heading {
+    width: 60%;
+  }
+
+  .folded-corner {
+    border-width: 6em;
   }
 
   .landing_text.wrap:last-child {
@@ -1342,8 +1421,66 @@
     background: none;
     box-shadow: none;
   }
+  .popup_content h3 {
+    font-size: 2em;
+    margin-bottom: 0em;
+  }
+  .status_edit.trigger {
+    right: -1em;
+    top: -4em;
+    z-index: 999999999999999999999999;
+    opacity: 1;
+    font-size: 1em;
+  }
 
-  .popup_content, .popup_form .popup_form_content {
+  .popup_form_content h3 {
+    font-size: 2.5em;
+    margin-bottom: 0em;
+  }
+
+  .popup_content .availability {
+    font-size: 1.2em;
+  }
+
+  #status_form input[type='text'] {
+    width: 90%;
+    line-height: 2em;
+    height: 3em;
+    margin-bottom: 0.6em;
+  }
+
+  #status_form textarea {
+    margin-bottom: 0.6em;
+  }
+
+  #status_form select {
+    margin-bottom: 0.6em;
+    height: 3em;
+  }
+
+  #status_form input[type='submit'] {
+    height: 3em;
+    line-height: 2em;
+    margin-top: 0.3em;
+  }
+
+  #status_form {
+    padding-bottom: 0.6em;
+  }
+
+  .popup_form .popup_form_content {
+    margin: 6em auto;
+  }
+
+  .current_status .status_edit.trigger {
+    right: -1.5em;
+    top: -3em;
+    z-index: 999999999999999999999999;
+    opacity: 1;
+    font-size: 1em;
+  }
+
+  .popup_content, .popup_form_content {
     margin: 5em auto;
   }
 
@@ -1523,5 +1660,12 @@
   }
   .container.reviews_collection_wrap {
     width: 100%;
+  }
+}
+
+
+@media only screen and (min-device-width : 414px) and (max-device-width : 736px) and (orientation : landscape) {
+  .landind_image {
+
   }
 }
