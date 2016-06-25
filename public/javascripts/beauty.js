@@ -193,7 +193,8 @@ $(document).ready(function() {
 
   $(".office").hover(displayMap, hideMap);
 
-
+  $('div.fc-day-grid > a' ).prop("onclick", null);
+  $('div.fc-day-grid').off("mousedown");
 })
 
 
