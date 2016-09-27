@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  $(window).trigger('scroll');
+  $(window).trigger('scroll load');
   var animation_elements = $(".scrollable");
 
   var check_if_in_view = function() {
@@ -38,30 +38,19 @@ $(document).ready(function() {
   });
 
   $(".landing_button_image").hover(function(){
-    var button = $(this).children("img");
+    var button = $(this).find("img");
     var buttonName = $(this).attr('id');
     $(".landing_text").children().each(function(){
-      if ($(this).attr('id') === buttonName) {
-        $(this).css("border-bottom-color", 'white')
-      }
     })
     button.attr('src', 'gifs/' + buttonName + '.gif')
   }, function(){
-    var button = $(this).children("img");
+    var button = $(this).find("img");
     var buttonName = $(this).attr('id');
         $(".landing_text").children().each(function(){
-      if ($(this).attr('id') === buttonName) {
-        $(this).css("border-bottom-color", 'black')
-      }
     })
     button.attr('src', 'images/' + buttonName + '.png');
   })
 
-  $(".landing_text").hover(function(){
-    $(this).children("p").css("border-bottom-color", 'white');
-  }, function(){
-    $(this).children("p").css("border-bottom-color", 'black');
-  })
 
   var scrollToContact = function(){
     if ($(window).width() >= 736 ) {
@@ -111,7 +100,7 @@ $(document).ready(function() {
     car.style.left = newPos;
   };
 
-  var driveLeft = setInterval(function(){
+    var driveLeft = setInterval(function(){
     var distFromLeft = parseInt(car.style.left);
     var windowWidth = document.body.clientWidth;
 
@@ -195,6 +184,8 @@ $(document).ready(function() {
 
   $('div.fc-day-grid > a' ).prop("onclick", null);
   $('div.fc-day-grid').off("mousedown");
+
+
 })
 
 

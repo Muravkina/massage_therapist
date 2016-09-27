@@ -1,4 +1,12 @@
 $(document).ready(function($){
+  //open booking popup
+  $(".trigger_booking").on('click touchstart', function(event){
+    event.preventDefault();
+    $(".popup_book").addClass('is-visible');
+  });
+
+  //close booking popup
+
   //open popup
   $('.trigger, .current_status > img').on('click touchstart', function(event){
     event.preventDefault();
@@ -25,7 +33,6 @@ $(document).ready(function($){
   function updateStatusContent(status, cb) {
 
     // update availability
-    console.log(status)
 
     var availabilityColor = (status.availability === 'available' || status.availability === 'limited availability') ? "available" : "unavailable";
     $(".popup_content > .availability").text(status.availability).addClass(availabilityColor)
@@ -54,13 +61,15 @@ $(document).ready(function($){
 
 
   //close popup
-  $('.popup, .popup_form').on('click touchstart', function(event){
-    if( $(event.target).is('.popup_close') || $(event.target).is('.popup') || $(event.target).is('.popup_form') ) {
-      event.preventDefault();
+  $('.popup, .popup_form, .popup_book').on('click touchstart', function(event){
+    console.log($(event.target))
+    if( $(event.target).is('.popup_close') || $(event.target).is('.popup') || $(event.target).is('.popup_form') ||  $(event.target).is('.popup_book')) {
+      if ( !$(event.target).is('.popup_book') ) {
+        event.preventDefault();
+        $('.popup_content > .availability').removeClass('available').removeClass('unavailable');
+        $('.popup_content > .location, .popup_content > .notes, .popup_form_content > .submission_status').hide();
+      }
       $(this).removeClass('is-visible');
-      $('.popup_content > .availability').removeClass('available').removeClass('unavailable');
-      $('.popup_content > .location, .popup_content > .notes, .popup_form_content > .submission_status').hide();
-      // $('.popup_form_content > .submission_status').hide();
     }
   });
 
@@ -93,6 +102,8 @@ $(document).ready(function($){
 
   }
   $("#status_form").on("submit", submitStatus);
+
+
 });
 
 
