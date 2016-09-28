@@ -143,8 +143,7 @@ $(document).ready(function() {
       left: 'title',
       center: 'basicDay, basicWeek, month',
       right: 'today prev,next'
-    },
-    height: 600
+    }
   })
 
   $('#calendar').off('click touchstart', 'div');

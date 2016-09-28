@@ -1424,9 +1424,9 @@ legend {
 /*SCHEDULE*/
 
 #calendar {
-  width: 80%;
+  width: 100%;
   margin: 4% auto;
-  margin-bottom: 10%;
+  margin-bottom: 3%;
 }
 
 #calendar h2, #calendar td, #calendar th, #calendar button, .schedule_instructions {
@@ -1438,7 +1438,7 @@ legend {
 }
 
 .schedule_instructions {
-  width: 80%;
+  width: 95%;
   margin: 4% auto;
   font-size: 1em;
 }
@@ -1465,13 +1465,20 @@ legend {
   background-color: white;
 }
 
-.rates.scrollable {
-  background-image: url(../images/b.jpg);
+.schedule.scrollable {
+  background-image: url(../images/birches.png);
+  background-repeat: no-repeat;
+  background-size: cover;
   background-attachment: fixed;
   backface-visibility: 0;
+  margin-bottom: 7%;
+  margin-top: 3%;
 }
-.m {
+.background_overlay {
  background-color: white;
+ width: 80%;
+ margin: 0 auto;
+ padding-bottom: 1em; 
 }
 
 .schedule.scrollable .wrap {
