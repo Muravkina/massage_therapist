@@ -772,12 +772,12 @@
 }
 
 .schedule_instructions {
-  width: 90%;
+  width: 100%;
   line-height: 1.2;
 }
 
 #calendar {
-  width: 90%;
+  width: 100%;
 }
 
 #calendar h2 {
@@ -787,6 +787,9 @@
   margin-bottom: 4%;
 }
 
+.background_overlay {
+  width: 95%;
+}
 
 }
 
@@ -1519,7 +1522,7 @@
   }
   /*EDUCATION SECTION*/
 #education.info, #massage.info, #resume.info {
-  width: 100%;
+  width: 85%;
 }
 
 .logo.three.columns img, .logo.three.columns  {
@@ -1619,6 +1622,10 @@
 
 .header .landing_text.wrap {
   margin-left: 0;
+}
+
+.schedule.scrollable, .reviews.scrollable {
+  background: none;
 }
 
 }
