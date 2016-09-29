@@ -387,6 +387,7 @@ hr.fc-divider {
 	border-width: 1px;
 	padding: 0;
 	vertical-align: top;
+	background-color: white;
 }
 
 .fc td.fc-today {

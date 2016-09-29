@@ -10,27 +10,43 @@ $(document).ready(function($){
   //open popup
   $('.trigger, .current_status > img').on('click touchstart', function(event){
     event.preventDefault();
-    getStatus();
+    getStatus(useData);
     var el = $(this).hasClass('status_edit') ? $('.popup_form') : $('.popup')
     el.addClass('is-visible');
     $("#status_form").show();
   });
 
   //get current status
-  function getStatus(){
+  function getStatus(cb){
     $(".popup_content > #spinster").show();
     $.ajax({
       type: 'GET',
       url: '/status'
     }).done(function(status){
       $('.popup_content #spinster').hide();
-      updateStatusContent(status, function(){
-      });
+      cb(status)
     })
   }
 
+  //use ajax data
+  function useData(status) {
+    updateStatusContent(status);
+    populateStatusForm(status);
+  }
+
+  //populate status form
+  function populateStatusForm(status) {
+    //define selected status
+    $('#availability option[value="' + status.availability + '"]').prop('selected', true)
+    //set location
+    $("input[name='location']").val(status.location);
+    //set notes
+    $("textarea[name='notes']").val(status.notes);
+
+  }
+
   //populate status box
-  function updateStatusContent(status, cb) {
+  function updateStatusContent(status) {
 
     // update availability
 
@@ -56,13 +72,12 @@ $(document).ready(function($){
       $('.popup_content > p.notes').hide();
     }
 
-    cb();
+
   }
 
 
   //close popup
   $('.popup, .popup_form, .popup_book').on('click touchstart', function(event){
-    console.log($(event.target))
     if( $(event.target).is('.popup_close') || $(event.target).is('.popup') || $(event.target).is('.popup_form') ||  $(event.target).is('.popup_book')) {
       if ( !$(event.target).is('.popup_book') ) {
         event.preventDefault();

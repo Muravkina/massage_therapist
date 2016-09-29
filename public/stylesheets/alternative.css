@@ -832,6 +832,12 @@ box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75);
 
 }
 /*REVIEWS*/
+.reviews.scrollable {
+  background-image: url(../images/b.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
 
 .rating {
   float:left;
@@ -1005,9 +1011,13 @@ legend {
 .review_button{
   float: right;
 }
-.form.eleven.columns {
-  margin-left: 13%;
-  margin-top: 3%;
+.form_wrap {
+  width: 100%;
+}
+
+.form_wrap .form {
+  width: 70%;
+  margin: 3% auto;
 }
 .review_author {
   float: right;
@@ -1018,15 +1028,18 @@ legend {
   margin-bottom: 1rem;
   overflow: auto;
 }
-.six.columns{
-  margin-left: 3em;
-}
-.reviews_collection .review.six.columns {
+
+.review.six.columns {
   margin-bottom: -1em;
+  width: 44%;
+  float: left;
+  margin-left: 3%;
 }
 .reviews_collection.row {
   margin: 3% auto;
-  width: 86%;
+  width: 90%;
+  margin-top: 10%;
+  background-color: white;
 }
 
 .newerReviews {
@@ -1047,6 +1060,10 @@ legend {
 .newerReviews:hover, .olderReviews:hover {
   cursor: pointer;
   color: rgb(100, 100, 100);
+}
+
+.reviews_collection_wrap {
+  width: 100%;
 }
 
 /*BOUNCING*/
@@ -1423,6 +1440,7 @@ legend {
 
 /*SCHEDULE*/
 
+
 #calendar {
   width: 100%;
   margin: 4% auto;
@@ -1431,6 +1449,10 @@ legend {
 
 #calendar h2, #calendar td, #calendar th, #calendar button, .schedule_instructions {
   font-family: 'Karla', sans-serif;
+}
+
+#calendar h2, .schedule_instructions p {
+  background-color: white;
 }
 
 #calendar button {
@@ -1475,7 +1497,6 @@ legend {
   margin-top: 3%;
 }
 .background_overlay {
- background-color: white;
  width: 80%;
  margin: 0 auto;
  padding-bottom: 1em; 

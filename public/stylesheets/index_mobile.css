@@ -372,6 +372,13 @@
   width: 43%;
 }
 
+.schedule.scrollable {
+  background: none;
+}
+.form_wrap .form {
+  width: 100%;
+}
+
 /*RESUME*/
 #resume.info {
   margin-bottom: 5%;
@@ -578,7 +585,9 @@
   margin-left: 0%;
 }
 
-
+.reviews.scrollable {
+  background: none;
+}
 
 
 /*CONTACT*/
@@ -1163,13 +1172,6 @@
     font-size: 1.15em;
   }
 
-  .reviews_collection_wrap {
-    width: 100%;
-  }
-
-  .review.six.columns {
-    width: 45%;
-  }
 }
 
 @media only screen and (min-width: 1500px)  {

@@ -614,13 +614,13 @@
   </div><!--rates-->
 
   <div class="reviews bounce_up scrollable">
-    <h1>Reviews</h1>
-    <div class="wrap kick_me_man">
-      <img src="images/kick_me.jpg">
-    </div><!--kick_me_man-->
-    <div class = "container">
-      <div class="row">
-        <div class="form eleven columns">
+    <div class="background_overlay">
+      <h1>Reviews</h1>
+<!--       <div class="wrap kick_me_man">
+        <img src="images/kick_me.jpg">
+      </div> -->
+      <div class="form_wrap">
+        <div class="form">
           <form method="post" action="/" id="reviewForm">
             <legend>Please rate:</legend>
             <div class="formErrors"></div>
@@ -653,31 +653,31 @@
           </form>
         </div><!--form eleven columns-->
       </div><!--row-->
-    </div><!--container-->
-    <div class="container reviews_collection_wrap">
-      <div class="reviews_collection row" data-id="<%= totalReviews %>">
-      <% reviews.forEach(function(review){ %>
-        <div class="review six columns" data-id="<%=review.id%>">
-          <div class="star-ratings-css" title= ".<%= review.stars %>" ></div>
-          <p class="review_body"><%= review.body %></p>
-          <p class="review_author"><%= review.author %></p>
-          <% if(user) { %>
-            <button class="deleteReview">
-              <img src="/gifs/spinster.gif" id="spinster">
-              <span>Delete</span>
-            </button>
+      <div class="reviews_collection_wrap">
+        <div class="reviews_collection row" data-id="<%= totalReviews %>">
+        <% reviews.forEach(function(review){ %>
+          <div class="review six columns" data-id="<%=review.id%>">
+            <div class="star-ratings-css" title= ".<%= review.stars %>" ></div>
+            <p class="review_body"><%= review.body %></p>
+            <p class="review_author"><%= review.author %></p>
+            <% if(user) { %>
+              <button class="deleteReview">
+                <img src="/gifs/spinster.gif" id="spinster">
+                <span>Delete</span>
+              </button>
+            <% } %>
+          </div><!-- review -->
+        <% }) %>
+        </div><!-- reviews_collection row -->
+        <div class="pages">
+          <img src="/gifs/load.gif" id="spinster">
+          <p class="newerReviews">Newer reviews</p>
+          <% if (reviews.length === 10) { %>
+            <p class="olderReviews">Older reviews</p>
           <% } %>
-        </div><!-- review -->
-      <% }) %>
-      </div><!-- reviews_collection row -->
-      <div class="pages">
-        <img src="/gifs/load.gif" id="spinster">
-        <p class="newerReviews">Newer reviews</p>
-        <% if (reviews.length === 10) { %>
-          <p class="olderReviews">Older reviews</p>
-        <% } %>
-      </div>
-    </div><!-- container  reviews_collection-->
+        </div>
+      </div><!-- container  reviews_collection-->
+    </div><!--background_overlay-->
   </div><!--reviews-->
 
   <div class="contact bounce_up scrollable">
