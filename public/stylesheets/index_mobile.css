@@ -949,6 +949,10 @@
     right: -3em;
   }
 
+  .reviews.scrollable, .schedule.scrollable {
+    background-size: contain;
+  }
+
 
 }
 
@@ -1005,6 +1009,23 @@
   .rates .table .three.columns {
     width: 20%;
     margin-right: 2%;
+  }
+
+  .reviews.scrollable, .schedule.scrollable {
+    background: none;
+  }
+
+  .background_overlay {
+    width: 100%;
+  }
+
+  .schedule_instructions {
+    background-color: white;
+    width: 90%;
+  }
+
+  #calendar {
+    width: 90%;
   }
 
 }
