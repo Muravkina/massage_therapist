@@ -35,6 +35,15 @@
 
 .landing_text.wrap {
   margin-right: 0%;
+  font-size: 0.9em;
+}
+.landing_text.wrap.schedule {
+  margin-left: 0.5%;
+  margin-right: 2.5%;
+}
+
+.landing_text.wrap.rates {
+  width: 12.3%;
 }
 
 .sticky .landing_text:first-child {
