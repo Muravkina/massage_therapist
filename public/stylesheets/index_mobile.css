@@ -7,7 +7,7 @@
 .main {
   margin: 0;
   margin-bottom: 20%;
-  margin-top: 25%;
+  margin-top: 10%;
 }
 .massage_therapist_image {
   width: 70%;
@@ -23,7 +23,7 @@
 }
 
 .header .landing_text_wrap {
-  width: 98%;
+  width: 100%;
   font-size: 10px;
 }
 
@@ -38,6 +38,7 @@
 .landing_text.wrap {
   margin-right: 0%;
   width: 28.3%;
+  margin-top: 2%;
 }
 
 .sticky .landing_text:first-child {
@@ -88,6 +89,7 @@
 .current_status img {
   top: 1.2em;
   z-index: 999;
+  right: 35%;
 }
 
 .current_status .status_edit.trigger {
@@ -199,7 +201,7 @@
 /*MEDICAL*/
 
 #medical.hidden {
-  width: 100%;
+  width: 90%;
 }
 
 #medical .image {
@@ -218,6 +220,7 @@
   font-size: 2em;
   font-weight: bold;
   margin-bottom: 3%;
+  margin-top: 8%;
 }
 
 #medical h3 {
@@ -226,7 +229,7 @@
 
 /*EDUCATION SECTION*/
 #education.info, #massage.info, #resume.info {
-  width: 100%;
+  width: 90%;
 }
 
 .logo.three.columns img, .logo.three.columns  {
@@ -1174,7 +1177,6 @@
   }
 
   .massage_therapist_image {
-   width: 55%;
     margin-left: 4em;
     float: left;
     margin-top: 3em;

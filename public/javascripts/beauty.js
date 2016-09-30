@@ -4,6 +4,7 @@ $(document).ready(function() {
   var animation_elements = $(".scrollable");
 
   var check_if_in_view = function() {
+    if ($(window).width() >= 736 ) {
     var window_height = $(window).height();
     var window_top_position = $(window).scrollTop();
     var window_bottom_position = (window_top_position + window_height);
@@ -22,6 +23,11 @@ $(document).ready(function() {
         $(this).removeClass('in-view');
       }
     });
+  } else {
+    $.each(animation_elements, function() {
+      $(this).css({"opacity":1})
+    })
+  }
   }
 
   $(window).on('scroll resize', check_if_in_view);
@@ -77,11 +83,18 @@ $(document).ready(function() {
 
   var scrollToSection = function(){
     var buttonName = $(this).attr("id");
-    var offsetWithoutView = 150;
-    if($(this).attr('class').indexOf('in-view') >= 0){
+    var offsetWithoutView;
+
+    if ($(window).width() >= 736 ) {
+      offsetWithoutView = 150;
+    } else {
+      offsetWithoutView = -75;
     }
+
+    // if($(this).attr('class').indexOf('in-view') >= 0){
+    // }
     $('html, body').animate({
-        scrollTop: $("." + buttonName + ".scrollable" ).position().top - $(".header").outerHeight() - 150
+        scrollTop: $("." + buttonName + ".scrollable" ).position().top - $(".header").outerHeight() - offsetWithoutView
     }, 1000);
   }
 
