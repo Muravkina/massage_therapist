@@ -104,6 +104,11 @@
   z-index: 9999;
 }
 
+.current_status #spinster {
+  top: -1em;
+  right: -1em;
+}
+
 .popup_content, .popup_form .popup_form_content {
   width: 75%;
   padding: 0.2em;
