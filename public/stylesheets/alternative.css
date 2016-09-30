@@ -43,7 +43,7 @@ body {
 .landing_image {
   margin-left: 15%;
   margin-bottom: 6.7%;
-  overflow: scroll;
+  overflow: hidden;
   width: 80%;
 }
 .massage_therapist_image {
