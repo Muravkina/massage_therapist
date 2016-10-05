@@ -302,6 +302,7 @@ var updatePost = function(event){
     editForm.prev(".openEdit").text("Edit");
     $(".editPost > #spinster").hide();
     $(".editPost > span").text('update');
+    post.find(".postImage").show();
   })
 }
 
@@ -441,6 +442,7 @@ $(".posts").on("click touchstart", ".deleteImage", function(event){
       var fileInput = "<input type='file' name='image' class='editFile'>";
       editForm.prepend(fileInput);
       postImage.removeAttr('src')
+      postImage.hide();
     })
 })
 
