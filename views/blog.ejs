@@ -41,17 +41,17 @@
                 <textarea id="body" placeholder="Share your insights..." name="body"></textarea><br>
                 <input type="text" id="tags" name="tags" placeholder="Tags (example: tag1, tag2)">
                 <input type="file" name="image" class="editFile" id="submitImageForPost" size="500">
-                <img id="preview"/>
+                <img id="preview" alt="image preview" />
                 <div class="submitPost_wrap">
                   <p class="submitPost">
-                    <img src="/gifs/spinster.gif" id="spinster">
+                    <img src="/gifs/spinster.gif" id="spinster" alt="loading icon">
                     <span>Submit</span>
                   </p>
                 </div><!--submitPost_wrap-->
               </form>
               <% } %>
               <p class="all_posts back">
-                <img src="/gifs/spinster.gif" id="spinster">
+                <img src="/gifs/spinster.gif" id="spinster" alt="loading icon">
                 <span>Back to all posts</span>
               </p>
               <div class="posts">
@@ -65,7 +65,7 @@
                     <a  href="/posts/<%= post.id %>" class="postTitle"><%= post.title %></a>
                     <img
                     <% if (post.image.url) { %>
-                      src="<%= post.image.url%>"
+                      src="<%= post.image.url %>" alt="<%= post.title %>"
                     <% } %>
                     class="postImage" id="preview">
                     <div class="post_body_wrap">
@@ -83,7 +83,7 @@
                     </div><!--post_body_wrap-->
                       <p class="postTags">
                         <% if (post.tags[0] !== "") { %>
-                          <img src="/images/tag.png" width="20px">
+                          <img src="/images/tag.png" width="20px" alt="tags icon">
                         <% } %>
                         <% post.tags.forEach(function(tag){ %>
                           <span class="searchTag"><%= tag %></span>
@@ -103,14 +103,14 @@
                         <% if (post.image.url) { %>
                           <div class="change_image_wrap">
                             <p class="deleteImage">
-                              <img src="/gifs/spinster.gif" id="spinster">
+                              <img src="/gifs/spinster.gif" id="spinster" alt="loading icon">
                               <span>Delete Image</span>
                             </p>
                             <p class="openChangeImage">Change Image</p>
                             <div class="changeImageInput">
                               <input type="file" name="image" class="editFile">
                                 <p class="changeImage">
-                                  <img src="/gifs/spinster.gif" id="spinster">
+                                  <img src="/gifs/spinster.gif" id="spinster" alt="loading icon">
                                   <span>Submit Image</span>
                                 </p>
                             </div><!--changeImageInput-->
@@ -129,7 +129,7 @@
                         >
                         <div class="edit_post_wrap">
                           <p class="editPost">
-                            <img src="/gifs/spinster.gif" id="spinster">
+                            <img src="/gifs/spinster.gif" id="spinster" alt="loading icon">
                             <span>Update</span>
                           </p>
                         </div><!--edit_post_wrap-->
@@ -153,7 +153,7 @@
                   <p class="newerTagPosts">Newer Posts</p>
                   <p class="olderTagPosts">Older Posts</p>
                 </div><!--tagPagination-->
-                <img src="/gifs/load.gif" id="spinster">
+                <img src="/gifs/load.gif" id="spinster" alt="loading icon">
               </div><!--pages-->
 
             </div><!--content_wrapper-->

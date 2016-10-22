@@ -17,6 +17,16 @@
     <meta property="og:image:type"    content="image/png">
     <meta property="og:image:width" content="480"/>
     <meta property="og:image:height" content="480"/>
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-85301106-1', 'auto');
+    ga('send', 'pageview');
+
+    </script>
   </head>
   <body>
 
@@ -38,7 +48,7 @@
                   <p class="postTitle"><%= post.title %></p>
                   <img
                   <% if (post.image.url) { %>
-                    src="<%= post.image.url%>"
+                    src="<%= post.image.url%>" alt="<%= post.title %>"
                   <% } %>
                   class="postImage" id="preview">
                   <div class="post_body_wrap">
@@ -49,7 +59,7 @@
                   </div><!--post_signature_wrapper-->
                   <p class="postTags">
                     <% if (post.tags[0] !== "") { %>
-                      <img src="/images/tag.png" width="20px">
+                      <img src="/images/tag.png" width="20px" alt="tag icon">
                     <% } %>
                       <% post.tags.forEach(function(tag){ %>
                       <span class="searchTag"><%= tag %></span>
@@ -66,14 +76,14 @@
                       <% if (post.image.url) { %>
                         <div class="change_image_wrap">
                           <p class="deleteImage">
-                            <img src="/gifs/spinster.gif" id="spinster">
+                            <img src="/gifs/spinster.gif" id="spinster" alt="loading icon">
                             <span>Delete Image</span>
                           </p>
                           <p class="openChangeImage">Change Image</p>
                           <div class="changeImageInput">
                             <input type="file" name="image" class="editFile">
                               <p class="changeImage">
-                                <img src="/gifs/spinster.gif" id="spinster">
+                                <img src="/gifs/spinster.gif" id="spinster" alt="loading icon">
                                 <span>Submit Image</span>
                               </p>
                           </div><!--changeImageInput-->
@@ -92,7 +102,7 @@
                       >
                       <div class="edit_post_wrap">
                         <p class="editPost">
-                          <img src="/gifs/spinster.gif" id="spinster">
+                          <img src="/gifs/spinster.gif" id="spinster" alt="loading icon">
                           <span>Update</span>
                         </p>
                       </div><!--edit_post_wrap-->
@@ -106,15 +116,15 @@
                 <h4>Share this post on:</h4>
                 <div class="share_content">
                   <div class = "facebook_share">
-                    <img src="/images/facebook-ci.png" class="fb-share">
+                    <img src="/images/facebook-ci.png" class="fb-share" alt="facebook sharing logo">
                     <p>Facebook</p>
                   </div><!--facebook_share-->
                   <div class="twitter_share">
-                    <a target="_blank" href="https://twitter.com/share" class="twitter-share-button" data-via="Muravkina"><img src="/images/twitter-ci.png">
+                    <a target="_blank" href="https://twitter.com/share" class="twitter-share-button" data-via="Muravkina"><img src="/images/twitter-ci.png" alt="twitter sharing logo">
                     <p>Twitter</p></a>
                   </div><!--twitter_share-->
                   <div class="linkedin_share">
-                  <a href="https://www.linkedin.com/shareArticle?mini=true&url=<%= url %>&title=<%= post.title %>&summary=<%= post.body %>&source=http://birchmassage.com/" target="_blank"><img src="/images/linkedin-ci.png"></a>
+                  <a href="https://www.linkedin.com/shareArticle?mini=true&url=<%= url %>&title=<%= post.title %>&summary=<%= post.body %>&source=http://birchmassage.com/" target="_blank"><img src="/images/linkedin-ci.png" alt="linkedin sharing logo"></a>
                     <p>Linkedin</p>
                   </div><!--linkedin_share-->
                 </div><!--share_content-->
@@ -131,9 +141,9 @@
                     <% if(relatedPost.id !== post.id) { %>
                       <div class="related_single_post">
                         <% if (relatedPost.image.url) { %>
-                          <img src="<%=relatedPost.image.url%>" width="75" height="75">
+                          <img src="<%= relatedPost.image.url %>" width="75" height="75" alt="<%= relatedPost.title %>">
                         <% } else { %>
-                          <img src="/images/no_image.png" width="75" height="75">
+                          <img src="/images/no_image.png" width="75" height="75" alt="no image for the post icon">
                         <% } %>
                         <a href="/posts/<%=relatedPost.id%>"><%= relatedPost.title %></a>
                         <p><%= relatedPost.body.substr(0, 200) %></p>
@@ -171,11 +181,11 @@
                     <div class="comment" data-id="<%= comment.id %>">
                       <p class="commentTitle"><%= comment.title %></p>
                       <% if (comment.title) { %>
-                        <img src="/images/triangle.png" width="6">
+                        <img src="/images/triangle.png" width="6" alt="triangle">
                       <% } %>
                       <p class="commentAuthorName"><%= comment.name %></p>
                       <% if (comment.website) { %>
-                        <img src="/images/triangle.png" width="6">
+                        <img src="/images/triangle.png" width="6" alt="triangle">
                       <% } %>
                       <a href="http://<%= comment.website %>" target="_blank"><p class="commentAuthorWebsite"><%= comment.website %></p></a>
                       <p class="commentDate">

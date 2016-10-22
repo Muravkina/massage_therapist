@@ -15,13 +15,10 @@
       <div class="about_author widget">
         <h2>About</h2>
         <div class="profile_image_wrap">
-          <img src="/images/profile.jpg" alt="profile picture">
+          <img src="/images/profile.jpg" alt="profile picture of massage therapist in New York area - Ilia Gerassimov">
         </div><!--profile_image_wrap-->
         <h2>Ilia Gerassimov</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. </p>
+        <p>Licenced massage therapist serving New York area </p>
       </div>
 
       <div class="subscribe widget">
@@ -29,7 +26,7 @@
         <div class="follow_by_email_wrap">
           <input type="email" class="subscribeEmail" name="subscribeEmail" placeholder="Email address..">
           <button class="subscribeByEmail">
-            <img src="/gifs/spinster.gif" id="spinster">
+            <img src="/gifs/spinster.gif" id="spinster" alt="loading icon">
             <span>Submit</span>
           </button>
         </div><!--follow_by_email_wrap-->
@@ -57,7 +54,7 @@
         <% popularPosts.forEach(function(post){ %>
           <div class="popular_post_wrap">
             <% if (post.image) { %>
-              <img src="<%= post.image.url %>" width="100%">
+              <img src="<%= post.image.url %>" width="100%" alt="<%= post.title %>">
             <% } %>
             <div class="popular_posts_body">
               <a href="/posts/<%= post._id %>"><h2><%= post.title %></h2></a>
@@ -95,13 +92,10 @@
       <div class="about_author widget">
         <h2>About</h2>
         <div class="profile_image_wrap">
-          <img src="/images/profile.jpg" alt="profile picture">
+          <img src="/images/profile.jpg" alt="profile picture" alt="profile picture of massage therapist in New York area Ilia Gerassimov">
         </div><!--profile_image_wrap-->
         <h2>Ilia Gerassimov</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. </p>
+        <p>Licensed massage therapist serving in New York area. </p>
       </div>
 
       <div class="subscribe widget">
@@ -134,7 +128,7 @@
         <% popularPosts.forEach(function(post){ %>
           <div class="popular_post_wrap">
             <% if (post.image) { %>
-              <img src="<%= post.image.url %>" width="100%">
+              <img src="<%= post.image.url %>" width="100%" alt="<%= post.title %>">
             <% } %>
             <div class="popular_posts_body">
               <a href="/posts/<%= post._id %>"><h2><%= post.title %></h2></a>

@@ -295,7 +295,7 @@ var updatePost = function(event){
     editedPost.body.html(data.body);
     editedPost.tags.html(tagsText);
     if (data.image){
-      editedPost.image.attr('src', data.image.url)
+      editedPost.image.attr('src', data.image.url);
     }
     post.children(".postData").show();
     $(":file").val('');
@@ -303,6 +303,7 @@ var updatePost = function(event){
     $(".editPost > #spinster").hide();
     $(".editPost > span").text('update');
     post.find(".postImage").show();
+
   })
 }
 

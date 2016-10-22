@@ -1495,7 +1495,7 @@ legend {
   margin-bottom: 7%;
   margin-top: 3%;
 }
-.background_overlay {
+.background_overlay, .no_javascript.overlay {
  width: 80%;
  margin: 0 auto;
  padding-bottom: 1em; 
