@@ -46,7 +46,7 @@
 }
 
 .header p {
-  font-size: 1em;
+  font-size: 1.3em;
   margin-bottom: 0.5em;
 }
 
@@ -229,7 +229,7 @@
 
 /*EDUCATION SECTION*/
 #education.info, #massage.info, #resume.info {
-  width: 90%;
+  width: 95%;
 }
 
 .logo.three.columns img, .logo.three.columns  {
@@ -280,6 +280,8 @@
 
 #education.info .continuing_education p {
   margin-bottom: 5%;
+  margin-top: 5%;
+  font-size: 1.7rem;
 }
 
 .one.column.bronx, .seven.columns.bronx {
@@ -318,7 +320,7 @@
 /*MASSAGE*/
 
 .direct_hire.eleven.columns {
-  width: 80%;
+  width: 90%;
   line-height: 2em;
   padding: 3%;
 }
@@ -343,35 +345,78 @@
 .company p {
   font-size: 1em;
   height: 21rem;
+  height: auto;
 }
 
 .company.three.columns {
   margin: 0;
   text-align: left;
-  margin-bottom: 10%;
+  margin-bottom: 5%;
 }
 
-.company.zeel p, .company.stressbusters p {
-  height: 21rem;
-}
 
 .company.zeel.three.columns, .company.greenpoint.three.columns {
   margin-right: 3%;
 }
 
+
+.zeel p:before {
+  background-image: url('../images/zeel.png');
+  background-size: 75%;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+  width: 100%; 
+  height: 7rem;
+  content:"";
+}
+
+.stressbusters p:before {
+  background-image: url('../images/stressbusters1.png');
+  background-size: 75%;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+  width: 100%;  
+  height: 7rem;
+  content:"";
+}
+
+.greenpoint p:before {
+  background-image: url('../images/greenpoint.png');
+  background-size: 75%;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+  width: 100%;  
+  height: 7rem;
+  content:"";
+}
+
+.health_fare p:before {
+  background-image: url('../images/health_fare.png');
+  background-size: 75%;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+  width: 100%;  
+  height: 7rem;
+  content:"";
+}
+
 .company img {
   width: 75%;
-  display: block;
+  display: none;
   margin: 0 auto;
 }
 
 .company {
-  margin-bottom: 5%;
+  margin-bottom: 2%;
 }
 
 .companies {
-  margin-bottom: 2%;
-  width: 94%;
+  margin-top: 10%;
+  width: 95%;
   padding-left: 0%;
 }
 
@@ -380,7 +425,12 @@
 }
 
 .companies .company.three.columns {
-  width: 43%;
+  width: 48%;
+  margin-left: 0;
+}
+
+.companies .company.three.columns:nth-child(2), .companies .company.three.columns:nth-child(4) {
+  margin-left: 1%;
 }
 
 .schedule.scrollable {
@@ -513,7 +563,6 @@
 
 .reviews.scrollable textarea {
   width: 100%;
-  margin-left: 2%;
   height: 7em;
   font-size: 1em;
 }
@@ -574,6 +623,10 @@
 .review_author {
   font-size: 0.8em;
   margin-bottom: 5%;
+}
+
+.newerReviews {
+  width: 25%;
 }
 
 .reviews_collection .review.six.columns {
@@ -663,6 +716,10 @@
   width: 20%;
   right: 6%;
   top: 1.5%;
+}
+
+.rates .introduction {
+  width: 90%;
 }
 
 .rates .container {
@@ -792,10 +849,14 @@
 }
 
 #calendar h2 {
-  font-size: 1.5em;
+  font-size: 2em;
 }
 #calendar .fc-right {
   margin-bottom: 4%;
+}
+
+.fc-toolbar .fc-center {
+  margin-top: 3%;
 }
 
 .background_overlay {
