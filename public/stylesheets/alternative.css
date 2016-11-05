@@ -509,6 +509,7 @@ body {
   overflow: auto;
   width: 100%;
   display: block;
+  overflow: auto;
   float: none;
 }
 
@@ -562,16 +563,12 @@ body {
   font-size: 2.5em
 }
 
-.line-arrow {
-  display: none;
-}
-
 /*MASSAGE BOX*/
 
 .hidden {
   width: 85%;
   display:none;
-  -moz-transition: all 300ms ease-out;
+    -moz-transition: all 300ms ease-out;
   -webkit-transition: all 300ms ease-out;
   -o-transition: all 300ms ease-out;
   transition: all 300ms ease-out;
@@ -1558,3 +1555,10 @@ legend {
   background-color: black;
   color: white;
 }
+
+.share {
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
+}
+
