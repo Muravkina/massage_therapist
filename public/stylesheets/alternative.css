@@ -509,7 +509,6 @@ body {
   overflow: auto;
   width: 100%;
   display: block;
-  overflow: auto;
   float: none;
 }
 
@@ -561,6 +560,10 @@ body {
   left: 25%;
   display:none;
   font-size: 2.5em
+}
+
+.line-arrow {
+  display: none;
 }
 
 /*MASSAGE BOX*/

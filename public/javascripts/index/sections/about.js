@@ -137,7 +137,7 @@ $(".section").on("mouseleave", function(){
   }
 });
 
-$(".section").on("click touchstart", function(){
+$(".section").on("click", function(){
   if ($(window).width() > 737 ) {
     var section = new Section($(this))
     section.hideAllImages($(this));
