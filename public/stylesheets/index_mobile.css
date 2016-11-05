@@ -159,15 +159,6 @@
   display: none;
 }
 
-/*.about_pictures{
-  width: 95%;
-  padding-left: 2%;
-}*/
-
-/*.about_image.wrap {
-  overflow: hidden;
-}
-*/
 .about_image {
   position: relative;
 }
@@ -180,6 +171,10 @@
   letter-spacing: 0em;
   font-size: 2em;
   border-bottom: 2px solid black;
+}
+
+.about.scrollable {
+  margin-top: -30%;
 }
 
 .about_image h2:after {
