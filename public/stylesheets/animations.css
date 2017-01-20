@@ -1,0 +1,76 @@
+/*CLOCK SCHEDULE*/
+.landing_button_image {
+	position: relative;
+	margin-bottom: 10%;
+}
+
+.landing_button_image:before {
+	content: '';
+	display: block;
+	padding-top: 100%;
+}
+
+.landing_button_image.wrap div {
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	position: absolute;
+}
+
+.landing_button #schedule, .landing_button #about, .landing_button #rates, .landing_button #reviews {
+	width: 70%;
+	margin-top: 10%;
+}
+
+.landing_button #schedule div {
+	background: url(../images/clock.png) 0 0 no-repeat;
+	background-size: 100%;
+	animation: animate 1.5s steps(8) infinite;
+	animation-play-state: paused;
+}
+
+.landing_button #about div {
+	background: url(../images/about_me.png) 0 0 no-repeat;
+	background-size: 100%;
+	animation: animate 1.5s steps(2) infinite;
+	animation-play-state: paused;
+}
+
+.landing_button #rates div {
+	background: url(../images/rates.png) 0 0 no-repeat;
+	background-size: 100%;
+	animation: animate 1.5s steps(9) infinite;
+	animation-play-state: paused;
+}
+
+.landing_button #reviews div {
+	background: url(../images/reviews.png) 0 0 no-repeat;
+	background-size: 100%;
+	animation: animate 1.5s steps(6) infinite;
+	animation-play-state: paused;
+}
+
+.landing_button #contact div {
+	background: url(../images/contact.png) 0 0 no-repeat;
+	background-size: 100%;
+	animation: animate 1.5s steps(7) infinite;
+	animation-play-state: paused;
+}
+
+.landing_button #blog div {
+	background: url(../images/blog.png) 0 0 no-repeat;
+	background-size: 100%;
+	animation: animate 1.5s steps(12) infinite;
+	animation-play-state: paused;
+}
+
+.landing_button #blog:hover div {
+	animation-play-state: running;
+}
+
+
+@keyframes animate {
+	0% { background-position: 0 0 }
+	100% { background-position: 0 100% }
+}

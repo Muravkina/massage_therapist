@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="/stylesheets/alternative.css">
     <link rel="stylesheet" href="/stylesheets/libraries/jquery-ui.min.css">
     <link rel="stylesheet" href="/stylesheets/index_mobile.css">
+    <link rel="stylesheet" href="/stylesheets/animations.css">
     <link rel='stylesheet' href='stylesheets/libraries/fullcalendar.css' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src='javascripts/libraries/moment.min.js'></script>
@@ -58,24 +59,31 @@
 
   </head>
 
+
+  <!-- BODY -->
+
   <body>
 
   <!-- FACEBOOK SHARE -->
 
- <div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1651556695122532";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1651556695122532";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
 
 
     <div class="main">
+
       <div class="main_landing">
 
       <div class="current_status">
+
         <span class="folded-corner"></span>
         <img alt="current status signal tower" src="gifs/current_status.gif">
         <p class="status trigger">Status</p>
@@ -119,55 +127,54 @@
 
       </div><!--current status-->
 
-        <div class="landing_image">
-          <div class="massage_therapist_image wrap">
-            <img alt="therapist massaging a person laying on the table gif" src="gifs/massage_therapist.gif">
-          </div><!--massage_therapist_image wrap-->
+      <div class="landing_image">
+        <div class="massage_therapist_image wrap">
+          <img alt="therapist massaging a person laying on the table gif" src="gifs/massage_therapist.gif">
+        </div><!--massage_therapist_image wrap-->
         <div class="main_heading">
           <div class="wrap">
             <img alt="birch massage by Ilia Gerassimov logo" src="images/logo.png">
           </div><!--wrap-->
         </div><!--main_heading-->
       </div><!--landing_image-->
+
     </div><!--main_landing-->
 
     <div class="black_landing">
       <div class="landing_button_pictures">
         <div class="landing_button">
           <div class="landing_button_image wrap about" id="about">
-            <img alt="profile picture" src="images/about.png">
+            <div></div>
           </div><!--landing_button_image wrap-->
         </div><!--landing_button-->
 
         <div class="landing_button">
           <div class="landing_button_image wrap schedule" id="schedule">
-            <img alt="wall clock" src="images/schedule.png">
+            <div></div>
           </div><!--landing_button_image wrap-->
         </div><!--landing_button-->
 
         <div class="landing_button">
           <div class="landing_button_image wrap rates" id="rates">
-            <img alt="dollar sign" src="images/rates.png">
+            <div></div>
           </div><!--landing_button_image wrap-->
         </div><!--landing_button-->
 
         <div class="landing_button">
           <div class="landing_button_image wrap reviews" id="reviews">
-            <img alt="kick me sticker" src="images/reviews.png">
+            <div></div>
           </div><!--landing_button_image wrap-->
         </div><!--landing_button-->
 
         <div class="landing_button">
           <div class="landing_button_image wrap contact" id ="contact">
-            <img alt="old fashioned corded phone" src="images/contact.png">
+            <div></div>
           </div><!--landing_button_image wrap-->
         </div><!--landing_button-->
 
         <div class="landing_button">
             <div class="landing_button_image wrap blog" id="blog">
-          <a href="/blog">
-              <img alt="pen" src="images/blog.png">
-          </a>
+              <div></div>
             </div><!--landing_button_image wrap-->
         </div><!--landing_button-->
       </div><!--landing_button_pictures-->

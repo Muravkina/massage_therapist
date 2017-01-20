@@ -44,17 +44,11 @@ $(document).ready(function() {
   });
 
   $(".landing_button_image").hover(function(){
-    var button = $(this).find("img");
-    var buttonName = $(this).attr('id');
-    $(".landing_text").children().each(function(){
-    })
-    button.attr('src', 'gifs/' + buttonName + '.gif')
+    var image = $(this).find('div');
+    image.css("animation-play-state", "running");
   }, function(){
-    var button = $(this).find("img");
-    var buttonName = $(this).attr('id');
-        $(".landing_text").children().each(function(){
-    })
-    button.attr('src', 'images/' + buttonName + '.png');
+    var image = $(this).find('div');
+    image.css("animation-play-state", "paused");
   })
 
 

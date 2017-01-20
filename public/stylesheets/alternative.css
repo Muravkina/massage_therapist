@@ -382,39 +382,9 @@ body {
 }
 
 .landing_button_image {
-  width: 70%;
+  width: 80%;
   margin: 0 auto;
   overflow: auto;
-}
-
-
-.landing_button_image.about {
-  width: 58%;
-  padding-top: 30px;
-}
-
-.landing_button_image.schedule {
-  width: 65%;
-  padding-top: 30px;
-}
-
-.landing_button_image.reviews {
-  width: 70%;
-  padding-top: 16px;
-}
-
-.landing_button_image.contact {
-  width: 75%;
-}
-
-.landing_button_image.blog {
-  width: 62%;
-  padding-top: 16px;
-}
-
-.landing_button_image.rates {
-  width: 55%;
-  padding-top: 17px;
 }
 
 .header {
@@ -437,6 +407,7 @@ body {
 
 .landing_text p {
   border-bottom: 2px solid black;
+  margin-bottom: 2%;
 }
 
 .landing_text:hover {
