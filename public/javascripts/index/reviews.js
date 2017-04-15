@@ -16,13 +16,14 @@ var newReview = function(reviews, user){
 $(".submit_review").on("click touchstart", function(event){
   event.preventDefault();
 
+  var lastReview = $(".reviews_collection div:nth-child(10)"),
+      reviewsNumber = $(".reviews_collection").children().length
+
   var data = {
     author: $(".reviewAuthor").val(),
     body: $(".reviewBody").val(),
     stars: $("input[name=rating]:checked").val(),
-    email: $(".reviewEmail").val(),
-    lastReview: $(".reviews_collection div:nth-child(10)"),
-    reviewsNumber: $(".reviews_collection").children().length
+    email: $(".reviewEmail").val()
   }
 
   var checkable = [$(".reviewAuthor"), $(".reviewBody"), $("input[name=rating]:checked")];
@@ -45,8 +46,8 @@ $(".submit_review").on("click touchstart", function(event){
       var review = "<div class='review six columns'><div class='star-ratings-css' title= '." + review.stars + "'></div><p class='review_body'>" + review.body + "</p><p class='review_author'>" + review.author + "</p></div>"
 
       //empty the last review if the number of reviews on the page is 10
-      if (data.reviewsNumber === 10) {
-        data.lastReview.empty()
+      if (reviewsNumber === 10) {
+        lastReview.empty()
       }
       $(".reviews_collection").prepend(review);
       $(".submit_review").off("click touchstart").on("click touchstart", function(e){
