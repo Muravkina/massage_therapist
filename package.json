@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "async": "^2.3.0",
     "aws-sdk": "^2.2.11",
     "bcrypt": "^0.8.5",
     "blueimp-file-upload-expressjs": "https://github.com/Muravkina/bluimp/tarball/master",
