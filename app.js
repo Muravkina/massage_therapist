@@ -18,7 +18,7 @@ var app = express();
 
 //set up a mongo db
 var mongoose   = require('mongoose');
-mongoose.connect('mongodb://gerill:Vehfif6903117@olympia.modulusmongo.net:27017/hiT4aqad')
+mongoose.connect('mongodb://birchmassage-2675:8o)Bw$Z4Jk$c)2MKe$5$c(6LX2i)5@db-birchmassage-2675.nodechef.com:5400/birchmassage');
 
 
 var Blog     = require('./models/blog');
@@ -44,7 +44,7 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(compression());
-app.use('/public', express.static(__dirname+'/public', {maxAge: oneDay}))
+app.use('/public', express.static(__dirname+'/public', {maxAge: oneDay}));
 app.use(express.static('public'));
 
 
