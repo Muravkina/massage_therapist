@@ -3,6 +3,7 @@ var engine = require('ejs-locals');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var cookieSession = require('cookie-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
@@ -14,7 +15,7 @@ require('dotenv').load();
 
 var routes = require('./routes/index');
 
-var app = express();
+// var app = express();
 
 //set up a mongo db
 var mongoose   = require('mongoose');
@@ -36,10 +37,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cookieParser());
-app.use(require('express-session')({
+app.use(cookieSession({
+    name: 'session',
     secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
 app.use(passport.initialize());
 app.use(passport.session());
