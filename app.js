@@ -11,7 +11,9 @@ var LocalStrategy = require('passport-local').Strategy;
 var compression = require('compression');
 var oneDay = 86400000;
 
-require('dotenv').load();
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 var routes = require('./routes/index');
 
