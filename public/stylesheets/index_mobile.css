@@ -1,4 +1,8 @@
 @media only screen and (min-width : 320px) and (max-width : 649px){
+  .current_status {
+    margin-right: 0;
+    right: 0;
+  }
 
 /*LANDING PAGE*/
 .black_landing, .landing_button_pictures, .landing_button, .landing_button_image {
@@ -9,6 +13,11 @@
   margin-bottom: 20%;
   margin-top: 10%;
 }
+
+.main_landing {
+  height: calc(100vh - 132px)
+}
+
 .massage_therapist_image {
   width: 70%;
   margin: 0 auto;
@@ -63,7 +72,6 @@
   display: block;
   margin-top: 1em;
   margin-bottom: 1em;
-  margin-left: 3em;
 }
 
 .wrap.menu img {
@@ -654,7 +662,6 @@
 }
 
 .review_button {
-  margin-right: -5%;
   width: 70%;
 }
 
@@ -1310,7 +1317,6 @@
     float: right;
     margin-bottom: 2em;
     margin-top: 1em;
-    margin-right: -10%;
   }
 
   .current_status .folded-corner {
@@ -1332,7 +1338,7 @@
 }
 
 @media only screen and (min-width: 1500px)  {
-  .massage_therapist_image {
+/*  .massage_therapist_image {
     width: 48%;
   }
   .main_heading {
@@ -1344,7 +1350,7 @@
   }
   .about_pictures {
     margin: 15% auto;
-  }
+  }*/
 }
 
 /*iphone landscape*/
@@ -1470,6 +1476,10 @@
   }
   .black_landing {
     display: none;
+  }
+
+  .share {
+    bottom: 3em;
   }
   .landing_text.wrap {
     width: 14%;

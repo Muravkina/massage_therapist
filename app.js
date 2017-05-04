@@ -21,6 +21,7 @@ var app = express();
 
 //set up a mongo db
 var mongoose   = require('mongoose');
+// mongoose.connect('mongodb://birchmassage-2675:8o)Bw$Z4Jk$c)2MKe$5$c(6LX2i)5@db-birchmassage-2675.nodechef.com:5400/birchmassage');
 mongoose.connect('mongodb://' + process.env.MONGODB_USER + ':' + process.env.MONGODB_PASSWORD +'@ds129641.mlab.com:29641/heroku_89mmtgtx');
 
 var Blog     = require('./models/blog');
